@@ -1,6 +1,8 @@
 <?php
 namespace App\Models;
 
+require_once __DIR__ . '/../../core/Database.php';
+
 use Core\Model;
 
 class User  implements  UserInterface {
@@ -53,6 +55,8 @@ class User  implements  UserInterface {
       $stmt->bindParam(':id', $id);
       return $stmt->execute();
   }
+  
+
    public function getId(){
     return  $this->id;
    }
