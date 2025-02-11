@@ -30,7 +30,6 @@ class Database {
             echo 'work';
             self::$instance = new self();
         }
-        var_dump(self::$instance);
         return self::$instance;
     }
 
