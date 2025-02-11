@@ -6,8 +6,9 @@ require_once 'Admin.php';
 class ItineraireFactory {
     private $db;
 
-    public function __construct($db) {
-        $this->db = $db;
+    public function __construct() {
+        $this->db = Database::getConnection();
+       
     }
 
 
@@ -24,12 +25,15 @@ class ItineraireFactory {
            } 
         }
     }
-    public function getDetails($id){
-        /// details
-        return $list;
+    public function getItineraire($id){
+        // n9lbo 3la iniraire f database 
+
+       return new Itineraire($id,$conducteur_id,$vehicule_id,$date_depart,$date_arriver,$statut);
     }
-    public function villeChecked(Itineraire $Itineraire, $ville){
-        // logic
+    public function getItinerairebyExpediteur($id_expediteur){
+        // n9lbo 3la iniraire f database  + details
+        // b3d $result = fetchObject('itineraire');
     }
+    
 }
 

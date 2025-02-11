@@ -13,7 +13,7 @@ class Itineraire extends Model {
     
     protected $table = 'itineraire'; // Assuming the doctors table is named 'medcins'
      
-    public function __construct($id,$conducteur_id,$vehicule_id,$date_depart,$date_arriver,$statut){
+    public function __construct($id=null,$conducteur_id,$vehicule_id,$date_depart,$date_arriver,$statut){
         
     }
     public function getAllbyConducteur($id) {
