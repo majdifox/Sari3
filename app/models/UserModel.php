@@ -3,49 +3,81 @@ namespace App\Models;
 
 use Core\Model;
 
-class User  extends Model {
-    private $id;
-    private $cnie;
-    private $nom;
-    private $prenom;
-    private $email;
-    private $motdepasse;
-    private $stats;
-    private $role;
-    private $datecreation;
-    protected $table = 'medcins'; // Assuming the doctors table is named 'medcins'
+class User extends Model {
+    protected $table = 'utilisateurs';
      
-    public function __construct($nom,$prenom){
-    
+    public function getAllUsers() {
+        $sql = "SELECT * FROM {$this->table} ORDER BY date_creation DESC";
+        return $this->query($sql);
     }
+
     public function getAllConducteurs() {
-        // $query = "SELECT * FROM public.utilisateurs u  left join public.medecins m  on    u.id  = m.utilisateur_id WHERE role LIKE 'medecin'";
-        // $stmt = $this->db->prepare($query);
-        // $stmt->execute();
-        // return $stmt->fetchAll();
+        $sql = "SELECT * FROM {$this->table} WHERE role = 'Conducteur'";
+        return $this->query($sql);
     }
-    public function getAllExpoditeurs() {
-        // $query = "SELECT * FROM public.utilisateurs u  left join public.medecins m  on    u.id  = m.utilisateur_id WHERE role LIKE 'medecin'";
-        // $stmt = $this->db->prepare($query);
-        // $stmt->execute();
-        // return $stmt->fetchAll();
+
+    public function getAllExpediteurs() {
+        $sql = "SELECT * FROM {$this->table} WHERE role = 'Expediteur'";
+        return $this->query($sql);
     }
+
     public function get($id) {
-        // $query = "SELECT * FROM public.utilisateurs u  left join public.medecins m  on    u.id  = m.utilisateur_id WHERE role LIKE 'medecin'and m.utilisateur_id= :id ";
-        // $stmt = $this->db->prepare($query);
-        // $stmt->bindParam(':id',$id);
-        // $stmt->execute();
-        // return $stmt->fetch();
+        $sql = "SELECT * FROM {$this->table} WHERE id = ?";
+        $result = $this->query($sql, [$id]);
+        return $result[0] ?? null;
     }
 
     public function update($data) {
-        // $query = "INSERT INTO " . $this->table . " (name, specialty) VALUES (:name, :specialty)";
-        // $stmt = $this->db->prepare($query);
-        // return $stmt->execute($data);
+        $id = $data['id'];
+        unset($data['id']);
+        
+        $sets = [];
+        foreach ($data as $key => $value) {
+            $sets[] = "{$key} = ?";
+        }
+        
+        $sql = "UPDATE {$this->table} SET " . implode(', ', $sets) . " WHERE id = ?";
+        $values = array_values($data);
+        $values[] = $id;
+        
+        return $this->execute($sql, $values);
     }
-    public function delete($data) {
-        // $query = "INSERT INTO " . $this->table . " (name, specialty) VALUES (:name, :specialty)";
-        // $stmt = $this->db->prepare($query);
-        // return $stmt->execute($data);
+
+    public function delete($id) {
+        $sql = "DELETE FROM {$this->table} WHERE id = ?";
+        return $this->execute($sql, [$id]);
+    }
+
+    public function toggleStatus($id) {
+        $sql = "UPDATE {$this->table} SET etat = 
+                CASE 
+                    WHEN etat = 'Normal' THEN 'Banne'
+                    ELSE 'Normal'
+                END 
+                WHERE id = ?";
+        return $this->execute($sql, [$id]);
+    }
+
+    public function countAll() {
+        $sql = "SELECT COUNT(*) as count FROM {$this->table}";
+        $result = $this->query($sql);
+        return $result[0]['count'];
+    }
+
+    public function countByRole($role) {
+        $sql = "SELECT COUNT(*) as count FROM {$this->table} WHERE role = ?";
+        $result = $this->query($sql, [$role]);
+        return $result[0]['count'];
+    }
+
+    public function getUserStats() {
+        $sql = "SELECT 
+                    role,
+                    COUNT(*) as total,
+                    COUNT(CASE WHEN etat = 'Normal' THEN 1 END) as actifs,
+                    COUNT(CASE WHEN etat = 'Banne' THEN 1 END) as bannis
+                FROM {$this->table}
+                GROUP BY role";
+        return $this->query($sql);
     }
 }

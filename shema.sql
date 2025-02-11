@@ -1,5 +1,5 @@
 ////////////////////////////////////////////////////////////////////////////////////////////
-CREATE TYPE role_enum AS ENUM ('Conducteur', 'Expediteur');
+CREATE TYPE role_enum AS ENUM ('Conducteur', 'Expediteur', 'Administrateur');
 CREATE TYPE etat_enum AS ENUM('Normal', 'Banne');
 
 CREATE TABLE utilisateurs (
