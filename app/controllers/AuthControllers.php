@@ -21,7 +21,7 @@ class AuthController {
             $Photo      = $_POST['Photo'] ?? '';
             $Role       = $_POST['Role'] ?? '';
             
-            if ($this->userModel->register($$Prenom, $Nom, $Email, $Mot_de_passe, $Telephone, $Photo, $Role)) {
+            if ($this->userModel->register($Prenom, $Nom, $Email, $Mot_de_passe, $Telephone, $Photo, $Role)) {
                 header("Location: index.php?action=login_form");
                 exit();
             } else {

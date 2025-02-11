@@ -15,7 +15,7 @@ class User  implements  UserInterface {
     private $status;
     private $role;
     private $datecreation;
-    protected $table = 'utilisateur'; // Assuming the doctors table is named 'medcins'
+    protected $table = 'utilisateur';
      
     public function __construct($db, $userData = null) {
       $this->db = $db;
@@ -55,7 +55,37 @@ class User  implements  UserInterface {
       $stmt->bindParam(':id', $id);
       return $stmt->execute();
   }
-  
+
+  public function register($Prenom, $Nom, $Email, $Mot_de_passe, $Telephone, $Photo, $Role) {
+   $hashedPassword = password_hash($Mot_de_passe, PASSWORD_BCRYPT);
+
+   $sql = "INSERT INTO utilisateurs (Prenom, Nom, Email, Mot_de_passe, Telephone, Photo, Role, Etat)
+           VALUES (:Prenom, :Nom, :Email, :Mot_de_passe, :Telephone, :Photo, :Role, 'active')";
+
+   $this->db->query($sql);
+   $this->db->bind(':Prenom', $Prenom);
+   $this->db->bind(':Nom', $Nom);
+   $this->db->bind(':Email', $Email);
+   $this->db->bind(':Mot_de_passe', $hashedPassword);
+   $this->db->bind(':Telephone', $Telephone);
+   $this->db->bind(':Photo', $Photo, PDO::PARAM_LOB);
+   $this->db->bind(':Role', $Role);
+
+   return $this->db->execute();
+}
+
+
+
+public function login($email, $password) {
+   $this->db->query("SELECT * FROM utilisateurs WHERE Email = :Email");
+   $this->db->bind(':Email', $email);
+   $user = $this->db->fetch();
+
+   if ($user && password_verify($password, $user['Mot_de_passe'])) {
+       return $user;
+   }
+   return false;
+}
 
    public function getId(){
     return  $this->id;
