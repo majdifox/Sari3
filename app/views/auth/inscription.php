@@ -23,7 +23,7 @@
 
         <!-- Formulaire -->
         <div class="p-8">
-            <form id="authForm" class="space-y-6">
+            <form id="authForm" action="" method="POST" class="space-y-6">
                 <div id="nameFields" class="flex gap-4 hidden">
                     <div class="flex-1">
                         <label class="block text-sm font-medium text-gray-700 mb-1">Prénom</label>
