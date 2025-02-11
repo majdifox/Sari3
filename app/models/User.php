@@ -23,12 +23,33 @@ class User  implements  UserInterface {
           $this->email = $userData['email'];
       }
   }
-    public function read($id) {
+    public static function read($id) {
       $sql = "SELECT * FROM users WHERE id = :id";
       $stmt = $this->db->prepare($sql);
       $stmt->bindParam(':id', $id);
       $stmt->execute();
       return $stmt->fetch(PDO::FETCH_OBJ);
+  }
+    public static function create($data) {
+      // $sql = "INSERT into  users ";
+      // $stmt = $this->db->prepare($sql);
+      // $stmt->bindParam(':username', $username);
+      // $stmt->execute();
+      // $userData = $stmt->fetch(PDO::FETCH_ASSOC);
+  }
+    public  function get($id) {
+      // $sql = "SELECT * FROM users WHERE id = :id";
+      // $stmt = $this->db->prepare($sql);
+      // $stmt->bindParam(':id', $id);
+      // $stmt->execute();
+      // return $stmt->fetch(PDO::FETCH_OBJ);
+  }
+    public static  function getAllbyRole($role) {
+      // $sql = "SELECT * FROM users WHERE id = :id";
+      // $stmt = $this->db->prepare($sql);
+      // $stmt->bindParam(':id', $id);
+      // $stmt->execute();
+      // return $stmt->fetch(PDO::FETCH_OBJ);
   }
 
   public function update($id, $data) {

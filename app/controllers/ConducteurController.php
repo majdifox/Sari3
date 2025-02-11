@@ -1,7 +1,7 @@
 <?php
+ 
 
-
-class conducteurController{
+class ConducteurController{
     public $conducteur;
     public function __construct(){
         $this->conducteur = new conducteur;

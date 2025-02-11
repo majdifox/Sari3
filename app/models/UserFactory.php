@@ -1,5 +1,5 @@
 <?php
-require_once 'expoditeur.php';
+require_once 'expediteur.php';
 require_once 'conducteur.php';
 require_once 'Admin.php';
 
@@ -13,8 +13,8 @@ class UserFactory {
 
     public function createUser($role, $userData = null) {
         switch ($role) {
-            case 'student':
-                return new Expoditeur($this->db, $userData);
+            case '':
+                return new Expediteur($this->db, $userData);
             case 'teacher':
                 return new Conducteur($this->db, $userData);
             case 'admin':
@@ -48,17 +48,18 @@ class UserFactory {
         }
         return null;
     }
+    public function register($data) {
+       
+        User::create($data);
+        
+    }
     public function getAllConducteurs() {
-        $sql = "SELECT * FROM users WHERE role = 'Conducteur'";
-        $stmt = $this->db->query($sql);
-        $conducteurs = $stmt->fetchAll(PDO::FETCH_OBJ);
-        $list = [];
-        $i = 0;
-        foreach ($conducteurs as $conducteur) {
-         $list[$i] = $this->createUser($conducteur->role,$conducteur);
-         $i++;
-        } 
-        return $list;
+        $role = 'Conducteur';
+        User::getAllbyRole($role);
+    }
+    public function getAllExpediteurs() {
+        $role = 'Expediteur';
+        User::getAllbyRole($role);
     }
 }
 

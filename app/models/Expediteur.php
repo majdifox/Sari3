@@ -11,7 +11,7 @@ class Expeduteur extends  User {
         $this->colisFactory = new ColisFactory();
 
     }
-    public function Makerequest($data) {
+    public function MakeRequest($data) {
     // data fiha id dyl itineraire o data dyl colis dyl expediteur
     // ghadi n3mro db table dyl Colis
     
