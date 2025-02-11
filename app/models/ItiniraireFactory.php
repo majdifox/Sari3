@@ -2,6 +2,7 @@
 require_once 'expoditeur.php';
 require_once 'conducteur.php';
 require_once 'Admin.php';
+require_once 'Vehicule.php';
 
 class ItineraireFactory {
     private $db;
@@ -11,17 +12,19 @@ class ItineraireFactory {
        
     }
 
-
+    public function createVehiculebyItiniraire(){
+        
+    }
     public function createItiniraireDetails(Itineraire $Itineraire) {
         // ona  le id de Itineraire dans ghadi n9lb 3la details lkhrin dylo
-        $list = getDetails($Itineraire->getId());
+        $list = getAllbyItiniraire($Itineraire->getId());
         if ($list) {
             $i= 0;
-            $I=[];
+            $objects=[];
            foreach ($list as $ItineraireDetails) {
-            $I[$i] = new ItineraireDetails($ItineraireDetails->getId(),$ItineraireDetails->getItineraire_id(),$ItineraireDetails->getOrders(),$ItineraireDetails->getVille()) ;
+            $objects[$i] = new ItineraireDetails($ItineraireDetails->getId(),$ItineraireDetails->getItineraire_id(),$ItineraireDetails->getOrders(),$ItineraireDetails->getVille()) ;
             $i++;
-            return $I;
+            return $objects;
            } 
         }
     }
@@ -34,6 +37,11 @@ class ItineraireFactory {
         // n9lbo 3la iniraire f database  + details
         // b3d $result = fetchObject('itineraire');
     }
+    public function getItinerairebyCondicteur($id_condecteur){
+        // n9lbo 3la iniraire f database  + details
+        // b3d $result = fetchObject('itineraire');
+    }
+    
     
 }
 

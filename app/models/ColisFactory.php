@@ -2,6 +2,7 @@
 require_once 'expoditeur.php';
 require_once 'conducteur.php';
 require_once 'Admin.php';
+require_once 'colis.php';
 
 class ColisFactory {
     private $db;
@@ -11,23 +12,26 @@ class ColisFactory {
     }
 
 
-    public function createColis($userData) {
-       return new Colis($id,$expediteur_id,$itineare_id,$destination,$volume,$poids,$date_depart,$date_arriver,$status,$etat);
+    public function createColis($ColisData) {
+       return new Colis($ColisData['id']=null,$expediteur_id,$ColisData['itineare_id'],$ColisData['destination'],$ColisData['volume'],$ColisData['poids'],$ColisData['date_depart'],$ColisData['date_arriver'],$ColisData['status'],$ColisData['etat']);
     }
     public function getColis($id) {
-        $sql = "SELECT * FROM users WHERE id_user = :id";
-        $stmt = $this->db->prepare($sql);
-        $stmt->bindParam(':id', $id);
-        $stmt->execute();
-        $userData = $stmt->fetch(PDO::FETCH_ASSOC);
-
-        if ($userData) {
-            $role = $userData["role"]; 
-            return $this->createUser($role, $userData);
+        $ColisData =   Colis::get($id);
+        if ($colis) {
+         return  $this->createColis($ColisData['id'],$expediteur_id,$ColisData['itineare_id'],$ColisData['destination'],$ColisData['volume'],$ColisData['poids'],$ColisData['date_depart'],$ColisData['date_arriver'],$ColisData['status'],$ColisData['etat']);
+         # code...
+        }else{
+         echo 'not found';
         }
-        return null;
     }
-    
+    public function AcceptColis($id){
+       $colis = $this->getColis($id);
+       $colis->accept();
+    }
+    public function RefuseColis($id){
+       $colis = $this->getColis($id);
+       $colis->refuse();
+    }
     public function getColisByExpediteur($id) {
         $sql = "SELECT * FROM colis WHERE expediteur_id = :expediteur_id";
         $stmt = $this->db->prepare($sql);
@@ -55,6 +59,11 @@ class ColisFactory {
          $i++;
         } 
         return $list;
+    }
+    public function addColis($ColisData){
+      $colis =   $this->createColis($ColisData);
+      $colis->create();
+
     }
 }
 
