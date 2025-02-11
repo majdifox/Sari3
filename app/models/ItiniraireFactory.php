@@ -28,42 +28,8 @@ class ItineraireFactory {
         /// details
         return $list;
     }
-    public function get($id) {
-        $sql = "SELECT * FROM users WHERE id_user = :id";
-        $stmt = $this->db->prepare($sql);
-        $stmt->bindParam(':id', $id);
-        $stmt->execute();
-        $userData = $stmt->fetch(PDO::FETCH_ASSOC);
-
-        if ($userData) {
-            $role = $userData["role"]; 
-            return $this->createUser($role, $userData);
-        }
-        return null;
-    }
-    public function authenticate($username, $password) {
-        $sql = "SELECT * FROM users WHERE username = :username";
-        $stmt = $this->db->prepare($sql);
-        $stmt->bindParam(':username', $username);
-        $stmt->execute();
-        $userData = $stmt->fetch(PDO::FETCH_ASSOC);
-
-        if ($userData && password_verify($password, $userData['password'])) {
-            return $this->createUser($userData["role"], $userData);
-        }
-        return null;
-    }
-    public function getAllTeachers() {
-        $sql = "SELECT * FROM users WHERE role = 'teacher'";
-        $stmt = $this->db->query($sql);
-        $teachers = $stmt->fetchAll(PDO::FETCH_OBJ);
-        $list = [];
-        $i = 0;
-        foreach ($teachers as $teacher) {
-         $list[$i] = $this->createUser($teacher->role,$teacher);
-         $i++;
-        } 
-        return $list;
+    public function villeChecked(Itineraire $Itineraire, $ville){
+        // logic
     }
 }
 
