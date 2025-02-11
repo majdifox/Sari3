@@ -4,44 +4,68 @@ namespace App\Models;
 use Core\Model;
 
 class Colis extends Model {
-    private $id;
-    private $cnie;
-    private $nom;
-    private $prenom;
-    private $email;
-    private $motdepasse;
-    private $stats;
-    private $role;
-    private $datecreation;
-    protected $table = 'medcins'; // Assuming the doctors table is named 'medcins'
+    protected $table = 'colis';
      
-    public function __construct($nom,$prenom){
-    
-    }
     public function getAll() {
-        // $query = "SELECT * FROM public.utilisateurs u  left join public.medecins m  on    u.id  = m.utilisateur_id WHERE role LIKE 'medecin'";
-        // $stmt = $this->db->prepare($query);
-        // $stmt->execute();
-        // return $stmt->fetchAll();
-    }
-    public function getbyIneteaire($id) {
-        // $query = "SELECT * FROM public.utilisateurs u  left join public.medecins m  on    u.id  = m.utilisateur_id WHERE role LIKE 'medecin'";
-        // $stmt = $this->db->prepare($query);
-        // $stmt->execute();
-        // return $stmt->fetchAll();
-    }
-    public function valide($id) {
-        // $query = "SELECT * FROM public.utilisateurs u  left join public.medecins m  on    u.id  = m.utilisateur_id WHERE role LIKE 'medecin'and m.utilisateur_id= :id ";
-        // $stmt = $this->db->prepare($query);
-        // $stmt->bindParam(':id',$id);
-        // $stmt->execute();
-        // return $stmt->fetch();
+        $sql = "SELECT c.*, u.nom as expediteur_nom, u.prenom as expediteur_prenom 
+                FROM {$this->table} c
+                JOIN utilisateurs u ON c.expediteur_id = u.id
+                ORDER BY c.date_depart DESC";
+        return $this->query($sql);
     }
 
-    public function add($data,$id) {
-        // $query = "INSERT INTO " . $this->table . " (name, specialty) VALUES (:name, :specialty)";
-        // $stmt = $this->db->prepare($query);
-        // return $stmt->execute($data);
+    public function getByItineraire($id) {
+        $sql = "SELECT c.*, u.nom as expediteur_nom, u.prenom as expediteur_prenom 
+                FROM {$this->table} c
+                JOIN utilisateurs u ON c.expediteur_id = u.id
+                WHERE c.id IN (
+                    SELECT colis_id FROM details_itineraire WHERE itineraire_id = ?
+                )
+                ORDER BY c.date_depart DESC";
+        return $this->query($sql, [$id]);
     }
-   
+
+    public function valide($id) {
+        $sql = "UPDATE {$this->table} SET statut = 'Livré' WHERE id = ?";
+        return $this->execute($sql, [$id]);
+    }
+
+    public function add($data) {
+        $columns = implode(', ', array_keys($data));
+        $values = implode(', ', array_fill(0, count($data), '?'));
+        
+        $sql = "INSERT INTO {$this->table} ({$columns}) VALUES ({$values})";
+        return $this->execute($sql, array_values($data));
+    }
+
+    public function countAll() {
+        $sql = "SELECT COUNT(*) as count FROM {$this->table}";
+        $result = $this->query($sql);
+        return $result[0]['count'];
+    }
+
+    public function getColisStats() {
+        $sql = "SELECT 
+                    statut,
+                    COUNT(*) as total,
+                    AVG(volume) as volume_moyen,
+                    AVG(poids) as poids_moyen
+                FROM {$this->table}
+                GROUP BY statut";
+        return $this->query($sql);
+    }
+
+    public function getRecentColis($limit = 10) {
+        $sql = "SELECT c.*, u.nom as expediteur_nom, u.prenom as expediteur_prenom 
+                FROM {$this->table} c
+                JOIN utilisateurs u ON c.expediteur_id = u.id
+                ORDER BY c.date_depart DESC
+                LIMIT ?";
+        return $this->query($sql, [$limit]);
+    }
+
+    public function updateStatus($id, $statut) {
+        $sql = "UPDATE {$this->table} SET statut = ? WHERE id = ?";
+        return $this->execute($sql, [$statut, $id]);
+    }
 }
