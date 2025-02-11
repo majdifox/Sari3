@@ -58,12 +58,15 @@ CREATE TABLE itineraire (
 
 //////////////////////////////////////////////////////////////////////////////////////////////
 
+CREATE TYPE ville_enum AS ENUM('True', 'False');
+
 CREATE TABLE details_itineraire (
-    ID SERIAL PRIMARY KEY, 
-	Itineraire_id INT NOT NULL,
-    Orders INT NOT NULL, 
-	Ville varchar(50) NOT NULL,
-	FOREIGN KEY (Itineraire_id) REFERENCES itineraire(ID) ON DELETE CASCADE 
+        ID SERIAL PRIMARY KEY, 
+    Itineraire_id INT NOT NULL,
+        Orders INT NOT NULL, 
+    Ville varchar(50) NOT NULL,
+        Statut ville_enum NOT NULL DEFAULT 'False',
+    FOREIGN KEY (Itineraire_id) REFERENCES itineraire(ID) ON DELETE CASCADE 
 );
 
 ////////////////////////////////////////////
