@@ -10,7 +10,11 @@ class Vehicule extends Model {
     private $volume;
     
     private $table = 'vehicule';
-    public function __construct($id,$expediteur_id,$itineraire,$destination,$volume,$poids,$date_depart,$date_arriver,$statut,$etat){
+    public function __construct($id=null,$matricule,$model,$volume){
+            $this->id = $id;
+            $this->matricule = $matricule;
+            $this->model = $model;
+            $this->volume = $volume;
         
     }
     
@@ -22,7 +26,7 @@ class Vehicule extends Model {
         // return $this->query($sql);
     }
     public static function get($id){
-        // return specifique colis
+        // return specifique vehicule
     }
     
     public function getByItineraire($id) {

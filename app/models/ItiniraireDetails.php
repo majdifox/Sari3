@@ -5,10 +5,9 @@ use Core\Model;
 
 class ItineraireDetails extends Model {
     private $id;
-    private $conducteur_id;
-    private $vehicule_id;
-    private $date_depart;
-    private $date_arriver;
+    private $iteneraire_id;
+    private $orders;
+    private $ville;
     private $statut;
     
     protected $table = 'details_itineraire'; // Assuming the doctors table is named 'medcins'
@@ -28,6 +27,13 @@ class ItineraireDetails extends Model {
         // $stmt->execute();
         // return $stmt->fetchAll();
     }
+    public function enTransit(){
+        $this->setStatus('En Transit');
+
+    }
+    public function Arrive(){
+        $this->setStatus('Arrive');
+    }
     public function get($id) {
         // $query = "SELECT * FROM public.utilisateurs u  left join public.medecins m  on    u.id  = m.utilisateur_id WHERE role LIKE 'medecin'";
         // $stmt = $this->db->prepare($query);
@@ -40,6 +46,15 @@ class ItineraireDetails extends Model {
         // $stmt->execute();
         // return $stmt->fetchAll();
     }
+
+    public function setStatus($status) {
+        $this->status = $status;
+        // $query = "SELECT * FROM public.utilisateurs u  left join public.medecins m  on    u.id  = m.utilisateur_id WHERE role LIKE 'medecin'";
+        // $stmt = $this->db->prepare($query);
+        // $stmt->execute();
+        // return $stmt->fetchAll();
+    }
+
     
    
 }

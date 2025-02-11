@@ -66,6 +66,8 @@ class Conducteur  extends  User {
   }
    public function showVehiculeInfos($id){
     // search the vehicule 
+    $data = $this->vehicule->getByItineraire($id);
+    $vehicule = new Vehicule();
    }
    public function getItinerairebyCondicteur($id_condecteur){
     // search the vehicule 
