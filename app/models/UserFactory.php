@@ -48,14 +48,14 @@ class UserFactory {
         }
         return null;
     }
-    public function getAllTeachers() {
-        $sql = "SELECT * FROM users WHERE role = 'teacher'";
+    public function getAllConducteurs() {
+        $sql = "SELECT * FROM users WHERE role = 'Conducteur'";
         $stmt = $this->db->query($sql);
-        $teachers = $stmt->fetchAll(PDO::FETCH_OBJ);
+        $conducteurs = $stmt->fetchAll(PDO::FETCH_OBJ);
         $list = [];
         $i = 0;
-        foreach ($teachers as $teacher) {
-         $list[$i] = $this->createUser($teacher->role,$teacher);
+        foreach ($conducteurs as $conducteur) {
+         $list[$i] = $this->createUser($conducteur->role,$conducteur);
          $i++;
         } 
         return $list;
