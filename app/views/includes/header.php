@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EasyMatch Transport</title>
+    <title>Sarii3 Transport</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body>
@@ -17,7 +17,7 @@
                         <circle cx="7.5" cy="18.5" r="2.5"/>
                         <circle cx="16.5" cy="18.5" r="2.5"/>
                     </svg>
-                    <span class="font-bold text-xl">EasyMatch Transport</span>
+                    <span class="font-bold text-xl">Sarii3 Transport</span>
                 </a>
 
                 <!-- Menu principal -->

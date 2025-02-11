@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EasyMatch Transport - Authentification</title>
+    <title>Sarii3 Transport - Authentification</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="min-h-screen bg-gradient-to-br from-[#2E3192] to-[#00B4DB] flex items-center justify-center p-4">
@@ -17,7 +17,7 @@
                     <circle cx="16.5" cy="18.5" r="2.5"/>
                 </svg>
             </div>
-            <h2 class="text-2xl font-bold text-white mb-2">EasyMatch Transport</h2>
+            <h2 class="text-2xl font-bold text-white mb-2">Sarii3 Transport</h2>
             <p class="text-blue-100" id="formTitle">Connectez-vous à votre compte</p>
         </div>
 

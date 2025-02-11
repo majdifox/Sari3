@@ -9,7 +9,7 @@
                             <circle cx="7.5" cy="18.5" r="2.5"/>
                             <circle cx="16.5" cy="18.5" r="2.5"/>
                         </svg>
-                        <span class="font-bold text-xl">EasyMatch Transport</span>
+                        <span class="font-bold text-xl">Sarii3 Transport</span>
                     </div>
                     <p class="text-sm text-blue-100">Votre plateforme de mise en relation pour le transport de colis.</p>
                 </div>
@@ -44,7 +44,7 @@
                             <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
                             </svg>
-                            <span>contact@easymatch.com</span>
+                            <span>contact@Sarii3.com</span>
                         </li>
                         <li class="flex items-center space-x-2">
                             <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -79,7 +79,7 @@
                             </svg>
                         </a>
                     </div>
-                    <p class="text-sm text-blue-100">&copy; 2024 EasyMatch Transport. Tous droits réservés.</p>
+                    <p class="text-sm text-blue-100">&copy; 2024 Sarii3 Transport. Tous droits réservés.</p>
                 </div>
             </div>
         </div>
