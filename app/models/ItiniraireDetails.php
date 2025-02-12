@@ -3,17 +3,16 @@ namespace App\Models;
 
 use Core\Model;
 
-class Itineraire extends Model {
+class ItineraireDetails extends Model {
     private $id;
-    private $conducteur_id;
-    private $vehicule_id;
-    private $date_depart;
-    private $date_arriver;
+    private $iteneraire_id;
+    private $orders;
+    private $ville;
     private $statut;
     
-    protected $table = 'itineraire'; // Assuming the doctors table is named 'medcins'
+    protected $table = 'details_itineraire'; // Assuming the doctors table is named 'medcins'
      
-    public function __construct($conducteur_id,$vehicule_id,$date_depart,$date_arriver,$statut){
+    public function __construct($itineraire_id,$orders,$ville,$statut){
         
     }
     public function getAllbyConducteur($id) {
@@ -21,6 +20,19 @@ class Itineraire extends Model {
         // $stmt = $this->db->prepare($query);
         // $stmt->execute();
         // return $stmt->fetchAll();
+    }
+    public function getAllbyItiniraire($itineraire_id) {
+        // $query = "SELECT * FROM public.utilisateurs u  left join public.medecins m  on    u.id  = m.utilisateur_id WHERE role LIKE 'medecin'";
+        // $stmt = $this->db->prepare($query);
+        // $stmt->execute();
+        // return $stmt->fetchAll();
+    }
+    public function enTransit(){
+        $this->setStatus('En Transit');
+
+    }
+    public function Arrive(){
+        $this->setStatus('Arrive');
     }
     public function get($id) {
         // $query = "SELECT * FROM public.utilisateurs u  left join public.medecins m  on    u.id  = m.utilisateur_id WHERE role LIKE 'medecin'";
@@ -34,6 +46,15 @@ class Itineraire extends Model {
         // $stmt->execute();
         // return $stmt->fetchAll();
     }
+
+    public function setStatus($status) {
+        $this->status = $status;
+        // $query = "SELECT * FROM public.utilisateurs u  left join public.medecins m  on    u.id  = m.utilisateur_id WHERE role LIKE 'medecin'";
+        // $stmt = $this->db->prepare($query);
+        // $stmt->execute();
+        // return $stmt->fetchAll();
+    }
+
     
    
 }

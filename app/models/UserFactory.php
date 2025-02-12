@@ -1,5 +1,5 @@
 <?php
-require_once 'expoditeur.php';
+require_once 'expediteur.php';
 require_once 'conducteur.php';
 require_once 'Admin.php';
 
@@ -13,8 +13,8 @@ class UserFactory {
 
     public function createUser($role, $userData = null) {
         switch ($role) {
-            case 'student':
-                return new Expoditeur($this->db, $userData);
+            case '':
+                return new Expediteur($this->db, $userData);
             case 'teacher':
                 return new Conducteur($this->db, $userData);
             case 'admin':
@@ -36,18 +36,30 @@ class UserFactory {
         }
         return null;
     }
-    
-    public function getAllTeachers() {
-        $sql = "SELECT * FROM users WHERE role = 'teacher'";
-        $stmt = $this->db->query($sql);
-        $teachers = $stmt->fetchAll(PDO::FETCH_OBJ);
-        $list = [];
-        $i = 0;
-        foreach ($teachers as $teacher) {
-         $list[$i] = $this->createUser($teacher->role,$teacher);
-         $i++;
-        } 
-        return $list;
+    public function authenticate($username, $password) {
+        $sql = "SELECT * FROM users WHERE username = :username";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindParam(':username', $username);
+        $stmt->execute();
+        $userData = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($userData && password_verify($password, $userData['password'])) {
+            return $this->createUser($userData["role"], $userData);
+        }
+        return null;
+    }
+    public function register($data) {
+       
+        User::create($data);
+        
+    }
+    public function getAllConducteurs() {
+        $role = 'Conducteur';
+        User::getAllbyRole($role);
+    }
+    public function getAllExpediteurs() {
+        $role = 'Expediteur';
+        User::getAllbyRole($role);
     }
 }
 

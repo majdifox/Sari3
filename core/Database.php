@@ -1,7 +1,7 @@
 <?php
 namespace Core;
-
 $config = require_once 'C:\laragon\www\SARI3\config\config.php';
+
 
 
 
@@ -13,7 +13,7 @@ class Database {
         global $config; 
         $host = "localhost";
         $port = "5432";
-        $dbname = "sarii";
+        $dbname = "Sarri";
         $user = "postgres";
         $pass = "Youness";
 
