@@ -29,8 +29,10 @@
 // }
 
 namespace Core;
-use Controllers\AdminController;
-    class Router {
+use App\Models\User;
+use Controllers\AuthController;
+
+class Router {
         private $routes = [];
 
         public function add($method, $path, $controller, $action) {
@@ -55,19 +57,29 @@ use Controllers\AdminController;
                 // echo '<pre>';
                 // var_dump($route['path']);
                 // echo '</pre>';  
-                if ($path = $route['path'] && $method === $route['method']) {
+                if ($path == $route['path'] && $method === $route['method']) {
                     
                     // echo '<pre>';
                     // var_dump($route['controller']);
                     // echo '</pre>';
-                    $controller = "Controllers\\" . $route['controller'];
+                    $controller = "App\\Controllers\\" . $route['controller'];
+                    echo "<br>";
+                    
                     echo $controller;
+                    echo "<br>";
+                    echo $route['path'];
+
                     if (class_exists($controller)) {
                         $action = $route['action']; 
                         echo '<br>';
                         echo $action;
                         echo '<br>';
-                        $controllerInstance = new $controller();
+                        
+$email = "mohamed@gmail.com";
+$User = new User;
+$result =  $User->read($email);
+                        var_dump($result);
+                        $controllerInstance = new $controller($result);
                         
                         if (method_exists($controllerInstance, $action)) {
                             echo '<br>';

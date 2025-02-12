@@ -1,16 +1,27 @@
 <?php
-namespace Models;
+namespace App\Models;
 
-use Core\Model;
+use App\Models\User;
 
 class Conducteur  extends  User {
     private $ItineraireFactory;
     private $ColisFactory;
-    public function __construct($ItineraireFactory){
+    public function __construct($data = null){
         parent::__construct();
         $this->ItineraireFactory = new ItineraireFactory();
         $this->ColisFactory = new ColisFactory();
         $this->Vehicule = new Vehicule();
+        if ($data) {
+           $this->id = $data["id"];
+           $this->cnie = $data["cnie"];
+           $this->nom = $data["nom"];
+           $this->prenom = $data["prenom"];
+           $this->email = $data["email"];
+           $this->motdepasse =$data["motdepasse"];
+           $this->status = $data["status"];
+           $this->role = $data["role"];
+           $this->datecreation =$data["datecreation"];
+        }
         
     }
     public function getColis($id){

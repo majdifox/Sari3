@@ -1,9 +1,9 @@
 <?php
 namespace App\Models;
 
+use Core\Database;
 
-
-class User  implements  UserInterface {
+class User   {
     private $id;
     private $cnie;
     private $nom;
@@ -16,20 +16,24 @@ class User  implements  UserInterface {
     private $db;
     protected $table = 'utilisateur'; // Assuming the doctors table is named 'medcins'
    
-    public function __construct($db, $userData = null) {
-      $this->db = \Database::getInstance();
+    public function __construct( $userData = null) {
+      $this->db = Database::getInstance()->getConnection();
       if ($userData) {
           $this->id = $userData['id'];
           $this->username = $userData['username'];
           $this->email = $userData['email'];
       }
   }
-    public static function read($id) {
-      $sql = "SELECT * FROM users WHERE id = :id";
+    public  function read($email) {
+      echo '<br> ';
+      var_dump(Database::getInstance());
+      echo '<br> ';
+     
+      $sql = "SELECT * FROM utilisateurs WHERE email = :email";
       $stmt = $this->db->prepare($sql);
-      $stmt->bindParam(':id', $id);
+      $stmt->bindParam(':email', $email);
       $stmt->execute();
-      return $stmt->fetch(PDO::FETCH_OBJ);
+      return $stmt->fetch(\PDO::FETCH_OBJ);
   }
     public static function create($data) {
       // $sql = "INSERT into  users ";

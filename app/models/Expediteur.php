@@ -21,7 +21,7 @@ class Expediteur extends  User {
     //  search itineraire by idColis and check if status still en preparation and delete it from the table colis
     $colis = $this->colisFactory->getColis($id);
   }
-  public function showIniterairebyExp() {
+  public function showIniteraire() {
     //  search itineraire by Exp 
     $Itineraire = $this->ItineraireFactory->getItinerairebyExpediteur($this->getId());
   }

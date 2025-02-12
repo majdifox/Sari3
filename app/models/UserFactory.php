@@ -1,24 +1,17 @@
 <?php
-require_once 'expediteur.php';
-require_once 'conducteur.php';
-require_once 'Admin.php';
+namespace App\Models;
 
 class UserFactory {
     private $db;
 
-    public function __construct($db) {
-        $this->db = $db;
-    }
-
-
-    public function createUser($role, $userData = null) {
+    public static function createUser($role, $userData = null) {
         switch ($role) {
-            case '':
-                return new Expediteur($this->db, $userData);
-            case 'teacher':
-                return new Conducteur($this->db, $userData);
-            case 'admin':
-                return new Admin($this->db, $userData);
+            case 'Expediteur':
+                return new Expediteur(null, $userData);
+            case 'Conducteur':
+                return new Conducteur(null, $userData);
+            case 'Admin':
+                return new Admin(null, $userData);
             default:
                 throw new Exception("Invalid user role");
         }

@@ -7,14 +7,13 @@ use App\Models\User;
 use Core\Controller;
 use App\Models\Colis;
 
-class AdminController extends Controller
+class AdminController 
 {
+    private $userFactory;
     public function __construct()
     {
-        parent::__construct();
-        if (!isset($_SESSION['user']) || $_SESSION['user']['role'] !== 'Administrateur') {
-            redirect('/login');
-        }
+       
+
     }
 
     public function dashboard()
