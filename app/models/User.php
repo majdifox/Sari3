@@ -1,8 +1,7 @@
 <?php
 namespace App\Models;
 
-use Core\Model;
-use Core\Database;
+
 
 class User  implements  UserInterface {
     private $id;
