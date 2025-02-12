@@ -78,7 +78,7 @@ class Router {
 $email = "mohamed@gmail.com";
 $User = new User;
 $result =  $User->read($email);
-                        var_dump($result);
+                        // var_dump($result);
                         $controllerInstance = new $controller($result);
                         
                         if (method_exists($controllerInstance, $action)) {

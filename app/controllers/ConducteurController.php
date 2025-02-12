@@ -15,7 +15,8 @@ class ConducteurController{
     public function showItinirairesbyConducteur(){
       $this->conducteur->getItinerairebyCondicteur();
     }
-    public function showItiniraire($idItineraire){
+    public function showItiniraire(){
+      echo 'hello';
         
     }
     public function showItinirairedetails($idItineraire){
