@@ -2,6 +2,7 @@
 namespace App\Models;
 
 use Core\Model;
+use Core\Database;
 
 class User  implements  UserInterface {
     private $id;
@@ -13,10 +14,11 @@ class User  implements  UserInterface {
     private $status;
     private $role;
     private $datecreation;
+    private $db;
     protected $table = 'utilisateur'; // Assuming the doctors table is named 'medcins'
-     
+   
     public function __construct($db, $userData = null) {
-      $this->db = $db;
+      $this->db = \Database::getInstance();
       if ($userData) {
           $this->id = $userData['id'];
           $this->username = $userData['username'];
