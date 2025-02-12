@@ -1,6 +1,6 @@
 <?php
 
-$router->add('GET', '/admin', 'AdminController', 'dashboard');
+$router->add('GET', 'admin', 'AdminController', 'dashboard');
 $router->add('GET', '/admin/utilisateurs/ban/{id}', 'AdminController', 'index');
 $router->add('GET', '/admin/inetiare/refuse/{id}', 'AdminController', 'refuseInetieare');
 $router->add('GET', '/admin/inetiare/accept/{id}', 'AdminController', 'acceptInetieare');
