@@ -1,10 +1,12 @@
 <?php
- 
+ namespace App\Controllers;
+
+ use App\Models\UserFactory;
 
 class ConducteurController{
     public $conducteur;
-    public function __construct(){
-        $this->conducteur = new conducteur;
+    public function __construct($userData){
+        $this->conducteur = UserFactory::createUser('Conducteur', $userData)  ;
     }
 
     public function showVehiculeInfos($id){

@@ -33,32 +33,32 @@ class ColisFactory {
        $colis->refuse();
     }
     public function getColisByExpediteur($id) {
-        $sql = "SELECT * FROM colis WHERE expediteur_id = :expediteur_id";
-        $stmt = $this->db->prepare($sql);
-        $stmt = $this->db->bindParam(':expediteur_id',$id);
-        $stmt->exectute();
-        $Colis = $stmt->fetchAll(PDO::FETCH_OBJ);
-        $list = [];
-        $i = 0;
-        foreach ($Colis as $coli) {
-         $list[$i] = $this->createColis($colis);
-         $i++;
-        } 
-        return $list;
+        // $sql = "SELECT * FROM colis WHERE expediteur_id = :expediteur_id";
+        // $stmt = $this->db->prepare($sql);
+        // $stmt = $this->db->bindParam(':expediteur_id',$id);
+        // $stmt->exectute();
+        // $Colis = $stmt->fetchAll(PDO::FETCH_OBJ);
+        // $list = [];
+        // $i = 0;
+        // foreach ($Colis as $coli) {
+        //  $list[$i] = $this->createColis($colis);
+        //  $i++;
+        // } 
+        // return $list;
     }
     public function getColisByVillesANDExpediteur($ville,$id) {
-        $sql = "SELECT * FROM colis WHERE expediteur_id = :expediteur_id";
-        $stmt = $this->db->prepare($sql);
-        $stmt = $this->db->bindParam(':expediteur_id',$id);
-        $stmt->exectute();
-        $Colis = $stmt->fetchAll(PDO::FETCH_OBJ);
-        $list = [];
-        $i = 0;
-        foreach ($Colis as $coli) {
-         $list[$i] = $this->createColis($colis);
-         $i++;
-        } 
-        return $list;
+        // $sql = "SELECT * FROM colis WHERE expediteur_id = :expediteur_id";
+        // $stmt = $this->db->prepare($sql);
+        // $stmt = $this->db->bindParam(':expediteur_id',$id);
+        // $stmt->exectute();
+        // $Colis = $stmt->fetchAll(PDO::FETCH_OBJ);
+        // $list = [];
+        // $i = 0;
+        // foreach ($Colis as $coli) {
+        //  $list[$i] = $this->createColis($colis);
+        //  $i++;
+        // } 
+        // return $list;
     }
     public function addColis($ColisData){
       $colis =   $this->createColis($ColisData);
