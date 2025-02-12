@@ -1,5 +1,5 @@
 <?php
-namespace App\Models;
+namespace Models;
 
 use Core\Model;
 
@@ -69,8 +69,9 @@ class Conducteur  extends  User {
     $data = $this->vehicule->getByItineraire($id);
     $vehicule = new Vehicule();
    }
-   public function getItinerairebyCondicteur($id_condecteur){
-    // search the vehicule 
+   public function getItinerairebyCondicteur(){
+    $id = $this->getId();
+    echo $id;
    }
    public function createItiniraireDetails(Itineraire $Itineraire){
     // $this->ItineraireFactory-> createItiniraireDetails(Itineraire $Itineraire);

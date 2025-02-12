@@ -1,10 +1,7 @@
 <?php
 namespace App\Models;
 
-require_once __DIR__ . '/../../core/Database.php';
 
-use Core\Model;
-use Core\Database;
 
 class User  implements  UserInterface {
     private $id;

@@ -2,19 +2,13 @@
 namespace Controllers;
 
 
-use Core\View;
-use App\Models\User;
-use Core\Controller;
-use App\Models\Colis;
 
-class AdminController extends Controller
+class Controller
 {
-    public function __construct()
+    private $db;
+    public function __construct($db)
     {
-        parent::__construct();
-        if (!isset($_SESSION['user']) || $_SESSION['user']['role'] !== 'Administrateur') {
-            redirect('/login');
-        }
+        $this->db = $db;
     }
 
     public function dashboard()

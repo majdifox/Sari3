@@ -1,21 +1,9 @@
 <?php
-namespace Controllers;
+namespace App\Controllers;
 
 
-use Core\View;
-use App\Models\User;
-use Core\Controller;
-use App\Models\Colis;
-
-class AdminController extends Controller
-{
-    public function __construct()
-    {
-        parent::__construct();
-        if (!isset($_SESSION['user']) || $_SESSION['user']['role'] !== 'Administrateur') {
-            redirect('/login');
-        }
-    }
+class AuthController  {
+    
 
     public function dashboard()
     {

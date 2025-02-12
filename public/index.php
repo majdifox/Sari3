@@ -1,7 +1,10 @@
 <?php
 require_once __DIR__.'/../vendor/autoload.php';
+use Core\Router;
+use App\Controllers\AuthController;
+$controller = new AuthController();
+$router = new Router();
+require_once __DIR__ . '/../config/routes.php';
 
-use Core\Database;
-// $config = require_once  'C:\laragon\www\Sari3\config\config.php';
+$router->dispatch();
 
-Database::getInstance();
