@@ -80,22 +80,32 @@ class User   {
       return $stmt->execute();
   }
 
-  public function register($Prenom, $Nom, $Email, $Mot_de_passe, $Telephone, $Photo, $Role) {
-   $hashedPassword = password_hash($Mot_de_passe, PASSWORD_BCRYPT);
+  public function register($data) {
+   // Hash the password
+   $hashedPassword = password_hash($data['mot_de_passe'], PASSWORD_BCRYPT);
 
-   $sql = "INSERT INTO utilisateurs (Prenom, Nom, Email, Mot_de_passe, Telephone, Photo, Role, Etat)
-           VALUES (:Prenom, :Nom, :Email, :Mot_de_passe, :Telephone, :Photo, :Role, 'active')";
+   $sql = "INSERT INTO utilisateurs (cni, nom, prenom, photo, telephone, email, mot_de_passe, role, etat) 
+           VALUES (:cni, :nom, :prenom, :photo, :telephone, :email, :mot_de_passe, :role, :etat)";
 
-   $this->db->query($sql);
-   $this->db->bind(':Prenom', $Prenom);
-   $this->db->bind(':Nom', $Nom);
-   $this->db->bind(':Email', $Email);
-   $this->db->bind(':Mot_de_passe', $hashedPassword);
-   $this->db->bind(':Telephone', $Telephone);
-   $this->db->bind(':Photo', $Photo, PDO::PARAM_LOB);
-   $this->db->bind(':Role', $Role);
-
-   return $this->db->execute();
+   try {
+       $stmt = $this->db->prepare($sql);
+       
+       return $stmt->execute([
+           ':cni' => $data['cni'],
+           ':nom' => $data['nom'],
+           ':prenom' => $data['prenom'],
+           ':photo' => $data['photo'],
+           ':telephone' => $data['telephone'],
+           ':email' => $data['email'],
+           ':mot_de_passe' => $hashedPassword,
+           ':role' => $data['role'],
+           ':etat' => $data['etat']
+       ]);
+   } catch (\PDOException $e) {
+       // Log error and return false
+       error_log($e->getMessage());
+       return false;
+   }
 }
 
 
