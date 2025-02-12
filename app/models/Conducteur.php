@@ -2,6 +2,8 @@
 namespace App\Models;
 
 use App\Models\User;
+use App\Models\ColisFactory;
+use App\Models\ItineraireFactory;
 
 class Conducteur  extends  User {
     private $ItineraireFactory;
@@ -10,7 +12,6 @@ class Conducteur  extends  User {
         parent::__construct();
         $this->ItineraireFactory = new ItineraireFactory();
         $this->ColisFactory = new ColisFactory();
-        $this->Vehicule = new Vehicule();
         if ($data) {
            $this->id = $data["id"];
            $this->cnie = $data["cnie"];
@@ -28,7 +29,6 @@ class Conducteur  extends  User {
      $colis =  $this->ColisFactory->getColis($id);
     }
     public function addAnnonce($data) {
-    //   $sql = "SELECT * FROM users WHERE id = :id";
     $dataofvehicule;
     $this->Vehicule->add($dataofvehicule);
     $this->ColisFactory->addColis($dataofColis);

@@ -5,8 +5,8 @@
 
 class ConducteurController{
     public $conducteur;
-    public function __construct($userData){
-        $this->conducteur = UserFactory::createUser('Conducteur', $userData)  ;
+    public function __construct(){
+        $this->conducteur = UserFactory::createUser('Conducteur', null)  ;
     }
 
     public function showVehiculeInfos($id){
@@ -15,7 +15,8 @@ class ConducteurController{
     public function showItinirairesbyConducteur(){
       $this->conducteur->getItinerairebyCondicteur();
     }
-    public function showItiniraire($idItineraire){
+    public function showItiniraire(){
+      echo 'hello';
         
     }
     public function showItinirairedetails($idItineraire){

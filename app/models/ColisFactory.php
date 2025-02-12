@@ -1,15 +1,9 @@
 <?php
-require_once 'expoditeur.php';
-require_once 'conducteur.php';
-require_once 'Admin.php';
-require_once 'colis.php';
+namespace App\Models;
+
 
 class ColisFactory {
-    private $db;
-
-    public function __construct($db) {
-        $this->db = $db;
-    }
+    
 
 
     public function createColis($ColisData) {

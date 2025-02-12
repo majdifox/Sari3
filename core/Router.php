@@ -54,33 +54,25 @@ class Router {
             //     var_dump($paths);
             //     echo '</pre>'; 
             foreach ($this->routes as $route) {
-                // echo '<pre>';
-                // var_dump($route['path']);
-                // echo '</pre>';  
+                
                 if ($path == $route['path'] && $method === $route['method']) {
+                    echo '<pre>';
+                    var_dump($route['path']);
+                    echo '</pre>';  
                     
                     // echo '<pre>';
                     // var_dump($route['controller']);
                     // echo '</pre>';
                     $controller = "App\\Controllers\\" . $route['controller'];
-                    echo "<br>";
+                   
                     
-                    echo $controller;
-                    echo "<br>";
-                    echo $route['path'];
 
                     if (class_exists($controller)) {
                         $action = $route['action']; 
-                        echo '<br>';
-                        echo $action;
-                        echo '<br>';
+                       
                         
-$email = "mohamed@gmail.com";
-$User = new User;
-$result =  $User->read($email);
-                        var_dump($result);
-                        $controllerInstance = new $controller($result);
-                        
+                        // var_dump($result);
+                        $controllerInstance = new $controller();
                         if (method_exists($controllerInstance, $action)) {
                             echo '<br>';
                             echo $controller;

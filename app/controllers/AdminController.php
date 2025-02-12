@@ -1,11 +1,14 @@
 <?php
-namespace Controllers;
+ namespace App\Controllers;
 
 
 use Core\View;
 use App\Models\User;
 use Core\Controller;
 use App\Models\Colis;
+use App\Models\UserFactory;
+use App\Models\ColisFactory;
+use App\Models\ItineraireFactory;
 
 class AdminController 
 {
@@ -18,68 +21,38 @@ class AdminController
 
     public function dashboard()
     {
-        $userModel = new User();
-        $colisModel = new Colis();
-
-        $data = [
-            'total_users' => $userModel->countAll(),
-            'total_colis' => $colisModel->countAll(),
-            'user_stats' => $userModel->getUserStats(),
-            'colis_stats' => $colisModel->getColisStats(),
-            'recent_colis' => $colisModel->getRecentColis(5)
-        ];
-
-        View::render('admin/dashboard', $data);
+        echo 'dashboard';
+        
     }
 
-    public function users()
+    public function ListConducteurs()
     {
-        $userModel = new User();
-        $users = $userModel->getAllUsers();
-        View::render('admin/users', ['users' => $users]);
+        
     }
-
-    public function toggleUserStatus()
+    public function ListItineraires()
     {
-        if (!isset($_POST['user_id'])) {
-            json_response(['success' => false, 'message' => 'ID utilisateur requis']);
-        }
-
-        $userModel = new User();
-        $success = $userModel->toggleStatus($_POST['user_id']);
-        json_response(['success' => $success]);
+        
     }
-
-    public function colis()
+    public function ListExpediteurs()
     {
-        $colisModel = new Colis();
-        $colis = $colisModel->getAll();
-        View::render('admin/colis', ['colis' => $colis]);
+        
     }
+    
 
-    public function updateColisStatus()
+    public function deleteUser($id_user)
     {
-        if (!isset($_POST['colis_id']) || !isset($_POST['statut'])) {
-            json_response(['success' => false, 'message' => 'Paramètres manquants']);
-        }
-
-        $colisModel = new Colis();
-        $success = $colisModel->updateStatus($_POST['colis_id'], $_POST['statut']);
-        json_response(['success' => $success]);
+        
     }
 
-    public function statistiques()
+    public function deleteAnnonce($id_annonce)
     {
-        $userModel = new User();
-        $colisModel = new Colis();
-
-        $data = [
-            'user_stats' => $userModel->getUserStats(),
-            'colis_stats' => $colisModel->getColisStats(),
-            'conducteurs_count' => $userModel->countByRole('Conducteur'),
-            'expediteurs_count' => $userModel->countByRole('Expediteur')
-        ];
-
-        View::render('admin/statistiques', $data);
+ 
     }
+    public function deleteVehicule($id_Vehicule)
+    {
+ 
+    }
+    
+
+    
 }
