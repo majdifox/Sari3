@@ -5,12 +5,19 @@ namespace App\Models;
     class ItineraireFactory {
         private $db;
 
-       
+       public function deleteItineraire($id)
+       {
+        $Itineraire =  $this->getItineraire($id);
+        if($Itineraire){
+            $Itineraire->delete();
+        }
+       }
 
         public function createVehiculebyItiniraire(Itineraire $Itineraire)
         {
             
         }
+        
         public function createItiniraireDetails(Itineraire $Itineraire) {
             // ona  le id de Itineraire dans ghadi n9lb 3la details lkhrin dylo
             $list = getAllbyItiniraire($Itineraire->getId());

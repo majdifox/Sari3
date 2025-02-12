@@ -3,25 +3,26 @@
 
 
 use Core\View;
-use App\Models\User;
-use Core\Controller;
-use App\Models\Colis;
-use App\Models\UserFactory;
-use App\Models\ColisFactory;
-use App\Models\ItineraireFactory;
+use App\Models\Admin;
+// use Core\Controller;
+// use App\Models\Colis;
+// use App\Models\UserFactory;
+// use App\Models\ColisFactory;
+// use App\Models\ItineraireFactory;
 
 class AdminController 
 {
-    private $userFactory;
+    private $admin;
     public function __construct()
     {
        
-
+        $this->admin = new Admin();
     }
 
     public function dashboard()
     {
-        echo 'dashboard';
+        $this->admin->ListItineraires();
+        echo '<br>dashboard';
         
     }
 

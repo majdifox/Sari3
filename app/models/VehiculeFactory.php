@@ -20,18 +20,7 @@ class VehiculeFactory {
     }
     
     public function getVehiculeByExpediteur($id) {
-        // $sql = "SELECT * FROM Vehicule WHERE expediteur_id = :expediteur_id";
-        // $stmt = $this->db->prepare($sql);
-        // $stmt = $this->db->bindParam(':expediteur_id',$id);
-        // $stmt->exectute();
-        // $Vehicule = $stmt->fetchAll(PDO::FETCH_OBJ);
-        // $list = [];
-        // $i = 0;
-        // foreach ($Vehicule as $coli) {
-        //  $list[$i] = $this->createVehicule($Vehicule);
-        //  $i++;
-        // } 
-        // return $list;
+        
     }
     public function getVehiculeByVillesANDExpediteur($ville,$id) {
         // $sql = "SELECT * FROM Vehicule WHERE expediteur_id = :expediteur_id";

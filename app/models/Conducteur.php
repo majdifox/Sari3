@@ -8,35 +8,20 @@ use App\Models\ItineraireFactory;
 class Conducteur  extends  User {
     private $ItineraireFactory;
     private $ColisFactory;
-    public function __construct($data = null){
+    public function __construct(){
         parent::__construct();
-        $this->ItineraireFactory = new ItineraireFactory();
-        $this->ColisFactory = new ColisFactory();
-        if ($data) {
-           $this->id = $data["id"];
-           $this->cnie = $data["cnie"];
-           $this->nom = $data["nom"];
-           $this->prenom = $data["prenom"];
-           $this->email = $data["email"];
-           $this->motdepasse =$data["motdepasse"];
-           $this->status = $data["status"];
-           $this->role = $data["role"];
-           $this->datecreation =$data["datecreation"];
-        }
-        
+        $this->ItineraireFactory = new ItineraireFactory;
+        $this->ColisFactory = new ColisFactory;
     }
     public function getColis($id){
      $colis =  $this->ColisFactory->getColis($id);
     }
     public function addAnnonce($data) {
-    $dataofvehicule;
-    $this->Vehicule->add($dataofvehicule);
     $this->ColisFactory->addColis($dataofColis);
-    
   }
   
   public function deleteAnnonce($id) {
-    //   $sql = "UPDATE users SET username = :username, email = :email WHERE id = :id";
+    $this->ItineraireFactory->deleteItineraire($id);
  
   }
 
@@ -64,7 +49,8 @@ class Conducteur  extends  User {
   public function reachThePoint($id_Itineraire,$ville){
 
    $Itineraire =  $this->ItineraireFactory->getItineraire($id_Itineraire);
-   $details =  createItineraireDetails($Itineraire);
+   
+   $details =  $this->ItineraireFactory->createItineraireDetails($Itineraire);
    foreach ($details as $detail) {
     $ItineraireVille =$detail->getVille();
     $order = $detail->getOrder();
