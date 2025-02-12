@@ -10,8 +10,8 @@ class ConducteurController{
     public function showVehiculeInfos($id){
 
     }
-    public function showItinirairesbyConducteur($id){
-
+    public function showItinirairesbyConducteur(){
+      $this->conducteur->getItinerairebyCondicteur();
     }
     public function showItiniraire($idItineraire){
         

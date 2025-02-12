@@ -29,7 +29,7 @@
 // }
 
 namespace Core;
-
+use Controllers\AdminController;
     class Router {
         private $routes = [];
 
@@ -45,18 +45,23 @@ namespace Core;
         public function dispatch() {
             $uri = $_SERVER['REQUEST_URI'];
             $method = $_SERVER['REQUEST_METHOD'];
-            
+            $paths = explode('/',$uri,3);
+
+            $path =  $paths[2];
+            // echo '<pre>';
+            //     var_dump($paths);
+            //     echo '</pre>'; 
             foreach ($this->routes as $route) {
                 // echo '<pre>';
-                // var_dump($route);
-                // echo '</pre>';
-                if ($this->matchRoute($uri, $route['path']) && $method === $route['method']) {
+                // var_dump($route['path']);
+                // echo '</pre>';  
+                if ($path = $route['path'] && $method === $route['method']) {
                     
                     // echo '<pre>';
-                    // var_dump($route);
+                    // var_dump($route['controller']);
                     // echo '</pre>';
-                    $controller = "App\\Controllers\\" . $route['controller'];
-                    
+                    $controller = "Controllers\\" . $route['controller'];
+                    echo $controller;
                     if (class_exists($controller)) {
                         $action = $route['action']; 
                         echo '<br>';
