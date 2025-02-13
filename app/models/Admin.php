@@ -1,38 +1,63 @@
 <?php
-require_once 'User.php';
+namespace App\Models;
+use App\Models\User;
 
+use App\Models\UserFactory;
+use App\Models\ColisFactory;
+use App\Models\VehiculeFactory;
+use App\Models\ItineraireFactory;
 class Admin extends User {
-    public function __construct($db, $userData = null) {
-        parent::__construct($db);
-        $this->role = 'admin';
-        if ($userData) {
-            $this->id = $userData['id_user'];
-            $this->username = $userData['username'];
-            $this->email = $userData['email'];
-        }
+    private $UserFactory;
+    public function __construct( ) {
+        $this->UserFactory = new UserFactory;
+        $this->ColisFactory = new ColisFactory;
+        $this->ItineraireFactory = new ItineraireFactory;
+        $this->VehiculeFactory = new VehiculeFactory;
+        
     }
-
+    
     public function getSpecificData() {
-        // $sql = "SELECT 
-        //         (SELECT COUNT(*) FROM courses) as total_courses,
-        //         (SELECT COUNT(*) FROM users WHERE role = 'student') as total_students,
-        //         (SELECT COUNT(*) FROM users WHERE role = 'teacher') as total_teachers";
-        // $stmt = $this->db->prepare($sql);
-        // $stmt->execute();
-        // return $stmt->fetch(PDO::FETCH_OBJ);
+        
     }
 
-    public function validateIneteraire($IneteraireId) {
-        // $sql = "UPDATE users SET is_active = TRUE WHERE id = :id AND role = 'teacher'";
-        // $stmt = $this->db->prepare($sql);
-        // $stmt->bindParam(':id', $IneteraireId);
-        // return $stmt->execute();
+    public function validateItineraires($ItinerairesId) {
+        
     }
-    public function deleteUser($id) {
-        // $sql = "UPDATE users SET is_active = TRUE WHERE id = :id AND role = 'teacher'";
-        // $stmt = $this->db->prepare($sql);
-        // $stmt->bindParam(':id', $IneteraireId);
-        // return $stmt->execute();
+    public function refuseItineraires($ItinerairesId) {
+        
+    }
+    
+
+    public function ListConducteurs()
+    {
+        
+    }
+    public function selectItineraires()
+    {
+        
+    }
+    public function ListItineraires()
+    {
+        echo 'ListItineraires method';
+    }
+    public function ListExpediteurs()
+    {
+        
+    }
+    
+
+    public function deleteUser($id_user)
+    {
+        
+    }
+
+    public function refuseAnnonce($id_annonce)
+    {
+ 
+    }
+    public function deleteVehicule($id_Vehicule)
+    {
+ 
     }
 }
 

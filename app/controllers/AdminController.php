@@ -1,43 +1,59 @@
 <?php
-namespace App\Controllers;
+ namespace App\Controllers;
+
 
 use Core\View;
-use App\Models\User;
-use App\Models\Colis;
+use App\Models\Admin;
+
 
 class AdminController 
 {
+    private $admin;
     public function __construct()
     {
-        
+
+        $this->admin = new Admin();
     }
 
     public function dashboard()
     {
-       
+
+        $this->admin->ListItineraires();
+        echo '<br>dashboard';
+
     }
 
-    public function users()
+    public function ListConducteurs()
     {
-    }
 
-    public function toggleUserStatus()
+        
+    }
+    public function ListItineraires()
+    {
+        
+    }
+    public function ListExpediteurs()
+    {
+        
+
+    }
+    
+
+    public function deleteUser($id_user)
     {
         
     }
 
-    public function colis()
+    public function deleteAnnonce($id_annonce)
     {
 
+ 
     }
-
-    public function updateColisStatus()
+    public function deleteVehicule($id_Vehicule)
     {
-        
+ 
     }
+    
 
-    public function statistiques()
-    {
-
-    }
+    
 }

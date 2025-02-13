@@ -3,7 +3,7 @@ namespace App\Models;
 
 use Core\Model;
 
-class Vehicule extends Model {
+class Vehicule  {
     private $id;
     private $matricule;
     private $model;

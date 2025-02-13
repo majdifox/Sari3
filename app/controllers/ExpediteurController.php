@@ -1,17 +1,20 @@
 <?php
+ namespace App\Controllers;
 
+ use App\Models\Expediteur;
 
 class ExpediteurController{
-    public $userFactory;
+    public $Expediteur;
     public function __construct(){
-        $this->userFactory = new userFactory($db);
+        $this->Expediteur = new Expediteur;
     }
 
-    public function showVehiculeInfos($id){
-
-    }
+   
     public function showItinirairesbyExpediteur($id){
 
+    }
+    public function dashboard(){
+      echo 'hola amigos';
     }
     public function showItiniraire($idItineraire){
         
