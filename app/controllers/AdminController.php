@@ -11,19 +11,21 @@ class AdminController
     private $admin;
     public function __construct()
     {
-       
+
         $this->admin = new Admin();
     }
 
     public function dashboard()
     {
+
         $this->admin->ListItineraires();
         echo '<br>dashboard';
-        
+
     }
 
     public function ListConducteurs()
     {
+
         
     }
     public function ListItineraires()
@@ -33,6 +35,7 @@ class AdminController
     public function ListExpediteurs()
     {
         
+
     }
     
 
@@ -43,6 +46,7 @@ class AdminController
 
     public function deleteAnnonce($id_annonce)
     {
+
  
     }
     public function deleteVehicule($id_Vehicule)
