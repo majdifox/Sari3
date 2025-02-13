@@ -4,54 +4,6 @@ namespace App\Models;
 use Core\Database;
 use PDO;
 
-<<<<<<< HEAD
-class User   {
-    protected $id;
-    protected $cnie;
-    protected $nom;
-    protected $prenom;
-    protected $email;
-    protected $motdepasse;
-    protected $status;
-    protected $role;
-    protected $datecreation;
-    protected static $db;
-    protected $table = 'utilisateur'; // Assuming the doctors table is named 'medcins'
-   
-    public function __construct( $userData = null) {
-      if ($userData) {
-          $this->id = $userData['id'];
-          $this->username = $userData['username'];
-          $this->email = $userData['email'];
-      }
-  }
-    public static function GetuserbyEmail($email) {
-      $connexion = Database::getInstance()->getConnection();
-     
-      $sql = "SELECT * FROM utilisateurs WHERE email = :email";
-      $stmt = $connexion->prepare($sql);
-      $stmt->bindParam(':email', $email);
-      $stmt->execute();
-      return $stmt->fetch(\PDO::FETCH_OBJ);
-  }
- 
-  public static function get($id) {
-   $connexion = Database::getInstance()->getConnection(); // ✅ Get connection
-   $sql = "SELECT * FROM utilisateurs WHERE ID = :id";
-   $stmt = $connexion->prepare($sql);
-   $stmt->bindParam(':id', $id);
-   $stmt->execute();
-   return $stmt->fetch(\PDO::FETCH_OBJ);
-}
-
-    public static  function getAllbyRole($role) {
-      // $sql = "SELECT * FROM users WHERE id = :id";
-      // $stmt = $this->db->prepare($sql);
-      // $stmt->bindParam(':id', $id);
-      // $stmt->execute();
-      // return $stmt->fetch(PDO::FETCH_OBJ);
-  }
-=======
 class User {
    private $id;
    private $cnie;
@@ -86,7 +38,6 @@ class User {
       $stmt->execute();
       return $stmt->fetch(PDO::FETCH_ASSOC);
    }
->>>>>>> c05bdb69bcb65faf8cc6f5e966b740b30e2b99de
 
    // Register a new user
    public static function register($cnie, $nom, $prenom, $email, $motdepasse, $status, $role, $datecreation) {
