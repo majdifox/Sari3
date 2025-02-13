@@ -93,155 +93,32 @@
         </form>
 
         <main>
-
-            <div class="bg-white p-8 rounded-md w-full">
-                <div class="items-center justify-between pb-6">
-                
-                <h2 class="text-gray-600 font-semibold">Les Enseignants</h2>
-                <span class="text-xs">Tous les Enseignants</span>
-                
-                <div>
-                    <div class="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
-                        <div class="inline-block min-w-full shadow rounded-lg overflow-hidden">
-                            <table class="min-w-full leading-normal">
-                                <thead>
-                                    <tr>
-                                        <th
-                                            class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                                            Nom
-                                        </th>
-                                        <th
-                                            class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                                            Role
-                                        </th>
-                                        <th
-                                            class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                                            Action
-                                        </th>
-                                        <th
-                                            class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                                            Action
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php foreach($enseignants as $enseignant){ ?>
-                                    <tr>
-                                        <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                                            <div class="flex items-center">
-                                                <div class="flex-shrink-0 w-10 h-10">
-                                                    <img class="w-full h-full rounded-full"
-                                                        src="../assets/images/<?php echo $enseignant['Photo'] ?>"
-                                                        alt="Photo de Profile" />
-                                                </div>
-                                                    <div class="ml-3">
-                                                        <p class="text-gray-900 whitespace-no-wrap">
-                                                            <?php echo htmlspecialchars($enseignant['Nom']) . ' ' . htmlspecialchars($enseignant['Prenom']) ?>
-                                                        </p>
-                                                    </div>
-                                                </div>
-                                        </td>
-                                        <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                                            <p class="text-gray-900 whitespace-no-wrap"><?php echo htmlspecialchars($enseignant['Role']) ?></p>
-                                        </td>
-                                        <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                                            <button onclick="refuserDemande(<?php echo $enseignant['ID']; ?>)" class="ml-auto text-white bg-red-700 hover:bg-red-800 font-medium rounded-lg text-sm px-2 py-2.5 me-2 mb-2" type="button">
-                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
-                                                <path stroke-linecap="round" stroke-linejoin="round" d="M18.364 18.364A9 9 0 0 0 5.636 5.636m12.728 12.728A9 9 0 0 1 5.636 5.636m12.728 12.728L5.636 5.636" />
-                                            </svg>
-                                            </button>
-                                        </td>
-                                        <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                                            <button onclick="accepterDemande(<?php echo $enseignant['ID']; ?>)" class="ml-auto text-white bg-green-700 hover:bg-green-800 font-medium rounded-lg text-sm px-2 py-2.5 me-2 mb-2" type="button">
-                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4"> 
-                                                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" /> 
-                                            </svg>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    <?php } ?>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
+            <h1 class='text-3xl font-semibold mb-4'>Gestion des Utilisateurs</h1>
+            <div class='bg-white shadow rounded-lg p-4'>
+                <table class='min-w-full'>
+                    <thead>
+                        <tr>
+                            <th class='py-2 px-4 border-b'>Nom</th>
+                            <th class='py-2 px-4 border-b'>Email</th>
+                            <th class='py-2 px-4 border-b'>Statut</th>
+                            <th class='py-2 px-4 border-b'>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($users as $user) { ?>
+                            <tr>
+                                <td class='py-2 px-4 border-b'><?= $user['name'] ?></td>
+                                <td class='py-2 px-4 border-b'><?= $user['email'] ?></td>
+                                <td class='py-2 px-4 border-b'><?= $user['status'] ?></td>
+                                <td class='py-2 px-4 border-b'>
+                                    <button onclick='validateUser(<?= $user['id'] ?>)' class='text-green-500'>Valider</button>
+                                    <button onclick='suspendUser(<?= $user['id'] ?>)' class='text-red-500'>Suspendre</button>
+                                </td>
+                            </tr>
+                        <?php } ?>
+                    </tbody>
+                </table>
             </div>
-
-            <div class="bg-white p-8 rounded-md w-full">
-                <div class="items-center justify-between pb-6">
-                
-                <h2 class="text-gray-600 font-semibold">Les Etudiants</h2>
-                <span class="text-xs">Tous les Etudiants</span>
-                
-                <div>
-                    <div class="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
-                        <div class="inline-block min-w-full shadow rounded-lg overflow-hidden">
-                            <table class="min-w-full leading-normal">
-                                <thead>
-                                    <tr>
-                                        <th
-                                            class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                                            Nom
-                                        </th>
-                                        <th
-                                            class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                                            Role
-                                        </th>
-                                        <th
-                                            class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                                            Action
-                                        </th>
-                                        <th
-                                            class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                                            Action
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php foreach($etudiants as $etudiant){ ?>
-                                    <tr>
-                                        <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                                            <div class="flex items-center">
-                                                <div class="flex-shrink-0 w-10 h-10">
-                                                    <img class="w-full h-full rounded-full"
-                                                        src="../assets/images/<?php echo $etudiant['Photo'] ?>"
-                                                        alt="Photo de Profile" />
-                                                </div>
-                                                    <div class="ml-3">
-                                                        <p class="text-gray-900 whitespace-no-wrap">
-                                                            <?php echo htmlspecialchars($etudiant['Nom']) . ' ' . htmlspecialchars($etudiant['Prenom']) ?>
-                                                        </p>
-                                                    </div>
-                                                </div>
-                                        </td>
-                                        <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                                            <p class="text-gray-900 whitespace-no-wrap"><?php echo htmlspecialchars($etudiant['Role']) ?></p>
-                                        </td>
-                                        <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                                            <button onclick="refuserDemande(<?php echo $etudiant['ID']; ?>)" class="ml-auto text-white bg-red-700 hover:bg-red-800 font-medium rounded-lg text-sm px-2 py-2.5 me-2 mb-2" type="button">
-                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
-                                                <path stroke-linecap="round" stroke-linejoin="round" d="M18.364 18.364A9 9 0 0 0 5.636 5.636m12.728 12.728A9 9 0 0 1 5.636 5.636m12.728 12.728L5.636 5.636" />
-                                            </svg>
-                                            </button>
-                                        </td>
-                                        <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                                            <button onclick="accepterDemande(<?php echo $etudiant['ID']; ?>)" class="ml-auto text-white bg-green-700 hover:bg-green-800 font-medium rounded-lg text-sm px-2 py-2.5 me-2 mb-2" type="button">
-                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4"> 
-                                                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" /> 
-                                            </svg>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    <?php } ?>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            
-
         </main>
     </div>
 

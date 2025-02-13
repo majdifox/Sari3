@@ -52,7 +52,6 @@ class UserFactory {
     }
     public function getAllExpediteurs() {
         $role = 'Expediteur';
-        User::getAllbyRole($role);
+        return User::getAllbyRole($role);
     }
 }
-

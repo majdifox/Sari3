@@ -35,29 +35,8 @@ class User   {
       $stmt->execute();
       return $stmt->fetch(\PDO::FETCH_OBJ);
   }
-    public static function create($data) {
-      // $sql = "INSERT into  users ";
-      // $stmt = $this->db->prepare($sql);
-      // $stmt->bindParam(':username', $username);
-      // $stmt->execute();
-      // $userData = $stmt->fetch(PDO::FETCH_ASSOC);
-  }
-    public  function get($id) {
-      // $sql = "SELECT * FROM users WHERE id = :id";
-      // $stmt = $this->db->prepare($sql);
-      // $stmt->bindParam(':id', $id);
-      // $stmt->execute();
-      // return $stmt->fetch(PDO::FETCH_OBJ);
-  }
-    public static  function getAllbyRole($role) {
-      // $sql = "SELECT * FROM users WHERE id = :id";
-      // $stmt = $this->db->prepare($sql);
-      // $stmt->bindParam(':id', $id);
-      // $stmt->execute();
-      // return $stmt->fetch(PDO::FETCH_OBJ);
-  }
 
-  public function update($id, $data) {
+  public function update($data) {
       $sql = "UPDATE users SET username = :username, email = :email WHERE id = :id";
       $stmt = $this->db->prepare($sql);
       $stmt->bindParam(':username', $data['username']);
@@ -66,10 +45,10 @@ class User   {
       return $stmt->execute();
   }
 
-  public function delete($id) {
+  public function delete() {
       $sql = "DELETE FROM users WHERE id_user = :id";
       $stmt = $this->db->prepare($sql);
-      $stmt->bindParam(':id', $id);
+      $stmt->bindParam(':id', $this->getId());
       return $stmt->execute();
   }
   public function activate($cnie,$id) {

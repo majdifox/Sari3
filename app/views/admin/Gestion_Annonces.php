@@ -81,84 +81,29 @@
         </header>
 
         <main>
+            <h1 class='text-3xl font-semibold mb-4'>Gestion des Annonces</h1>
+            <form action='/admin/create-announcement' method='POST' class='mb-4'>
+                <input type='text' name='title' placeholder='Titre de l annonce' required class='border p-2 rounded-lg w-full'/>
+                <textarea name='content' placeholder='Contenu de l annonce' required class='border p-2 rounded-lg w-full mt-2'></textarea>
+                <button type='submit' class='bg-blue-500 text-white p-2 rounded-lg'>Créer Annonce</button>
+            </form>
 
-            <?php foreach($courses as $course) { ?>
-            <div class="mt-[4rem] ml-[20rem] bg-white dark:bg-gray-800 rounded-xl shadow-2xl max-w-4xl w-full p-8 transition-all duration-300 animate-fade-in pt-[3.5rem]">
-                <div class="flex flex-col md:flex-row">
-                    <div class="md:w-1/3 text-center mb-8 md:mb-0">
-                        <img src="../assets/images/<?php echo $course['photo_utilisateur'] ?>" alt="Profile Picture" class="rounded-full w-48 h-48 mx-auto mb-4 border-4 border-green-500 transition-transform duration-300 hover:scale-105">
-                        <h1 class="text-2xl font-bold text-green-500 dark:text-white mb-2"></h1>
-                        <p class="text-stone-700 font-semibold"><?php echo htmlspecialchars($course['nom_utilisateur']) . ' ' . htmlspecialchars($course['prenom_utilisateur']); ?></p>
-                        
-
-                        <h2 class="text-xl font-semibold text-green-500 mb-4  mt-[3rem]">Catégorie</h2>
-                        <p class="text-stone-700 font-semibold"><?php echo htmlspecialchars($course['categorie_nom']) ?></p>
-
-                        <a  href='details_cours_administration.php?id=<?php echo $course['ID']; ?>'>
-                        <button class="ml-[5.7rem] mt-[5rem] flex items-center rounded-md border border-green-300 py-2 px-4 text-center text-sm transition-all shadow-sm hover:shadow-lg text-green-600 hover:text-white hover:bg-green-800 hover:border-green-800 focus:text-white focus:bg-green-800 focus:border-green-800 active:border-green-800 active:text-white active:bg-green-800 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none" type="button">
-                            Details
-                            
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4 ml-1.5">
-                                <path fill-rule="evenodd" d="M16.28 11.47a.75.75 0 0 1 0 1.06l-7.5 7.5a.75.75 0 0 1-1.06-1.06L14.69 12 7.72 5.03a.75.75 0 0 1 1.06-1.06l7.5 7.5Z" clip-rule="evenodd" />
-                            </svg>
-                        </button>
-                        </a>
-
-                        <form class="mt-[5rem] mb-[2rem]" method="POST">
-                            <input type="hidden" name="cours_id" value="<?php echo $course['ID']; ?>">
-                            <button type="submit" name="statut" value="Accepté" 
-                            class="mr-[2rem] text-white bg-gradient-to-r from-green-500 via-green-600 to-green-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Accepter</button>
-                            <button type="submit" name="statut" value="Refusé" 
-                            class="text-white bg-gradient-to-r from-red-500 via-red-600 to-red-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Refuser</button>
-                        </form>
-
-                    </div>
-                    <div class="md:w-2/3 md:pl-8">
-                        <p class="text-gray-700 font-semibold text-2xl dark:text-gray-300 mb-6"> <?php echo htmlspecialchars($course['Titre']) ?></p>
-                        <div class="grid min-h-[140px] w-full place-items-center overflow-x-scroll rounded-lg lg:overflow-visible">
-                        <iframe width="500" height="350"
-                        src="<?php echo htmlspecialchars($course['Contenu']) ?>">
-                        </iframe>
-                        </div>
-                        <p class="text-gray-700 dark:text-gray-300 mb-6 mt-6">
-                        <?php echo htmlspecialchars($course['Description']) ?>
-                        </p>
-                    </div>
-                </div>
-
-                <div class="mb-[0.5rem]">
-                    <hr class="h-px w-[50rem] my-4 bg-gray-200 border-0 dark:bg-gray-700">
-
-                    <svg id="morecmnt" class="w-4 h-4 text-green-700 cursor-pointer" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 10">
-                        <path d="M15.434 1.235A2 2 0 0 0 13.586 0H2.414A2 2 0 0 0 1 3.414L6.586 9a2 2 0 0 0 2.828 0L15 3.414a2 2 0 0 0 .434-2.179Z"/>
-                    </svg>
-                    <svg id="lesscmnt" class="w-4 h-4 text-green-700 cursor-pointer hidden" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 10 16">
-                        <path d="M3.414 1A2 2 0 0 0 0 2.414v11.172A2 2 0 0 0 3.414 15L9 9.414a2 2 0 0 0 0-2.828L3.414 1Z"/>
-                    </svg>
-                </div>
-
-            </div>
-            <?php } ?>
-        
-     
-            <div class="bg-white rounded-lg p-4 flex items-center flex-wrap mt-[2rem]">
-                <nav class="mx-auto" aria-label="Page navigation">
-                    <ul class="inline-flex">
-                    <a href="?page=<?php echo max($page - 1, 1); ?>">
-                        <li><button class="h-10 px-5 text-green-600 transition-colors duration-150 rounded-l-lg focus:shadow-outline hover:bg-green-100">
-                            <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20"><path d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" fill-rule="evenodd"></path></svg></button>
+            <h2 class='text-2xl font-semibold mb-2'>Annonces Existantes</h2>
+            <div class='bg-white shadow rounded-lg p-4'>
+                <ul class='space-y-2'>
+                    <?php foreach ($annonces as $annonce) { ?>
+                        <li class='flex justify-between items-center'>
+                            <span><?= $annonce['title'] ?></span>
+                            <div>
+                                <a href='/admin/edit-announcement/<?= $annonce['id'] ?>' class='text-blue-500'>Éditer</a>
+                                <form action='/admin/delete-announcement/<?= $annonce['id'] ?>' method='POST' class='inline'>
+                                    <button type='submit' class='text-red-500'>Supprimer</button>
+                                </form>
+                            </div>
                         </li>
-                    </a>
-
-                    <a href="?page=<?php echo $page + 1; ?>">
-                        <li><button class="h-10 px-5 text-green-600 transition-colors duration-150 bg-white rounded-r-lg focus:shadow-outline hover:bg-green-100">
-                            <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20"><path d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" fill-rule="evenodd"></path></svg></button>
-                        </li>
-                    </a>
-                    </ul>
-                </nav>
+                    <?php } ?>
+                </ul>
             </div>
-
         </main>
 
     </div>

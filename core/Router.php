@@ -50,9 +50,9 @@ class Router {
             $paths = explode('/',$uri,3);
 
             $path =  $paths[2];
-            // echo '<pre>';
-            //     var_dump($paths);
-            //     echo '</pre>'; 
+            echo '<pre>';
+                var_dump($paths);
+                echo '</pre>'; 
             foreach ($this->routes as $route) {
                 
                 if ($path == $route['path'] && $method === $route['method']) {

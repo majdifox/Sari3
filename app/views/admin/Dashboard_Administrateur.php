@@ -122,6 +122,22 @@
                 </div>
             </section>
 
+            <section class="bg-white shadow rounded-lg">
+                <div class="px-6 py-5 font-semibold border-b border-gray-100">
+                    Liste des Conducteurs
+                </div>
+                <div class="overflow-x-auto conducteurs-list">
+                </div>
+            </section>
+
+            <section class="bg-white shadow rounded-lg">
+                <div class="px-6 py-5 font-semibold border-b border-gray-100">
+                    Liste des Itinéraires
+                </div>
+                <div class="overflow-x-auto itineraire-list">
+                </div>
+            </section>
+
             <!-- Derniers Colis -->
             <section class="bg-white shadow rounded-lg">
                 <div class="px-6 py-5 font-semibold border-b border-gray-100">
@@ -223,6 +239,30 @@
                 }
             }
         });
+
+        // Fetch Conducteurs
+        fetch('/admin/conducteurs')
+            .then(response => response.json())
+            .then(data => {
+                const conducteursContainer = document.querySelector('.conducteurs-list');
+                data.forEach(conducteur => {
+                    const conducteurElement = document.createElement('div');
+                    conducteurElement.textContent = conducteur.name; // Adjust to your data structure
+                    conducteursContainer.appendChild(conducteurElement);
+                });
+            });
+
+        // Fetch Itinéraires
+        fetch('/admin/itineraire')
+            .then(response => response.json())
+            .then(data => {
+                const itinerairesContainer = document.querySelector('.itineraire-list');
+                data.forEach(itineraire => {
+                    const itineraireElement = document.createElement('div');
+                    itineraireElement.textContent = itineraire.destination; // Adjust to your data structure
+                    itinerairesContainer.appendChild(itineraireElement);
+                });
+            });
     </script>
 </body>
 </html>
