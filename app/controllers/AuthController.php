@@ -11,7 +11,7 @@ class AuthController  {
 
     public function login ()
     {
-        echo 'hello';
+        // echo 'hello';
     if($_SERVER['REQUEST_METHOD']==='POST'){
         echo '$POST';
         $email = $_POST['email'] ;
@@ -19,9 +19,7 @@ class AuthController  {
        $user =  User::GetuserbyEmail($email);
        if ($user) {
         $_SESSION['user'] = $user;
-        echo '<pre>';
-        var_dump($user);
-        echo '</pre>';
+        
         $role = $user->role;
         header("Location: http://sari3.test/index.php/".$role);
     }else {
@@ -30,6 +28,13 @@ class AuthController  {
     }else {
         require_once('C:\laragon\www\Sari3\app\views\auth\login.php');
     }
+
+    }
+
+    public function logout (){
+        session_start();
+        session_destroy();
+        header('Location: login');
 
     }
 

@@ -10,10 +10,21 @@ use App\Models\ItineraireFactory;
 class Conducteur  extends  User {
     private $ItineraireFactory;
     private $ColisFactory;
-    public function __construct(){
+    private $UserFactory;
+
+    public function __construct($id = null ,$cnie = null,$nom = null  ,$prenom = null,$email = null,$role = null,$datecreation = null){
         parent::__construct();
+        
+        $this->id =  $id;
+        $this->cnie =  $cnie;
+        $this->nom =  $nom;
+        $this->prenom =  $prenom;
+        $this->email =  $email;
+        $this->role =  $role;
+        $this->datecreation =  $datecreation;
         $this->ItineraireFactory = new ItineraireFactory;
         $this->ColisFactory = new ColisFactory;
+        $this->UserFactory = new UserFactory;
     }
     public function getColis($id){
      $colis =  $this->ColisFactory->getColis($id);
@@ -68,13 +79,16 @@ class Conducteur  extends  User {
     $data = $this->vehicule->getByItineraire($id);
     $vehicule = new Vehicule();
    }
-   public function getItinerairebyCondicteur(){
-    $id = $this->getId();
+   public function getItinerairebyCondicteur($id){
+   
     echo $id;
    }
    public function createItiniraireDetails(Itineraire $Itineraire){
     // $this->ItineraireFactory-> createItiniraireDetails(Itineraire $Itineraire);
    }
+   public function getProfileInfos($id_condecteur){
+    return  $user =  $this->UserFactory->getUser($id_condecteur);
+  }
 
 
 

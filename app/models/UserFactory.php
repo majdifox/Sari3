@@ -5,11 +5,12 @@ class UserFactory {
     private $db;
 
     public static function createUser($role, $userData = null) {
+       
         switch ($role) {
             case 'Expediteur':
                 return new Expediteur(null, $userData);
             case 'Conducteur':
-                return new Conducteur(null, $userData);
+                return new Conducteur($userData->id,null,$userData->nom,$userData->prenom,$userData->email,$role,null);
             case 'Admin':
                 return new Admin(null, $userData);
             default:
@@ -17,14 +18,10 @@ class UserFactory {
         }
     }
     public function getUser($id) {
-        $sql = "SELECT * FROM users WHERE id_user = :id";
-        $stmt = $this->db->prepare($sql);
-        $stmt->bindParam(':id', $id);
-        $stmt->execute();
-        $userData = $stmt->fetch(PDO::FETCH_ASSOC);
-
+       $userData =  User::get($id);
+    
         if ($userData) {
-            $role = $userData["role"]; 
+            $role = $userData->role; 
             return $this->createUser($role, $userData);
         }
         return null;

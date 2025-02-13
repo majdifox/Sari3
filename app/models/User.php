@@ -4,20 +4,19 @@ namespace App\Models;
 use Core\Database;
 
 class User   {
-    private $id;
-    private $cnie;
-    private $nom;
-    private $prenom;
-    private $email;
-    private $motdepasse;
-    private $status;
-    private $role;
-    private $datecreation;
-    private $db;
+    protected $id;
+    protected $cnie;
+    protected $nom;
+    protected $prenom;
+    protected $email;
+    protected $motdepasse;
+    protected $status;
+    protected $role;
+    protected $datecreation;
+    protected static $db;
     protected $table = 'utilisateur'; // Assuming the doctors table is named 'medcins'
    
     public function __construct( $userData = null) {
-      $this->db = Database::getInstance()->getConnection();
       if ($userData) {
           $this->id = $userData['id'];
           $this->username = $userData['username'];
@@ -34,13 +33,15 @@ class User   {
       return $stmt->fetch(\PDO::FETCH_OBJ);
   }
  
-    public  function get($id) {
-      // $sql = "SELECT * FROM users WHERE id = :id";
-      // $stmt = $this->db->prepare($sql);
-      // $stmt->bindParam(':id', $id);
-      // $stmt->execute();
-      // return $stmt->fetch(PDO::FETCH_OBJ);
-  }
+  public static function get($id) {
+   $connexion = Database::getInstance()->getConnection(); // ✅ Get connection
+   $sql = "SELECT * FROM utilisateurs WHERE ID = :id";
+   $stmt = $connexion->prepare($sql);
+   $stmt->bindParam(':id', $id);
+   $stmt->execute();
+   return $stmt->fetch(\PDO::FETCH_OBJ);
+}
+
     public static  function getAllbyRole($role) {
       // $sql = "SELECT * FROM users WHERE id = :id";
       // $stmt = $this->db->prepare($sql);
