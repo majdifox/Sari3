@@ -7,13 +7,12 @@ class ColisFactory {
 
 
     public function createColis($ColisData) {
-       return new Colis($ColisData['id']=null,$expediteur_id,$ColisData['itineare_id'],$ColisData['destination'],$ColisData['volume'],$ColisData['poids'],$ColisData['date_depart'],$ColisData['date_arriver'],$ColisData['status'],$ColisData['etat']);
+       return new Colis($ColisData['id'] = null,$expediteur_id,$ColisData['itineare_id'],$ColisData['destination'],$ColisData['volume'],$ColisData['poids'],$ColisData['date_depart'],$ColisData['date_arriver'],$ColisData['status'],$ColisData['etat']);
     }
     public function getColis($id) {
         $ColisData =   Colis::get($id);
         if ($colis) {
          return  $this->createColis($ColisData['id'],$expediteur_id,$ColisData['itineare_id'],$ColisData['destination'],$ColisData['volume'],$ColisData['poids'],$ColisData['date_depart'],$ColisData['date_arriver'],$ColisData['status'],$ColisData['etat']);
-         # code...
         }else{
          echo 'not found';
         }
@@ -30,15 +29,7 @@ class ColisFactory {
         // $sql = "SELECT * FROM colis WHERE expediteur_id = :expediteur_id";
         // $stmt = $this->db->prepare($sql);
         // $stmt = $this->db->bindParam(':expediteur_id',$id);
-        // $stmt->exectute();
-        // $Colis = $stmt->fetchAll(PDO::FETCH_OBJ);
-        // $list = [];
-        // $i = 0;
-        // foreach ($Colis as $coli) {
-        //  $list[$i] = $this->createColis($colis);
-        //  $i++;
-        // } 
-        // return $list;
+       
     }
     public function getColisByVillesANDExpediteur($ville,$id) {
         // $sql = "SELECT * FROM colis WHERE expediteur_id = :expediteur_id";
