@@ -24,24 +24,16 @@ class User   {
           $this->email = $userData['email'];
       }
   }
-    public  function read($email) {
-      echo '<br> ';
-      var_dump(Database::getInstance());
-      echo '<br> ';
+    public static function GetuserbyEmail($email) {
+      $connexion = Database::getInstance()->getConnection();
      
       $sql = "SELECT * FROM utilisateurs WHERE email = :email";
-      $stmt = $this->db->prepare($sql);
+      $stmt = $connexion->prepare($sql);
       $stmt->bindParam(':email', $email);
       $stmt->execute();
       return $stmt->fetch(\PDO::FETCH_OBJ);
   }
-    public static function create($data) {
-      // $sql = "INSERT into  users ";
-      // $stmt = $this->db->prepare($sql);
-      // $stmt->bindParam(':username', $username);
-      // $stmt->execute();
-      // $userData = $stmt->fetch(PDO::FETCH_ASSOC);
-  }
+ 
     public  function get($id) {
       // $sql = "SELECT * FROM users WHERE id = :id";
       // $stmt = $this->db->prepare($sql);
