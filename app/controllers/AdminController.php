@@ -4,11 +4,7 @@
 
 use Core\View;
 use App\Models\Admin;
-// use Core\Controller;
-// use App\Models\Colis;
-// use App\Models\UserFactory;
-// use App\Models\ColisFactory;
-// use App\Models\ItineraireFactory;
+
 
 class AdminController 
 {

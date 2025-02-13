@@ -1,8 +1,7 @@
 <?php
 namespace App\Models;
-
 use App\Models\User;
-use Core\Controller;
+
 use App\Models\UserFactory;
 use App\Models\ColisFactory;
 use App\Models\VehiculeFactory;

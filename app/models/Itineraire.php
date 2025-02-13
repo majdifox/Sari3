@@ -16,13 +16,20 @@ class Itineraire extends Model {
     public function __construct($id=null,$conducteur_id,$vehicule_id,$date_depart,$date_arriver,$statut){
         
     }
-    public function getAllbyConducteur($id) {
+    public static function getAllbyConducteur($id) {
         // $query = "SELECT * FROM public.utilisateurs u  left join public.medecins m  on    u.id  = m.utilisateur_id WHERE role LIKE 'medecin'";
         // $stmt = $this->db->prepare($query);
         // $stmt->execute();
         // return $stmt->fetchAll();
     }
-    public function get($id) {
+    public static function getAllbyExpediteur($id) {
+        // $query = "SELECT * FROM public.utilisateurs u  left join public.medecins m  on    u.id  = m.utilisateur_id WHERE role LIKE 'medecin'";
+        // $stmt = $this->db->prepare($query);
+        // $stmt->execute();
+        // return $stmt->fetchAll();
+    }
+    
+    public static function get($id) {
         // $query = "SELECT * FROM public.utilisateurs u  left join public.medecins m  on    u.id  = m.utilisateur_id WHERE role LIKE 'medecin'";
         // $stmt = $this->db->prepare($query);
         // $stmt->execute();

@@ -1,31 +1,29 @@
 <?php
 namespace App\Models;
-
+use App\Models\Itineraire;
+use App\Models\ItineraireDetails;
 
     class ItineraireFactory {
-        private $db;
 
        public function deleteItineraire($id)
        {
-        $Itineraire =  $this->getItineraire($id);
+        $Itineraire =  $this->get($id);
         if($Itineraire){
             $Itineraire->delete();
         }
        }
 
-        public function createVehiculebyItiniraire(Itineraire $Itineraire)
-        {
-            
-        }
+       
         
         public function createItiniraireDetails(Itineraire $Itineraire) {
             // ona  le id de Itineraire dans ghadi n9lb 3la details lkhrin dylo
-            $list = getAllbyItiniraire($Itineraire->getId());
+            $list = ItineraireDetails::getDetailsOfItiniraire($Itineraire->getId());
             if ($list) {
                 $i= 0;
                 $objects=[];
+                // hna kancriyiw objects 
             foreach ($list as $ItineraireDetails) {
-                $objects[$i] = new ItineraireDetails($ItineraireDetails->getId(),$ItineraireDetails->getItineraire_id(),$ItineraireDetails->getOrders(),$ItineraireDetails->getVille()) ;
+                $objects[$i] = new ItineraireDetails($ItineraireDetails->id,$ItineraireDetails->iteneraire_id,$ItineraireDetails->orders,$ItineraireDetails->ville,$ItineraireDetails->statut) ;
                 $i++;
                 return $objects;
             } 
@@ -33,8 +31,13 @@ namespace App\Models;
         }
         public function getItineraire($id){
             // n9lbo 3la iniraire f database 
-
-        return new Itineraire($id,$conducteur_id,$vehicule_id,$date_depart,$date_arriver,$statut);
+            $Itineraire = Itineraire::get($id);
+            if($Itineraire){
+                
+                return new Itineraire($id,$conducteur_id,$vehicule_id,$date_depart,$date_arriver,$statut);
+            }else{
+                false;
+            }
         }
         public function getItinerairebyExpediteur($id_expediteur){
             // n9lbo 3la iniraire f database  + details

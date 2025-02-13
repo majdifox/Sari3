@@ -1,11 +1,16 @@
 <?php
 namespace App\Models;
 
-use Core\Model;
+use App\Models\User;
+
+use App\Models\UserFactory;
+use App\Models\ColisFactory;
+use App\Models\VehiculeFactory;
+use App\Models\ItineraireFactory;
 
 class Expediteur extends  User {
     private $ItineraireFactory;
-    public function __construct($ItineraireFactory){
+    public function __construct(){
         parent::__construct();
         $this->ItineraireFactory = new ItineraireFactory();
         $this->colisFactory = new ColisFactory();

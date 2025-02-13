@@ -1,8 +1,10 @@
 <?php
 namespace App\Models;
-
 use App\Models\User;
+
+use App\Models\UserFactory;
 use App\Models\ColisFactory;
+use App\Models\VehiculeFactory;
 use App\Models\ItineraireFactory;
 
 class Conducteur  extends  User {

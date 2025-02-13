@@ -19,7 +19,7 @@ class ItineraireDetails extends Model {
     {
         
     }
-    public  function getDetailsOfItiniraire($itineraire_id) {
+    public static  function getDetailsOfItiniraire($itineraire_id) {
         
     }
     public function enTransit(){
