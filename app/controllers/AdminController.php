@@ -1,10 +1,9 @@
 <?php
-namespace Controllers;
+namespace App\Controllers;
 
-
+use Core\Controller;
 use Core\View;
 use App\Models\User;
-use Core\Controller;
 use App\Models\Colis;
 
 class AdminController extends Controller
@@ -12,7 +11,8 @@ class AdminController extends Controller
     public function __construct()
     {
         parent::__construct();
-        if (!isset($_SESSION['user']) || $_SESSION['user']['role'] !== 'Administrateur') {
+        // Vérifier si l'utilisateur est connecté et est un administrateur
+        if (!isset($_SESSION['user'])) {
             redirect('/login');
         }
     }
@@ -25,8 +25,8 @@ class AdminController extends Controller
         $data = [
             'total_users' => $userModel->countAll(),
             'total_colis' => $colisModel->countAll(),
-            'user_stats' => $userModel->getUserStats(),
-            'colis_stats' => $colisModel->getColisStats(),
+            'conducteurs_count' => $userModel->countByRole('Conducteur'),
+            'expediteurs_count' => $userModel->countByRole('Expediteur'),
             'recent_colis' => $colisModel->getRecentColis(5)
         ];
 
@@ -76,9 +76,19 @@ class AdminController extends Controller
 
         $data = [
             'user_stats' => $userModel->getUserStats(),
-            'colis_stats' => $colisModel->getColisStats(),
             'conducteurs_count' => $userModel->countByRole('Conducteur'),
-            'expediteurs_count' => $userModel->countByRole('Expediteur')
+            'expediteurs_count' => $userModel->countByRole('Expediteur'),
+            'colis_by_status' => [
+                'en_preparation' => $colisModel->countByStatus('En préparation'),
+                'en_transit' => $colisModel->countByStatus('En transit'),
+                'livre' => $colisModel->countByStatus('Livré'),
+                'non_livre' => $colisModel->countByStatus('Non livré')
+            ],
+            'colis_by_state' => [
+                'accepte' => $colisModel->countByState('Accepté'),
+                'en_attente' => $colisModel->countByState('En attente'),
+                'refuse' => $colisModel->countByState('Refusé')
+            ]
         ];
 
         View::render('admin/statistiques', $data);
