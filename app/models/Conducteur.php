@@ -12,17 +12,7 @@ class Conducteur  extends  User {
         parent::__construct();
         $this->ItineraireFactory = new ItineraireFactory();
         $this->ColisFactory = new ColisFactory();
-        if ($data) {
-           $this->id = $data["id"];
-           $this->cnie = $data["cnie"];
-           $this->nom = $data["nom"];
-           $this->prenom = $data["prenom"];
-           $this->email = $data["email"];
-           $this->motdepasse =$data["motdepasse"];
-           $this->status = $data["status"];
-           $this->role = $data["role"];
-           $this->datecreation =$data["datecreation"];
-        }
+       
         
     }
     public function getColis($id){
