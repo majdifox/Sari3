@@ -13,12 +13,11 @@ class ConducteurController{
           $this->conducteur->getItinerairebyCondicteur();
       }
       public function showItiniraire(){
-            echo 'hello';
             
       }
       public function dashboard(){
-            echo 'getItinerairebyCondicteur';
-            $this->conducteur->getItinerairebyCondicteur($id_condecteur);
+            // $this->conducteur->getItinerairebyCondicteur($id_condecteur);
+            require_once('C:\laragon\www\Sari3\app\views\conducteur\Detail_Annonce.php');
       }
       public function showItinirairedetails($idItineraire){
             $this->conducteur->createItiniraireDetails( $Itineraire);

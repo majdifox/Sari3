@@ -1,48 +1,3 @@
-<?php
-session_start();
-require_once 'config.php';
-
-// Fetch driver details
-$driver_id = isset($_GET['id']) ? intval($_GET['id']) : 0;
-
-$query = "
-    SELECT u.*, 
-           COUNT(DISTINCT i.id) as total_trips,
-           COUNT(DISTINCT c.id) as total_deliveries,
-           ROUND(AVG(CASE 
-               WHEN i.date_arriver IS NOT NULL 
-               THEN EXTRACT(EPOCH FROM (i.date_arriver - i.date_depart))/3600 
-           END)) as avg_delivery_time
-    FROM utilisateurs u
-    LEFT JOIN itineraire i ON u.id = i.conducteur_id
-    LEFT JOIN colis c ON i.id = c.itineraire_id
-    WHERE u.id = $1 AND u.role = 'conducteur'
-    GROUP BY u.id";
-
-$result = pg_query_params($conn, $query, array($driver_id));
-$driver = pg_fetch_assoc($result);
-
-if (!$driver) {
-    header('Location: drivers.php');
-    exit();
-}
-
-// Fetch recent routes
-$routes_query = "
-    SELECT i.*, 
-           COUNT(c.id) as total_packages,
-           v.modele as vehicle_model
-    FROM itineraire i
-    LEFT JOIN colis c ON i.id = c.itineraire_id
-    LEFT JOIN vehicule v ON i.vehicule_id = v.id
-    WHERE i.conducteur_id = $1
-    GROUP BY i.id, v.modele
-    ORDER BY i.date_depart DESC
-    LIMIT 5";
-
-$routes_result = pg_query_params($conn, $routes_query, array($driver_id));
-$recent_routes = pg_fetch_all($routes_result);
-?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -204,7 +159,7 @@ $recent_routes = pg_fetch_all($routes_result);
                 <div class="profile-card text-center">
                     <img src="data:image/jpeg;base64,<?php echo base64_encode(pg_unescape_bytea($driver['photo'])); ?>" 
                          alt="Driver Photo" class="driver-photo">
-                    <h3 class="mt-3"><?php echo htmlspecialchars($driver['prenom'] . ' ' . $driver['nom']); ?></h3>
+                    <h3 class="mt-3">EEE</h3>
                     <div class="rating">
                         <i class="fas fa-star"></i>
                         <i class="fas fa-star"></i>
