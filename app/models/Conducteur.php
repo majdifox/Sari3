@@ -19,12 +19,11 @@ class Conducteur  extends  User {
      $colis =  $this->ColisFactory->getColis($id);
     }
     public function addAnnonce($data) {
-    $this->ColisFactory->addColis($dataofColis);
-  }
+      $this->ColisFactory->addColis($data);
+    }
   
   public function deleteAnnonce($id) {
     $this->ItineraireFactory->deleteItineraire($id);
- 
   }
 
   public function AcceptRequest($id_colis){
