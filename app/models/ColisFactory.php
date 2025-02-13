@@ -1,54 +1,56 @@
 <?php
 namespace App\Models;
 
+use PDO;
 
 class ColisFactory {
-    
 
-
-    public function createColis($ColisData) {
-       return new Colis($ColisData['id'] = null,$expediteur_id,$ColisData['itineare_id'],$ColisData['destination'],$ColisData['volume'],$ColisData['poids'],$ColisData['date_depart'],$ColisData['date_arriver'],$ColisData['status'],$ColisData['etat']);
+    public function createColis($colisData) {
+        return new Colis(
+            $colisData['id'] ?? null,
+            $colisData['expediteur_id'],
+            $colisData['itineraire_id'],
+            $colisData['destination'],
+            $colisData['volume'],
+            $colisData['poids'],
+            $colisData['date_depart'],
+            $colisData['date_arriver'],
+            $colisData['statut'],
+            $colisData['etat']
+        );
     }
+
+    // Retrieve a Colis by ID
     public function getColis($id) {
-        $ColisData =   Colis::get($id);
-        if ($colis) {
-         return  $this->createColis($ColisData['id'],$expediteur_id,$ColisData['itineare_id'],$ColisData['destination'],$ColisData['volume'],$ColisData['poids'],$ColisData['date_depart'],$ColisData['date_arriver'],$ColisData['status'],$ColisData['etat']);
-        }else{
-         echo 'not found';
+        $colisData = Colis::get($id);
+        if ($colisData) {
+            return $this->createColis($colisData);
+        } else {
+            throw new \Exception("Colis not found with ID: $id");
         }
     }
-    public function AcceptColis($id){
-       $colis = $this->getColis($id);
-       $colis->accept();
-    }
-    public function RefuseColis($id){
-       $colis = $this->getColis($id);
-       $colis->refuse();
-    }
-    public function getColisByExpediteur($id) {
-        // $sql = "SELECT * FROM colis WHERE expediteur_id = :expediteur_id";
-        // $stmt = $this->db->prepare($sql);
-        // $stmt = $this->db->bindParam(':expediteur_id',$id);
-       
-    }
-    public function getColisByVillesANDExpediteur($ville,$id) {
-        // $sql = "SELECT * FROM colis WHERE expediteur_id = :expediteur_id";
-        // $stmt = $this->db->prepare($sql);
-        // $stmt = $this->db->bindParam(':expediteur_id',$id);
-        // $stmt->exectute();
-        // $Colis = $stmt->fetchAll(PDO::FETCH_OBJ);
-        // $list = [];
-        // $i = 0;
-        // foreach ($Colis as $coli) {
-        //  $list[$i] = $this->createColis($colis);
-        //  $i++;
-        // } 
-        // return $list;
-    }
-    public function addColis($ColisData){
-      $colis =   $this->createColis($ColisData);
-      $colis->create();
 
+    // Accept a Colis (update status to 'En transit')
+    public function acceptColis($id) {
+        $colis = $this->getColis($id);
+        $colis->accept();
+    }
+
+    // Refuse a Colis (update status to 'Refusé')
+    public function refuseColis($id) {
+        $colis = $this->getColis($id);
+        $colis->refuse();
+    }
+
+    // Get all Colis by Expediteur (Sender) ID
+    public function getColisByExpediteur($id) {
+        $colis = new Colis();
+        return $colis->getByExpediteur($id);
+    }
+
+    // Add a new Colis
+    public function addColis($colisData) {
+        $colis = $this->createColis($colisData);
+        $colis->create();
     }
 }
-
