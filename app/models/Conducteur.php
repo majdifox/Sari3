@@ -14,6 +14,7 @@ class Conducteur  extends  User {
 
     public function __construct($id = null ,$cnie = null,$nom = null  ,$prenom = null,$email = null,$role = null,$datecreation = null){
         parent::__construct();
+<<<<<<< HEAD
         
         $this->id =  $id;
         $this->cnie =  $cnie;
@@ -25,17 +26,22 @@ class Conducteur  extends  User {
         $this->ItineraireFactory = new ItineraireFactory;
         $this->ColisFactory = new ColisFactory;
         $this->UserFactory = new UserFactory;
+=======
+        $this->ItineraireFactory = new ItineraireFactory();
+        $this->ColisFactory = new ColisFactory();
+       
+        
+>>>>>>> c05bdb69bcb65faf8cc6f5e966b740b30e2b99de
     }
     public function getColis($id){
      $colis =  $this->ColisFactory->getColis($id);
     }
     public function addAnnonce($data) {
-    $this->ColisFactory->addColis($dataofColis);
-  }
+      $this->ColisFactory->addColis($data);
+    }
   
   public function deleteAnnonce($id) {
     $this->ItineraireFactory->deleteItineraire($id);
- 
   }
 
   public function AcceptRequest($id_colis){

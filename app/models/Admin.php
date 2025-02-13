@@ -8,6 +8,10 @@ use App\Models\VehiculeFactory;
 use App\Models\ItineraireFactory;
 class Admin extends User {
     private $UserFactory;
+    private $ColisFactory;
+    private $ItineraireFactory;
+    private $VehiculeFactory;
+
     public function __construct( ) {
         $this->UserFactory = new UserFactory;
         $this->ColisFactory = new ColisFactory;

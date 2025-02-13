@@ -1,6 +1,10 @@
 <?php
 namespace App\Models;
 
+use Exception;
+use PDO;
+use App\Models\User;
+
 class UserFactory {
     private $db;
 
@@ -37,19 +41,6 @@ class UserFactory {
             return $this->createUser($userData["role"], $userData);
         }
         return null;
-    }
-    public function register($data) {
-       
-        User::create($data);
-        
-    }
-    public function getAllConducteurs() {
-        $role = 'Conducteur';
-        User::getAllbyRole($role);
-    }
-    public function getAllExpediteurs() {
-        $role = 'Expediteur';
-        User::getAllbyRole($role);
     }
 }
 
