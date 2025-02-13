@@ -27,8 +27,14 @@ class ConducteurController{
            
             require_once 'C:\laragon\www\Sari3\app\views\conducteur\Profile_Conducteur.php';
       }
-      public function showItinirairedetails($idItineraire){
-            $this->conducteur->createItiniraireDetails( $Itineraire);
+      public function details(){
+            $uri = $_SERVER['REQUEST_URI'];
+            $method = $_SERVER['REQUEST_METHOD'];
+            $paths = explode('/',$uri,3);
+            $Itineraire_id = end($paths);
+            echo $Itineraire_id;
+            $this->conducteur->createItiniraireDetails( $Itineraire_id);
+            require_once '../views/conducteur/Details_Annonces.php';
       }
       
       public function mesannonces() {

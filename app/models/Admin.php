@@ -6,6 +6,7 @@ use App\Models\UserFactory;
 use App\Models\ColisFactory;
 use App\Models\VehiculeFactory;
 use App\Models\ItineraireFactory;
+
 class Admin extends User {
     private $UserFactory;
     private $ColisFactory;

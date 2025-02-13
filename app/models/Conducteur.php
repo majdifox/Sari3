@@ -46,7 +46,7 @@ class Conducteur  extends  User {
 
   public function AcceptRequest($id_colis){
     // accept request dyl expediteur bach idkhl colis dylo
-    checkVolumeOfColis($idItineraire,$volume_of_new_colis);
+    $this->checkVolumeOfColis($idItineraire,$volume_of_new_colis);
     // accept
   }
   public function RefuseRequest($id_colis){
@@ -89,7 +89,7 @@ class Conducteur  extends  User {
    
     echo $id;
    }
-   public function createItiniraireDetails(Itineraire $Itineraire){
+   public function createItiniraireDetails( $Itineraire_id){
     // $this->ItineraireFactory-> createItiniraireDetails(Itineraire $Itineraire);
    }
    public function getProfileInfos($id_condecteur){
