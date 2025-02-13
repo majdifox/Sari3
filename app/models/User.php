@@ -71,6 +71,48 @@ class User   {
       $stmt->bindParam(':id', $id);
       return $stmt->execute();
   }
+
+  public function register($data) {
+   // Hash the password
+   $hashedPassword = password_hash($data['mot_de_passe'], PASSWORD_BCRYPT);
+
+   $sql = "INSERT INTO utilisateurs (cni, nom, prenom, photo, telephone, email, mot_de_passe, role, etat) 
+           VALUES (:cni, :nom, :prenom, :photo, :telephone, :email, :mot_de_passe, :role, :etat)";
+
+   try {
+       $stmt = $this->db->prepare($sql);
+       
+       return $stmt->execute([
+           ':cni' => $data['cni'],
+           ':nom' => $data['nom'],
+           ':prenom' => $data['prenom'],
+           ':photo' => $data['photo'],
+           ':telephone' => $data['telephone'],
+           ':email' => $data['email'],
+           ':mot_de_passe' => $hashedPassword,
+           ':role' => $data['role'],
+           ':etat' => $data['etat']
+       ]);
+   } catch (\PDOException $e) {
+       // Log error and return false
+       error_log($e->getMessage());
+       return false;
+   }
+}
+
+
+
+public function login($email, $password) {
+   $this->db->query("SELECT * FROM utilisateurs WHERE Email = :Email");
+   $this->db->bind(':Email', $email);
+   $user = $this->db->fetch();
+
+   if ($user && password_verify($password, $user['Mot_de_passe'])) {
+       return $user;
+   }
+   return false;
+}
+
    public function getId(){
     return  $this->id;
    }

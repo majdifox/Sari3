@@ -12,8 +12,10 @@ class Conducteur  extends  User {
     private $ColisFactory;
     public function __construct(){
         parent::__construct();
-        $this->ItineraireFactory = new ItineraireFactory;
-        $this->ColisFactory = new ColisFactory;
+        $this->ItineraireFactory = new ItineraireFactory();
+        $this->ColisFactory = new ColisFactory();
+       
+        
     }
     public function getColis($id){
      $colis =  $this->ColisFactory->getColis($id);
