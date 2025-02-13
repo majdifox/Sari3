@@ -48,7 +48,7 @@ class Router {
             $uri = $_SERVER['REQUEST_URI'];
             $method = $_SERVER['REQUEST_METHOD'];
             $paths = explode('/',$uri,3);
-
+            echo $_SERVER['REQUEST_METHOD'];
             $path =  $paths[2];
             echo '<pre>';
                 var_dump($paths);
@@ -60,9 +60,7 @@ class Router {
                     var_dump($route['path']);
                     echo '</pre>';  
                     
-                    // echo '<pre>';
-                    // var_dump($route['controller']);
-                    // echo '</pre>';
+                   
                     $controller = "App\\Controllers\\" . $route['controller'];
                    
                     
