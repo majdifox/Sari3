@@ -48,7 +48,7 @@ class Itineraire implements Model {
     }
     public function update() {
         
-    }
+    }   
     public function read() {
         
     }

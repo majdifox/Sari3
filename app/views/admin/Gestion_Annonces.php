@@ -82,7 +82,7 @@
 
         <main>
             <h1 class='text-3xl font-semibold mb-4'>Gestion des Annonces</h1>
-            <form action='/admin/create-announcement' method='POST' class='mb-4'>
+        <form action='/Admin/create-announcement' method='POST' class='mb-4'>
                 <input type='text' name='title' placeholder='Titre de l annonce' required class='border p-2 rounded-lg w-full'/>
                 <textarea name='content' placeholder='Contenu de l annonce' required class='border p-2 rounded-lg w-full mt-2'></textarea>
                 <button type='submit' class='bg-blue-500 text-white p-2 rounded-lg'>Créer Annonce</button>
@@ -95,8 +95,8 @@
                         <li class='flex justify-between items-center'>
                             <span><?= $annonce['title'] ?></span>
                             <div>
-                                <a href='/admin/edit-announcement/<?= $annonce['id'] ?>' class='text-blue-500'>Éditer</a>
-                                <form action='/admin/delete-announcement/<?= $annonce['id'] ?>' method='POST' class='inline'>
+                                <a href='/Admin/edit-announcement/<?= $annonce['id'] ?>' class='text-blue-500'>Éditer</a>
+                                <form action='/Admin/delete-announcement/<?= $annonce['id'] ?>' method='POST' class='inline'>
                                     <button type='submit' class='text-red-500'>Supprimer</button>
                                 </form>
                             </div>

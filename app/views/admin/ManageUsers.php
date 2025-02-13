@@ -24,7 +24,7 @@
         </table>
         <script>
             // Fetch Users
-            fetch('/admin/users')
+        fetch('/Admin/users')
                 .then(response => response.json())
                 .then(data => {
                     const tbody = document.querySelector('tbody');
@@ -45,19 +45,19 @@
                 });
 
             function validateUser(id) {
-                fetch(`/admin/validate/${id}`, { method: 'POST' })
+                fetch(`/Admin/validate/${id}`, { method: 'POST' })
                     .then(response => response.json())
                     .then(data => { alert(data.status); });
             }
 
             function suspendUser(id) {
-                fetch(`/admin/suspend/${id}`, { method: 'POST' })
+                fetch(`/Admin/suspend/${id}`, { method: 'POST' })
                     .then(response => response.json())
                     .then(data => { alert(data.status); });
             }
 
             function deleteUser(id) {
-                fetch(`/admin/delete/${id}`, { method: 'DELETE' })
+                fetch(`/Admin/delete/${id}`, { method: 'DELETE' })
                     .then(response => response.json())
                     .then(data => { alert(data.status); });
             }
