@@ -13,7 +13,7 @@ class UserFactory {
             case 'Admin':
                 return new Admin(null, $userData);
             default:
-                throw new Exception("Invalid user role");
+                throw new \Exception("Invalid user role");
         }
     }
     public function getUser($id) {
@@ -21,7 +21,7 @@ class UserFactory {
         $stmt = $this->db->prepare($sql);
         $stmt->bindParam(':id', $id);
         $stmt->execute();
-        $userData = $stmt->fetch(PDO::FETCH_ASSOC);
+        $userData = $stmt->fetch(\PDO::FETCH_ASSOC);
 
         if ($userData) {
             $role = $userData["role"]; 
@@ -34,7 +34,7 @@ class UserFactory {
         $stmt = $this->db->prepare($sql);
         $stmt->bindParam(':username', $username);
         $stmt->execute();
-        $userData = $stmt->fetch(PDO::FETCH_ASSOC);
+        $userData = $stmt->fetch(\PDO::FETCH_ASSOC);
 
         if ($userData && password_verify($password, $userData['password'])) {
             return $this->createUser($userData["role"], $userData);

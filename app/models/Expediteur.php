@@ -10,6 +10,7 @@ use App\Models\ItineraireFactory;
 
 class Expediteur extends  User {
     private $ItineraireFactory;
+    private $colisFactory;
     public function __construct(){
         parent::__construct();
         $this->ItineraireFactory = new ItineraireFactory();

@@ -20,7 +20,7 @@ class ExpediteurController{
         
     }
     public function showItinirairedetails($idItineraire){
-        $this->Expediteur->createItiniraireDetails( $Itineraire);
+        $this->Expediteur->deleteColis( $Itineraire);
     }
 
 

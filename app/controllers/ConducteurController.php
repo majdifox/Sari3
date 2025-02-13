@@ -20,8 +20,14 @@ class ConducteurController{
             echo 'getItinerairebyCondicteur';
             $this->conducteur->getItinerairebyCondicteur($id_condecteur);
       }
-      public function showItinirairedetails($idItineraire){
-            $this->conducteur->createItiniraireDetails( $Itineraire);
+      public function details(){
+            $uri = $_SERVER['REQUEST_URI'];
+            $method = $_SERVER['REQUEST_METHOD'];
+            $paths = explode('/',$uri,3);
+            $Itineraire_id = end($paths);
+            echo $Itineraire_id;
+            $this->conducteur->createItiniraireDetails( $Itineraire_id);
+            require_once '../views/conducteur/Details_Annonces.php';
       }
       
       
