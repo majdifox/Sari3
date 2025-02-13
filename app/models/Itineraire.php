@@ -1,7 +1,9 @@
 <?php
 namespace App\Models;
 
+use Core\Database;
 use Core\Model;
+use PDO;
 
 class Itineraire extends Model {
     private $id;
@@ -10,37 +12,55 @@ class Itineraire extends Model {
     private $date_depart;
     private $date_arriver;
     private $statut;
-    
-    protected $table = 'itineraire'; // Assuming the doctors table is named 'medcins'
-     
-    public function __construct($id=null,$conducteur_id,$vehicule_id,$date_depart,$date_arriver,$statut){
-        
+    private $db;
+
+    public function __construct($id = null, $conducteur_id = null, $vehicule_id = null, $date_depart = null, $date_arriver = null, $statut = null) {
+        $this->db = Database::getInstance()->getConnection();
+        $this->id = $id;
+        $this->conducteur_id = $conducteur_id;
+        $this->vehicule_id = $vehicule_id;
+        $this->date_depart = $date_depart;
+        $this->date_arriver = $date_arriver;
+        $this->statut = $statut;
     }
-    public static function getAllbyConducteur($id) {
-        // $query = "SELECT * FROM public.utilisateurs u  left join public.medecins m  on    u.id  = m.utilisateur_id WHERE role LIKE 'medecin'";
-        // $stmt = $this->db->prepare($query);
-        // $stmt->execute();
-        // return $stmt->fetchAll();
+
+    // Get all itineraries by driver ID
+    public static function getAllByConducteur($id) {
+        $db = Database::getInstance()->getConnection();
+        $query = "SELECT * FROM itineraire WHERE conducteur_id = :conducteur_id";
+        $stmt = $db->prepare($query);
+        $stmt->bindParam(':conducteur_id', $id, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
-    public static function getAllbyExpediteur($id) {
-        // $query = "SELECT * FROM public.utilisateurs u  left join public.medecins m  on    u.id  = m.utilisateur_id WHERE role LIKE 'medecin'";
-        // $stmt = $this->db->prepare($query);
-        // $stmt->execute();
-        // return $stmt->fetchAll();
+
+    // Get all itineraries by sender ID (expediteur)
+    public static function getAllByExpediteur($id) {
+        $db = Database::getInstance()->getConnection();
+        $query = "SELECT i.* FROM itineraire i
+                  JOIN colis c ON i.id = c.itineraire_id
+                  WHERE c.expediteur_id = :expediteur_id";
+        $stmt = $db->prepare($query);
+        $stmt->bindParam(':expediteur_id', $id, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
-    
+
+    // Get a specific itinerary by ID
     public static function get($id) {
-        // $query = "SELECT * FROM public.utilisateurs u  left join public.medecins m  on    u.id  = m.utilisateur_id WHERE role LIKE 'medecin'";
-        // $stmt = $this->db->prepare($query);
-        // $stmt->execute();
-        // return $stmt->fetchAll();
+        $db = Database::getInstance()->getConnection();
+        $query = "SELECT * FROM itineraire WHERE id = :id";
+        $stmt = $db->prepare($query);
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC);
     }
+
+    // Delete an itinerary by ID
     public function delete($id) {
-        // $query = "SELECT * FROM public.utilisateurs u  left join public.medecins m  on    u.id  = m.utilisateur_id WHERE role LIKE 'medecin'";
-        // $stmt = $this->db->prepare($query);
-        // $stmt->execute();
-        // return $stmt->fetchAll();
+        $query = "DELETE FROM itineraire WHERE id = :id";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        return $stmt->execute();
     }
-    
-   
 }
