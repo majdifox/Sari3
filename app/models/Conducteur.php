@@ -10,12 +10,22 @@ use App\Models\ItineraireFactory;
 class Conducteur  extends  User {
     private $ItineraireFactory;
     private $ColisFactory;
-    public function __construct(){
+    private $UserFactory;
+
+    public function __construct($id = null ,$cnie = null,$nom = null  ,$prenom = null,$email = null,$role = null,$datecreation = null){
         parent::__construct();
-        $this->ItineraireFactory = new ItineraireFactory();
-        $this->ColisFactory = new ColisFactory();
-       
         
+        $this->id =  $id;
+        $this->cnie =  $cnie;
+        $this->nom =  $nom;
+        $this->prenom =  $prenom;
+        $this->email =  $email;
+        $this->role =  $role;
+        $this->datecreation =  $datecreation;
+        $this->ItineraireFactory = new ItineraireFactory;
+        $this->ColisFactory = new ColisFactory;
+        $this->UserFactory = new UserFactory;
+       
     }
     public function getColis($id){
      $colis =  $this->ColisFactory->getColis($id);
@@ -30,7 +40,7 @@ class Conducteur  extends  User {
 
   public function AcceptRequest($id_colis){
     // accept request dyl expediteur bach idkhl colis dylo
-    checkVolumeOfColis($idItineraire,$volume_of_new_colis);
+    $this->checkVolumeOfColis($idItineraire,$volume_of_new_colis);
     // accept
   }
   public function RefuseRequest($id_colis){
@@ -69,13 +79,16 @@ class Conducteur  extends  User {
     $data = $this->vehicule->getByItineraire($id);
     $vehicule = new Vehicule();
    }
-   public function getItinerairebyCondicteur(){
-    $id = $this->getId();
+   public function getItinerairebyCondicteur($id){
+   
     echo $id;
    }
-   public function createItiniraireDetails(Itineraire $Itineraire){
+   public function createItiniraireDetails( $Itineraire_id){
     // $this->ItineraireFactory-> createItiniraireDetails(Itineraire $Itineraire);
    }
+   public function getProfileInfos($id_condecteur){
+    return  $user =  $this->UserFactory->getUser($id_condecteur);
+  }
 
 
 

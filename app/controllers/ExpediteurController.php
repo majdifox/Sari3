@@ -13,14 +13,39 @@ class ExpediteurController{
     public function showItinirairesbyExpediteur($id){
 
     }
+
     public function dashboard(){
-      echo 'hola amigos';
+      session_start();
+      echo '<pre>';
+      // var_dump($_SESSION['user']->id);
+      echo '</pre>';
+      $id_expediteur = $_SESSION['user']->id;
+      $user =   $this->Expediteur->getProfileInfos($id_expediteur);
+      
+      require_once 'C:\laragon\www\Sari3\app\views\expediteur\Home_Annonces.php';
     }
+
+    public function detailsannonceexp(){
+
+      require_once 'C:\laragon\www\Sari3\app\views\expediteur\Details_Annonces.php';
+    }
+
+    public function mescolis(){
+
+      require_once 'C:\laragon\www\Sari3\app\views\expediteur\Mes_Colis.php';
+    }
+
+    public function prflexpediteur(){
+
+      require_once 'C:\laragon\www\Sari3\app\views\expediteur\Profile_Expediteur.php';
+    }
+
+
     public function showItiniraire($idItineraire){
         
     }
     public function showItinirairedetails($idItineraire){
-        $this->Expediteur->createItiniraireDetails( $Itineraire);
+        $this->Expediteur->deleteColis( $Itineraire);
     }
 
 

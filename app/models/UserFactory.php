@@ -9,26 +9,29 @@ class UserFactory {
     private $db;
 
     public static function createUser($role, $userData = null) {
+       
         switch ($role) {
             case 'Expediteur':
                 return new Expediteur(null, $userData);
             case 'Conducteur':
-                return new Conducteur(null, $userData);
+                return new Conducteur($userData->id,null,$userData->nom,$userData->prenom,$userData->email,$role,null);
             case 'Admin':
                 return new Admin(null, $userData);
             default:
-                throw new Exception("Invalid user role");
+                throw new \Exception("Invalid user role");
         }
     }
     public function getUser($id) {
+       $userData =  User::get($id);
+    
         $sql = "SELECT * FROM users WHERE id_user = :id";
         $stmt = $this->db->prepare($sql);
         $stmt->bindParam(':id', $id);
         $stmt->execute();
-        $userData = $stmt->fetch(PDO::FETCH_ASSOC);
+        $userData = $stmt->fetch(\PDO::FETCH_ASSOC);
 
         if ($userData) {
-            $role = $userData["role"]; 
+            $role = $userData->role; 
             return $this->createUser($role, $userData);
         }
         return null;
@@ -38,7 +41,7 @@ class UserFactory {
         $stmt = $this->db->prepare($sql);
         $stmt->bindParam(':username', $username);
         $stmt->execute();
-        $userData = $stmt->fetch(PDO::FETCH_ASSOC);
+        $userData = $stmt->fetch(\PDO::FETCH_ASSOC);
 
         if ($userData && password_verify($password, $userData['password'])) {
             return $this->createUser($userData["role"], $userData);

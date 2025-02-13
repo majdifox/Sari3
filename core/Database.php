@@ -13,27 +13,26 @@ class Database {
         global $config; 
         $host = "localhost";
         $port = "5432";
-        $dbname = "Sarri";
+        $dbname = "Sarii";
         $user = "postgres";
-        $pass = "Youness";
+        $pass = "Admin";
 
         try {
-            $this->conn = new \PDO("pgsql:host=$host;port=$port;dbname=$dbname", $user, $pass);
-            var_dump($this->conn);
-        } catch(PDOException $e) {
+            $this->connection = new \PDO("pgsql:host=$host;port=$port;dbname=$dbname", $user, $pass);
+        } catch(\PDOException $e) {
             echo "Connection failed: " . $e->getMessage();
         }
     }
 
     public static function getInstance() {
         if (self::$instance === null) {
-            echo 'work';
+            // echo 'work';
             self::$instance = new self();
         }
         return self::$instance;
     }
 
     public function getConnection() {
-        return $this->conn;
+        return $this->connection;
     }
 }

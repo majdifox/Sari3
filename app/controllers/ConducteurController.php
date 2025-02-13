@@ -10,19 +10,43 @@ class ConducteurController{
     }
 
       public function showItinirairesbyConducteur(){
-          $this->conducteur->getItinerairebyCondicteur();
+         
       }
       public function showItiniraire(){
             
       }
       public function dashboard(){
-            // $this->conducteur->getItinerairebyCondicteur($id_condecteur);
-            require_once('C:\laragon\www\Sari3\app\views\conducteur\Detail_Annonce.php');
+            // echo 'getItinerairebyCondicteur';
+            session_start();
+            echo '<pre>';
+            // var_dump($_SESSION['user']->id);
+            echo '</pre>';
+            $id_condecteur = $_SESSION['user']->id;
+            $user =   $this->conducteur->getProfileInfos($id_condecteur);
+           
+            require_once 'C:\laragon\www\Sari3\app\views\conducteur\Profile_Conducteur.php';
       }
-      public function showItinirairedetails($idItineraire){
-            $this->conducteur->createItiniraireDetails( $Itineraire);
+      public function details(){
+            $uri = $_SERVER['REQUEST_URI'];
+            $method = $_SERVER['REQUEST_METHOD'];
+            $paths = explode('/',$uri,3);
+            $Itineraire_id = end($paths);
+            echo $Itineraire_id;
+            $this->conducteur->createItiniraireDetails( $Itineraire_id);
+            require_once '../views/conducteur/Details_Annonces.php';
       }
       
+      public function mesannonces() {
+            
+            require_once 'C:\laragon\www\Sari3\app\views\conducteur\Mes_Annonces.php';
+    
+      }
+
+      public function detailsannonce() {
+            
+            require_once 'C:\laragon\www\Sari3\app\views\conducteur\Details_Annonces.php';
+    
+      }
       
       public function addAnnonce() {
             //  @oussamaamou
