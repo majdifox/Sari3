@@ -122,6 +122,17 @@ class Colis extends Model {
         return $stmt->execute();
     }
 
+    // Get Colis by Ville (City) and Expediteur (Sender) ID
+    public function getColisByVillesANDExpediteur($ville, $id) {
+        $query = "SELECT * FROM colis 
+                    WHERE destination = :ville AND expediteur_id = :expediteur_id";
+        $stmt = (new Colis())->db->prepare($query);
+        $stmt->bindParam(':ville', $ville, PDO::PARAM_STR);
+        $stmt->bindParam(':expediteur_id', $id, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
 
     public function setEtat($etat){
         $this->etat = $etat;
