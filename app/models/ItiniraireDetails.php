@@ -15,17 +15,12 @@ class ItineraireDetails extends Model {
     public function __construct($itineraire_id,$orders,$ville,$statut){
         
     }
-    public function getAllbyConducteur($id) {
-        // $query = "SELECT * FROM public.utilisateurs u  left join public.medecins m  on    u.id  = m.utilisateur_id WHERE role LIKE 'medecin'";
-        // $stmt = $this->db->prepare($query);
-        // $stmt->execute();
-        // return $stmt->fetchAll();
+    public function getAllbyConducteur($id)
+    {
+        
     }
-    public function getAllbyItiniraire($itineraire_id) {
-        // $query = "SELECT * FROM public.utilisateurs u  left join public.medecins m  on    u.id  = m.utilisateur_id WHERE role LIKE 'medecin'";
-        // $stmt = $this->db->prepare($query);
-        // $stmt->execute();
-        // return $stmt->fetchAll();
+    public static  function getDetailsOfItiniraire($itineraire_id) {
+        
     }
     public function enTransit(){
         $this->setStatus('En Transit');
@@ -35,10 +30,7 @@ class ItineraireDetails extends Model {
         $this->setStatus('Arrive');
     }
     public function get($id) {
-        // $query = "SELECT * FROM public.utilisateurs u  left join public.medecins m  on    u.id  = m.utilisateur_id WHERE role LIKE 'medecin'";
-        // $stmt = $this->db->prepare($query);
-        // $stmt->execute();
-        // return $stmt->fetchAll();
+       
     }
     public function delete($id) {
         // $query = "SELECT * FROM public.utilisateurs u  left join public.medecins m  on    u.id  = m.utilisateur_id WHERE role LIKE 'medecin'";
