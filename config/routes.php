@@ -4,6 +4,7 @@ $router->add('GET', 'admin', 'AdminController', 'dashboard');
 $router->add('GET', 'login', 'ConducteurController', 'showItiniraire');
 $router->add('GET', 'Conducteur/dashboard', 'ConducteurController', 'dashboard');
 $router->add('GET', 'Expediteur/dashboard', 'ExpediteurController', 'dashboard');
+$router->add('GET', 'admin', 'AdminController', 'dashboard');
 $router->add('GET', 'admin/expediteurs', 'AdminController', 'ListExpediteurs');
 $router->add('GET', 'admin/users', 'AdminController', 'ListUsers');
 $router->add('POST', 'admin/validate/{id}', 'AdminController', 'ValidateUser');

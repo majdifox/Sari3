@@ -13,7 +13,6 @@ class ConducteurController{
           $this->conducteur->getItinerairebyCondicteur();
       }
       public function showItiniraire(){
-            echo 'hello';
             
       }
       public function dashboard(){

@@ -1,5 +1,6 @@
 <?php
 namespace App\Models;
+use Core\Database;
 
 use Core\Model;
 
@@ -11,11 +12,11 @@ class Itineraire implements Model {
     private $date_arriver;
     private $statut;
     
-    protected static $db;
+    private $db;
     protected $table = 'itineraire'; // Assuming the doctors table is named 'medcins'
      
     public function __construct($conducteur_id, $vehicule_id, $date_depart, $date_arriver, $statut, $id = null) {
-        self::$db = Database::getConnection(); // Assuming a Database class exists for connection
+        $this->db = Database::getInstance()->getConnection();
         $this->conducteur_id = $conducteur_id;
         $this->vehicule_id = $vehicule_id;
         $this->date_depart = $date_depart;
@@ -38,7 +39,7 @@ class Itineraire implements Model {
     public static function getAllItineraires() {
         $instance = new self(null, null, null, null, null);
         $query = "SELECT * FROM " . $instance->table;
-        $stmt = self::$db->prepare($query);
+        $stmt = Database::getInstance()->getConnection()->prepare($query);
         $stmt->execute();
         return $stmt->fetchAll();
     }

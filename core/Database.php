@@ -19,7 +19,7 @@ class Database {
 
         try {
             $this->conn = new \PDO("pgsql:host=$host;port=$port;dbname=$dbname", $user, $pass);
-            var_dump($this->conn);
+            
         } catch(PDOException $e) {
             echo "Connection failed: " . $e->getMessage();
         }
@@ -27,7 +27,6 @@ class Database {
 
     public static function getInstance() {
         if (self::$instance === null) {
-            echo 'work';
             self::$instance = new self();
         }
         return self::$instance;

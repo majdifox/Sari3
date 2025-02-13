@@ -30,7 +30,8 @@
 
 namespace Core;
 use App\Models\User;
-use Controllers\AuthController;
+use App\Controllers\AuthController;
+use App\Controllers\AdminController;
 
 class Router {
         private $routes = [];
@@ -48,17 +49,13 @@ class Router {
             $uri = $_SERVER['REQUEST_URI'];
             $method = $_SERVER['REQUEST_METHOD'];
             $paths = explode('/',$uri,3);
-            echo $_SERVER['REQUEST_METHOD'];
+        
             $path =  $paths[2];
-            echo '<pre>';
-                var_dump($paths);
-                echo '</pre>'; 
+          
             foreach ($this->routes as $route) {
                 
                 if ($path == $route['path'] && $method === $route['method']) {
-                    echo '<pre>';
-                    var_dump($route['path']);
-                    echo '</pre>';  
+                  
                     
                    
                     $controller = "App\\Controllers\\" . $route['controller'];
@@ -72,9 +69,7 @@ class Router {
                         // var_dump($result);
                         $controllerInstance = new $controller();
                         if (method_exists($controllerInstance, $action)) {
-                            echo '<br>';
-                            echo $controller;
-                            echo '<br>';
+                            
 
                             return $controllerInstance->$action();
                         }

@@ -20,7 +20,7 @@ class AdminController
     }
 
     public function dashboard()
-    {
+    {   
         // Assuming you have the necessary parameters available
         $conducteur_id = 1; // Example value, replace with actual logic
         $vehicule_id = 1; // Example value, replace with actual logic
@@ -29,7 +29,8 @@ class AdminController
         $statut = 'active'; // Example value, replace with actual logic
 
         $itineraires = $this->admin->ListItineraires($conducteur_id, $vehicule_id, $date_depart, $date_arriver, $statut);
-        return json_encode($itineraires);
+        require_once 'C:\laragon\www\Sari3\app\views\admin\Dashboard_Administrateur.php';
+        // return json_encode($itineraires);
     }
 
     public function ListConducteurs()
