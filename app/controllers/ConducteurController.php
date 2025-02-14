@@ -13,7 +13,6 @@ class ConducteurController{
          
       }
       public function showItiniraire(){
-            echo 'hello';
             
       }
       public function dashboard(){

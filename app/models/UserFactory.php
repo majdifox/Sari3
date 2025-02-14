@@ -29,15 +29,30 @@ class UserFactory {
         }
         return null;
     }
+    public function authenticate($username, $password) {
+        $sql = "SELECT * FROM users WHERE username = :username";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindParam(':username', $username);
+        $stmt->execute();
+        $userData = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    public function authenticate($email, $password) {
-        $userData =  User::getByEmail($email);
-
-
-        if ($userData && password_verify($password, $userData->password)) {
-            return $this->createUser($userData->role, $userData);
+        if ($userData && password_verify($password, $userData['password'])) {
+            return $this->createUser($userData["role"], $userData);
         }
         return null;
+    }
+    public function register($data) {
+       
+        User::create($data);
+        
+    }
+    public function getAllConducteurs() {
+        $role = 'Conducteur';
+        User::getAllbyRole($role);
+    }
+    public function getAllExpediteurs() {
+        $role = 'Expediteur';
+        User::getAllbyRole($role);
     }
 }
 

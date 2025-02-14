@@ -1,13 +1,10 @@
 <?php
 namespace App\Models;
-
-use Core\Model;
 use Core\Database;
-
-
+use Core\Model;
 use PDO;
 
-class Colis extends Model {
+class Colis implements Model {
     private $id;
     private $expediteur_id;
     private $itineraire_id;
@@ -133,6 +130,23 @@ class Colis extends Model {
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    
+    public static function CountAll() {
+        $connexion = Database::getInstance()->getConnection();
+        $sql = "SELECT COUNT(*) as numbertotal FROM colis ";
+        $stmt = $connexion->query($sql);
+        $result = $stmt->fetch(\PDO::FETCH_ASSOC);
+        return $result['numbertotal'];
+    }
+    public static function CountByStatus($status) {
+        $connexion = Database::getInstance()->getConnection();
+        $sql = "SELECT COUNT(*) as numbertotalcolis FROM colis where statut=:statut  ";
+        $stmt = $connexion->prepare($sql);
+        $stmt->bindValue(':statut', $status);
+        $stmt->execute();
+        $result = $stmt->fetch(\PDO::FETCH_ASSOC);
+        return $result['numbertotalcolis'];
+    }
 
     public function setEtat($etat){
         $this->etat = $etat;
@@ -182,4 +196,29 @@ class Colis extends Model {
     public function getItineraireId(){
         return  $this->destination;
     }
+    
+    // les 5 dernier colis
+    public static function getRecentColis()
+{
+    $connexion = Database::getInstance()->getConnection();
+    
+    // Join with utilisateurs table to get expediteur information
+    $query = "SELECT c.*, 
+                     u.prenom as expediteur_prenom, 
+                     u.nom as expediteur_nom
+              FROM colis c
+              JOIN utilisateurs u ON c.expediteur_id = u.id
+              ORDER BY c.date_depart DESC 
+              LIMIT 5";
+              
+    $stmt = $connexion->prepare($query);
+    $stmt->execute();
+    $recent_colis = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+
+    return $recent_colis;
+}
+
+
+    
+   
 }
