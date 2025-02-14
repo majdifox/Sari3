@@ -46,6 +46,11 @@ class UserFactory {
         User::create($data);
         
     }
+
+    public function getAllUsers() {
+        $users = User::getAll();
+        return $users;
+    }
     public function getAllConducteurs() {
         $role = 'Conducteur';
         $user=User::getAllbyRole($role);

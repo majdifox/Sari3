@@ -24,23 +24,23 @@ if (!isset($_SESSION['user']) || !isset($_SESSION['user']->prenom)) {
                 </a>
         <div class="flex-grow flex flex-col justify-between text-gray-500 bg-gray-800">
             <nav class="flex flex-col mx-4 my-6 space-y-4">
-                <a href="/Admin" class="inline-flex items-center justify-center py-3 text-green-600 bg-white rounded-lg">
+                <a href="#" class="inline-flex items-center justify-center py-3 text-green-600 bg-white rounded-lg">
                     <span class="sr-only">Dashboard</span>
                     <i class="fas fa-chart-line text-xl"></i>
                 </a>
 
-                <a href="/Admin/users" class="inline-flex items-center justify-center py-3 hover:text-gray-400 hover:bg-gray-700 focus:text-gray-400 focus:bg-gray-700 rounded-lg">
+                <a href="admin/users" class="inline-flex items-center justify-center py-3 hover:text-gray-400 hover:bg-gray-700 focus:text-gray-400 focus:bg-gray-700 rounded-lg">
                     <span class="sr-only">Utilisateurs</span>
                     <i class="fas fa-users text-xl"></i>
                 </a>
 
-                <a href="/Admin/colis" class="inline-flex items-center justify-center py-3 hover:text-gray-400 hover:bg-gray-700 focus:text-gray-400 focus:bg-gray-700 rounded-lg">
+                <a href="admin/colis" class="inline-flex items-center justify-center py-3 hover:text-gray-400 hover:bg-gray-700 focus:text-gray-400 focus:bg-gray-700 rounded-lg">
                     <span class="sr-only">Colis</span>
                     <i class="fas fa-box text-xl"></i>
                 </a>
 
-                <a href="/Admin/statistiques" class="inline-flex items-center justify-center py-3 hover:text-gray-400 hover:bg-gray-700 focus:text-gray-400 focus:bg-gray-700 rounded-lg">
-                    <span class="sr-only">Statistiques</span>
+                <a href="admin/" class="inline-flex items-center justify-center py-3 hover:text-gray-400 hover:bg-gray-700 focus:text-gray-400 focus:bg-gray-700 rounded-lg">
+                    <span class="sr-only">Annonces</span>
                     <i class="fas fa-chart-bar text-xl"></i>
                 </a>
             </nav>
@@ -52,7 +52,7 @@ if (!isset($_SESSION['user']) || !isset($_SESSION['user']->prenom)) {
             <div class="flex flex-shrink-0 items-center ml-auto">
                 <div class="flex items-center">
                     <span class="text-gray-800 text-sm mr-4">Bienvenue, <?= $_SESSION['user']->prenom ?></span>
-                    <a href="/logout" class="text-gray-800 hover:text-red-500">
+                    <a href="logout" class="text-gray-800 hover:text-red-500">
                         <i class="fas fa-sign-out-alt"></i>
                     </a>
                 </div>

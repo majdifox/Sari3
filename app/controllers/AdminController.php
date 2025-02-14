@@ -32,6 +32,12 @@ class AdminController
         require_once 'C:\laragon\www\Sari3\app\views\Admin\Dashboard_Administrateur.php';
         // return json_encode($itineraires);
     }
+    public function gestion_utilisateur()
+    {
+        $users = $this->ListUsers();
+        
+        require_once 'C:\laragon\www\Sari3\app\views\Admin\Gestion_Utilisateur.php';
+    }
     public function getDashboardStats() {
         $stats = [];
         

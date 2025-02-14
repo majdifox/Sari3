@@ -197,4 +197,14 @@ class User {
       $result = $stmt->fetch(\PDO::FETCH_ASSOC);
       return $result['numbertotalrole'] ?? 0;
    }
+
+   public static function getAll() {
+      $connexion = Database::getInstance()->getConnection();
+      $query = "SELECT id, nom, prenom, email, telephone, role ,etat
+                 FROM utilisateurs 
+                 ORDER BY id DESC ";
+      $stmt = $connexion->query($query);
+      $results= $stmt->fetchAll(\PDO::FETCH_ASSOC);
+      return $results;
+   }
 }
