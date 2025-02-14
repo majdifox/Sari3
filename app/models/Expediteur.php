@@ -15,7 +15,7 @@ class Expediteur extends  User {
       parent::__construct();
       
       $this->id =  $id;
-      $this->cnie =  $cnie;
+      $this->cni =  $cnie;
       $this->nom =  $nom;
       $this->prenom =  $prenom;
       $this->email =  $email;
@@ -25,10 +25,16 @@ class Expediteur extends  User {
       $this->ColisFactory = new ColisFactory;
       $this->UserFactory = new UserFactory;
   }
-    public function MakeRequest($data) {
-    // data fiha id dyl itineraire o data dyl colis dyl expediteur
-    // ghadi n3mro db table dyl Colis
+  public function getItinerairebyID($id){
+    return $Itineraire =  $this->ItineraireFactory->getItineraire($id);
+   
+  }
+  public function createItiniraireDetails(Itineraire $Itineraire){
+    return $details =  $this->ItineraireFactory->createItiniraireDetails($Itineraire);
     
+   }
+    public function MakeRequest($data) {
+    $this->ColisFactory->addColis($data);
   }
 
   public function getProfileInfos($id_expediteur){

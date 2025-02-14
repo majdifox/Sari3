@@ -18,9 +18,11 @@ class Colis {
     private $date_arriver;
     private $statut;
     private $etat;
+    private $origin;
+    private $nom;
     private $db;
 
-    public function __construct($id = null, $expediteur_id = null, $itineraire_id = null, $destination = null, $volume = null, $poids = null, $date_depart = null, $date_arriver = null, $statut = null, $etat = null) {
+    public function __construct($id = null, $expediteur_id = null, $itineraire_id = null, $destination = null, $volume = null, $poids = null, $date_depart = null, $date_arriver = null, $statut = null, $etat = null, $nom = null ,$origin = null) {
         $this->db = Database::getInstance()->getConnection();
         $this->id = $id;
         $this->expediteur_id = $expediteur_id;
@@ -32,6 +34,8 @@ class Colis {
         $this->date_arriver = $date_arriver;
         $this->statut = $statut;
         $this->etat = $etat;
+        $this->origin = $origin;
+        $this->nom = $nom;
     }
 
     public function getAll() {
@@ -81,22 +85,52 @@ class Colis {
     }
 
     public function create() {
-        $query = "INSERT INTO colis (expediteur_id, itineraire_id, destination, volume, poids, date_depart, date_arriver, statut, etat) 
-                  VALUES (:expediteur_id, :itineraire_id, :destination, :volume, :poids, :date_depart, :date_arriver, :statut, :etat)";
+        
+        $id = $this->getId();
+        $expediteur_id = $this->getExpediteurId(); 
+        $itineraire_id = $this->getItineraireId();
+        $destination = $this->getDestination();
+        $volume = $this->getVolume();
+        $poids = $this->getPoids();
+        $date_depart = $this->getDateDepart();
+        $date_arriver = $this->getDateArriver();
+        $statut = $this->getStatus();
+        $origin = $this->getOrigin();
+        $nom = $this->getNom();
+        echo '<pre>';
+        var_dump([
+            'expediteur_id' => $expediteur_id,
+            'itineraire_id' => $itineraire_id,
+            'destination' => $destination,
+            'volume' => $volume,
+            'poids' => $poids,
+            'origin' => $origin,
+            'nom' => $nom,
+        ]);
+        echo '</pre>';
+        $query = "INSERT INTO colis (expediteur_id, itineraire_id, destination, volume, poids, origin,nom) 
+                  VALUES (:expediteur_id, :itineraire_id, :destination, :volume, :poids, :origin,:nom)";
         $stmt = $this->db->prepare($query);
-        $stmt->bindParam(':expediteur_id', $this->expediteur_id, PDO::PARAM_INT);
-        $stmt->bindParam(':itineraire_id', $this->itineraire_id, PDO::PARAM_INT);
-        $stmt->bindParam(':destination', $this->destination, PDO::PARAM_STR);
-        $stmt->bindParam(':volume', $this->volume, PDO::PARAM_STR);
-        $stmt->bindParam(':poids', $this->poids, PDO::PARAM_STR);
-        $stmt->bindParam(':date_depart', $this->date_depart, PDO::PARAM_STR);
-        $stmt->bindParam(':date_arriver', $this->date_arriver, PDO::PARAM_STR);
-        $stmt->bindParam(':statut', $this->statut, PDO::PARAM_STR);
-        $stmt->bindParam(':etat', $this->etat, PDO::PARAM_STR);
+        $stmt->bindParam(':expediteur_id', $expediteur_id, PDO::PARAM_INT);
+        $stmt->bindParam(':itineraire_id', $itineraire_id, PDO::PARAM_INT);
+        $stmt->bindParam(':destination', $destination, PDO::PARAM_STR);
+        $stmt->bindParam(':volume', $volume, PDO::PARAM_INT);
+        $stmt->bindParam(':poids', $poids, PDO::PARAM_INT);
+        $stmt->bindParam(':origin', $origin, PDO::PARAM_STR);
+        $stmt->bindParam(':nom', $nom, PDO::PARAM_STR);
         return $stmt->execute();
     }
 
     public function update() {
+        $id = $this->getId();
+        $expediteur_id = $this->getExpediteurId(); 
+        $itineraire_id = $this->getItineraireId();
+        $destination = $this->getDestination();
+        $volume = $this->getVolume();
+        $poids = $this->getPoids();
+        $date_depart = $this->getDateDepart();
+        $date_arriver = $this->getDateArriver();
+        $statut = $this->getStatus();
         $query = "UPDATE colis 
                   SET expediteur_id = :expediteur_id, 
                       itineraire_id = :itineraire_id, 
@@ -109,16 +143,16 @@ class Colis {
                       etat = :etat 
                   WHERE ID = :id";
         $stmt = $this->db->prepare($query);
-        $stmt->bindParam(':id', $this->id, PDO::PARAM_INT);
-        $stmt->bindParam(':expediteur_id', $this->expediteur_id, PDO::PARAM_INT);
-        $stmt->bindParam(':itineraire_id', $this->itineraire_id, PDO::PARAM_INT);
-        $stmt->bindParam(':destination', $this->destination, PDO::PARAM_STR);
-        $stmt->bindParam(':volume', $this->volume, PDO::PARAM_STR);
-        $stmt->bindParam(':poids', $this->poids, PDO::PARAM_STR);
-        $stmt->bindParam(':date_depart', $this->date_depart, PDO::PARAM_STR);
-        $stmt->bindParam(':date_arriver', $this->date_arriver, PDO::PARAM_STR);
-        $stmt->bindParam(':statut', $this->statut, PDO::PARAM_STR);
-        $stmt->bindParam(':etat', $this->etat, PDO::PARAM_STR);
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        $stmt->bindParam(':expediteur_id', $expediteur_id, PDO::PARAM_INT);
+        $stmt->bindParam(':itineraire_id', $itineraire_id, PDO::PARAM_INT);
+        $stmt->bindParam(':destination', $destination, PDO::PARAM_STR);
+        $stmt->bindParam(':volume', $volume, PDO::PARAM_STR);
+        $stmt->bindParam(':poids', $poids, PDO::PARAM_STR);
+        $stmt->bindParam(':date_depart', $date_depart, PDO::PARAM_STR);
+        $stmt->bindParam(':date_arriver', $date_arriver, PDO::PARAM_STR);
+        $stmt->bindParam(':statut', $statut, PDO::PARAM_STR);
+        $stmt->bindParam(':etat', $etat, PDO::PARAM_STR);
         return $stmt->execute();
     }
 
@@ -174,12 +208,18 @@ class Colis {
         return  $this->destination;
     }
     public function getId(){
-        return  $this->destination;
+        return  $this->id;
     }
     public function getExpediteurId(){
-        return  $this->destination;
+        return  $this->expediteur_id;
     }
     public function getItineraireId(){
-        return  $this->destination;
+        return  $this->itineraire_id;
+    }
+    public function getOrigin(){
+        return  $this->origin;
+    }
+    public function getNom(){
+        return  $this->nom;
     }
 }

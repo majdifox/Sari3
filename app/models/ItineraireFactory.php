@@ -28,16 +28,14 @@ use App\Models\ItineraireDetails;
         public function createItiniraireDetails(Itineraire $Itineraire) {
             // ona  le id de Itineraire dans ghadi n9lb 3la details lkhrin dylo
             $list = ItineraireDetails::getDetailsOfItiniraire($Itineraire->getId());
-            echo '<pre>';
-            var_dump($list);
-            echo '</pre>';
-            
+           
             if ($list) {
                 $i= 0;
                 $objects=[];
                 // hna kancriyiw objects 
             foreach ($list as $ItineraireDetails) {
-                echo '<br>'.$i;
+                echo '<br>'.$i;                     
+                
                 $objects[$i] = new ItineraireDetails($ItineraireDetails->id,$ItineraireDetails->itineraire_id,$ItineraireDetails->orders,$ItineraireDetails->ville,$ItineraireDetails->statut) ;
                 $i++;
             } 

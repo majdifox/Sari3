@@ -1,119 +1,313 @@
+<?php
+session_start();
+echo '<pre>';
+var_dump($Details);
+echo '</pre>';
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Lien du Tailwind -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Lien des Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css" integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ==" crossorigin="anonymous" referrerpolicy="no-referrer" /> 
-    
-    <title>Les Cours</title>
+    <title>Driver Profile - TruckTrace</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://api.mapbox.com/mapbox-gl-js/v2.6.1/mapbox-gl.css" rel="stylesheet">
+    <style>
+        :root {
+            --dark-blue: #1a237e;
+            --yellow: #ffd700;
+        }
+
+        body {
+            background-color: #f8f9fa;
+            min-height: 100vh;
+            position: relative;
+            padding-bottom: 60px;
+        }
+
+        .navbar {
+            background-color: var(--dark-blue);
+            padding: 1rem 0;
+        }
+
+        .navbar-brand {
+            color: var(--yellow) !important;
+            font-weight: bold;
+            font-size: 1.5rem;
+        }
+
+        .nav-link {
+            color: white !important;
+        }
+
+        .driver-container {
+            margin: 2rem auto;
+            max-width: 1200px;
+        }
+
+        .profile-card {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            padding: 2rem;
+            border-top: 5px solid var(--yellow);
+            margin-bottom: 2rem;
+        }
+
+        .driver-photo {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin: 0 auto 1rem;
+            border: 3px solid var(--yellow);
+        }
+
+        .stats-card {
+            text-align: center;
+            padding: 1.5rem;
+            background: #f8f9fa;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+        }
+
+        .stats-number {
+            font-size: 2rem;
+            color: var(--dark-blue);
+            font-weight: bold;
+        }
+
+        .stats-label {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .route-map {
+            height: 300px;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+        }
+
+        .route-card {
+            background: white;
+            border-radius: 10px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-left: 4px solid var(--yellow);
+        }
+
+        .status-badge {
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        .status-active {
+            background-color: #e8f5e9;
+            color: #2e7d32;
+        }
+
+        .select-driver-btn {
+            background-color: var(--dark-blue);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 30px;
+            font-weight: bold;
+            border: none;
+            transition: all 0.3s;
+        }
+
+        .select-driver-btn:hover {
+            background-color: #151b60;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .rating {
+            color: var(--yellow);
+            font-size: 1.2rem;
+            margin: 1rem 0;
+        }
+    </style>
 </head>
-<body class="bg-gradient-to-t from-blue-300 via-blue-200 to-blue-100">
-
-    <header class="mb-[4rem]">
-        <nav class="bg-white border-gray-200 px-4 lg:px-6 py-2.5 dark:bg-gray-800">
-            <div class="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl">
-                <a class="flex items-center">
-                    <img src="../Red-Blue-Modern-Logistics-Express-Logo.png" class="mr-3 mt-[-1rem] w-[7rem]" alt="Site Web Logo" />
-                </a>
-                <div class="flex items-center lg:order-2 mt-[-1rem]">
-                    <a href="../templates/logout.php" class="text-white bg-blue-500 hover:opacity-80 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800">Logout</a>
-                    <button data-collapse-toggle="mobile-menu-2" type="button" class="inline-flex items-center p-2 ml-1 text-sm text-gray-500 rounded-lg lg:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" aria-controls="mobile-menu-2" aria-expanded="false">
-                        <span class="sr-only">Open main menu</span>
-                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd"></path></svg>
-                        <svg class="hidden w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
-                    </button>
-                </div>
-                <div class="hidden justify-between items-center w-full lg:flex lg:w-auto lg:order-1 mt-[-1rem]" id="mobile-menu-2">
-                    <ul class="flex flex-col mt-4 font-medium lg:flex-row lg:space-x-8 lg:mt-0">
-                        <li>
-                            <a href="cours_etudiant.php" class="block py-2 pr-4 pl-3 text-stone-700 rounded bg-primary-700 lg:bg-transparent lg:text-primary-700 lg:p-0 dark:text-white" aria-current="page">Home</a>
-                        </li>
-                        <li>
-                            <a href="profile_etudiant.php" class="block py-2 pr-4 pl-3 text-stone-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-primary-700 lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700">Profile</a>
-                        </li>
-                        <li>
-                            <a href="mes_cours.php" class="block py-2 pr-4 pl-3 text-stone-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-primary-700 lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700">Mes Cours</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-    </header>
-
-    <!-- Inscription -->
-    <form id="coursInscription" method="POST" action="">
-            <input type="hidden" name="cours_inscription" value="1">
-            <input type="hidden" name="ID_cours" id="ID_cours" value="">
-        </form>
-
-    <main class="overflow-hidden bg-white">
-
-        
-        
-        <!-- Cours Details-->
-        <div >
-            <div class="container mx-auto px-4 py-8">
-            <div class="flex flex-wrap -mx-4">
-                <div class="w-full md:w-1/2 px-4 mb-8">
-                    
-                    <div class="p-4 mt-[8rem] text-red-800 border border-red-300 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400 dark:border-red-800" role="alert">
-                        <div class="pl-[15rem] flex items-center">
-                            <svg class="flex-shrink-0 w-4 h-4 me-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                            <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
-                            </svg>
-                            <span class="sr-only">Info</span>
-                            <h3 class="text-lg font-medium">Alerte Informative</h3>
-                        </div>
-                        <div class="mt-2 mb-4 pl-[2rem] text-sm">
-                            Vous devez vous inscrire au cours pour pouvoir accéder au contenu et interagir avec celui-ci.
-                        </div>
-                    </div>
-                    
-
-                    
-                    <iframe width="725" height="450"
-                    src="">
-                    </iframe>
-                    
-                </div>
-
-                <div class="w-full md:w-1/2 px-4">
-                
-                <button onclick="coursInscription()" type='button' class='cursor-pointer ml-[32rem] py-2.5 px-6 text-sm rounded-lg bg-red-500 text-white font-semibold text-center shadow-xs transition-all duration-500 hover:bg-red-700'>S'Inscrire</button>
-                
-                <h1 class="text-5xl font-bold leading-tight my-6 text-gray-800 dark:text-gray-100 underline underline-offset-3 decoration-6 decoration-blue-200">Catégorie</h1>
-
-                <span class="bg-blue-100 text-blue-800 text-sm font-semibold me-2 px-3.5 py-1.5 rounded dark:bg-blue-900 dark:text-blue-300">Catégorie</span>
-                <p class="text-gray-500 text-lg dark:text-gray-400 my-8">Catégorie</p>
-                <span class="bg-gray-100 text-gray-800 text-base font-medium me-2 px-3.5 py-1.5 rounded dark:bg-gray-700 dark:text-gray-300">Catégorie</span>
-
-                </div>
-                
-            </div>
-            
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <a class="navbar-brand" href="#">TruckTrace</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="dashboard.php">Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="drivers.php">All Drivers</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="logout.php">Logout</a>
+                    </li>
+                </ul>
             </div>
         </div>
-        
-        <hr class="h-[0.1rem] w-[20rem]] mx-10 bg-blue-200 border-0 dark:bg-gray-700">
-        <section class="py-24 relative">
+    </nav>
 
-    </section>
-                                            
+    <!-- Driver Profile Content -->
+    <div class="driver-container">
+        <div class="row">
+            <!-- Driver Info Card -->
+            <div class="col-md-4">
+                <div class="profile-card text-center">
+                    <img src="data:image/jpeg;base64,<?php echo 'ggg' ?>" 
+                         alt="Driver Photo" class="driver-photo">
+                    <h3 class="mt-3"><?php echo "hello" ?></h3>
+                    <div class="rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star-half-alt"></i>
+                        <span class="ms-2">4.5</span>
+                    </div>
+                    <p class="text-muted mb-4">Professional Truck Driver</p>
+                    
+                    <!-- Driver Stats -->
+                    <div class="row">
+                        <div class="col-4">
+                            <div class="stats-card">
+                                <div class="stats-number"><?php echo 'total_trips' ?></div>
+                                <div class="stats-label">Trips</div>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="stats-card">
+                                <div class="stats-number"><?php echo 'total_deliveries' ?></div>
+                                <div class="stats-label">Deliveries</div>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="stats-card">
+                                <div class="stats-number"><?php echo 'avg_delivery_time' ?>h</div>
+                                <div class="stats-label">Avg Time</div>
+                            </div>
+                        </div>
+                    </div>
 
-    </main>
+                    <button class="select-driver-btn mt-4 w-100" data-bs-toggle="modal" data-bs-target="#selectDriverModal">
+                        Select Driver
+                    </button>
+                </div>
+            </div>
 
+            <!-- Route Map and History -->
+            <div class="col-md-8">
+                <div class="profile-card">
+                    <h4 class="mb-4">Current Route</h4>
+                    <div id="map" class="route-map"></div>
 
+                    <h4 class="mb-4 mt-5">Recent Routes</h4>
+                
+                </div>
+            </div>
+        </div>
+    </div>
 
+    <!-- Select Driver Modal -->
+    <div class="modal fade" id="selectDriverModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Select Driver for Delivery</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="/index.php/makeRequest" method="POST">
+                        
+                        <input type="hidden" name="expediteur_id" value="<?php echo $_SESSION["user"]["id"]; ?>">
+                        <input type="hidden" name="itineraire_id" value="<?php echo $Itineraire->getId(); ?>">
+                        
+            
+                        <div class="mb-3">
+                            <label class="form-label">Nom</label>
+                            <input type="text" class="form-control" name="nom" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Origin</label>
+                                <select name="origin" class="form-control" required>
+                                    <?php
+                                    foreach ($Details as $city) {
+                                           ?>
 
+                                            <option value="<?=$city->getVille()?>"><?=$city->getVille()?></option>
+                                   <?php
+                                 }
+                                    ?>
+                                </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Destination</label>
+                                <select name="destination" class="form-control" required>
+                                    <?php
+                                    foreach ($Details as $city) 
+                                    {
+                                        if($city->getOrders() != 0){
 
+                                            ?>
+
+                                <option value="<?=$city->getVille()?>"><?=$city->getVille()?></option>
+                                    <?php
+                                    }
+                                    }
+                                    ?>
+                                </select>
+                        </div>
+                
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Poids (kg)</label>
+                                    <input type="number" class="form-control" name="poids" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Volume (m³)</label>
+                                    <input type="number" class="form-control" name="volume" required>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary w-100">Confirm Selection</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="text-center">
+        <div class="container">
+            <p class="mb-0">&copy; 2024 TruckTrace. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://api.mapbox.com/mapbox-gl-js/v2.6.1/mapbox-gl.js"></script>
     <script>
-        function coursInscription(ID_cours) {
-        document.getElementById("ID_cours").value = ID_cours;
-        document.getElementById("coursInscription").submit();
-        };
+        // Initialize map
+        mapboxgl.accessToken = 'YOUR_MAPBOX_ACCESS_TOKEN';
+        const map = new mapboxgl.Map({
+            container: 'map',
+            style: 'mapbox://styles/mapbox/streets-v11',
+            center: [-74.5, 40],
+            zoom: 9
+        });
     </script>
 </body>
 </html>

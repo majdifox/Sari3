@@ -12,10 +12,13 @@ class ItineraireDetails {
     private $orders;
     private $ville;
     private $status;
+    private $date_arriver;
     private $db;
 
-    public function __construct($itineraire_id = null, $orders = null, $ville = null, $statut = null) {
+    public function __construct($id,$itineraire_id = null, $orders = null, $ville = null, $statut = null) {
         $this->db = Database::getInstance()->getConnection();
+
+        $this->id = $id;
         $this->iteneraire_id = $itineraire_id;
         $this->orders = $orders;
         $this->ville = $ville;

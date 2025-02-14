@@ -107,7 +107,7 @@
                 <div class="mb-8">
                     
                     <h2 class="text-xl font-semibold text-blue-500">Date de Depart</h2>
-                    <p class="text-lg font-semibold text-stone-700"><?=$itineraire->getDatedepare()?></p>
+                    <p class="text-lg font-semibold text-stone-700"><?=$itineraire->getDateDepar()?></p>
                     
                     <h3 class="text-xl font-semibold text-blue-500">Date d'Arrivé</h2>
                     <p class="text-lg font-semibold text-stone-700">17-02-2025</p>

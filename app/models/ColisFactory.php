@@ -6,6 +6,9 @@ use PDO;
 class ColisFactory {
 
     public function createColis($colisData) {
+        echo '<pre>';
+        var_dump($colisData);
+        echo '</pre>';
         return new Colis(
             $colisData['id'] ?? null,
             $colisData['expediteur_id'],
@@ -13,14 +16,15 @@ class ColisFactory {
             $colisData['destination'],
             $colisData['volume'],
             $colisData['poids'],
-            $colisData['date_depart'],
-            $colisData['date_arriver'],
-            $colisData['statut'],
-            $colisData['etat']
+            $colisData['date_depart']??null,
+            $colisData['date_arriver']?? null,
+            $colisData['statut']??null,
+            $colisData['etat']??null,
+            $colisData['nom'],
+            $colisData['origin']
         );
     }
 
-    // Retrieve a Colis by ID
     public function getColis($id) {
         $colisData = Colis::get($id);
         if ($colisData) {

@@ -5,21 +5,21 @@ use PDO;
 use Core\Database;
 
 class User {
-   private $id;
-   private $cnie;
-   private $nom;
-   private $prenom;
-   private $email;
-   private $motdepasse;
-   private $status;
-   private $role;
-   private $datecreation;
-   private $db;
+   protected $id;
+   protected $cnie;
+   protected $nom;
+   protected $prenom;
+   protected $email;
+   protected $motdepasse;
+   protected $status;
+   protected $role;
+   protected $datecreation;
+   protected $db;
 
    public function __construct($id = null, $cnie = null, $nom = null, $prenom = null, $email = null, $motdepasse = null, $status = null, $role = null, $datecreation = null) {
       $this->db = Database::getInstance()->getConnection();
       $this->id = $id;
-      $this->cnie = $cnie;
+      $this->cni = $cnie;
       $this->nom = $nom;
       $this->prenom = $prenom;
       $this->email = $email;
@@ -92,7 +92,7 @@ class User {
                   WHERE id = :id";
       $stmt = $this->db->prepare($query);
       $stmt->bindParam(':id', $this->id, PDO::PARAM_INT);
-      $stmt->bindParam(':cnie', $this->cnie, PDO::PARAM_STR);
+      $stmt->bindParam(':cnie', $this->cni, PDO::PARAM_STR);
       $stmt->bindParam(':nom', $this->nom, PDO::PARAM_STR);
       $stmt->bindParam(':prenom', $this->prenom, PDO::PARAM_STR);
       $stmt->bindParam(':email', $this->email, PDO::PARAM_STR);
@@ -128,7 +128,7 @@ class User {
       return $this->nom;
    }
    public function getCnie() {
-      return $this->cnie;
+      return $this->cni;
    }
    public function getPrenom() {
       return $this->prenom;

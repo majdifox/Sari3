@@ -19,14 +19,16 @@ class ExpediteurController{
       echo '<pre>';
       // var_dump($_SESSION['user']->id);
       echo '</pre>';
-      $id_expediteur = $_SESSION['user']->id;
+      $id_expediteur = $_SESSION['user']['id'];
       $user =   $this->Expediteur->getProfileInfos($id_expediteur);
       
       require_once 'C:\laragon\www\Sari3\app\views\expediteur\Home_Annonces.php';
     }
 
-    public function detailsannonceexp(){
-
+    public function detailsannonceexp($id){
+        $Itineraire = $this->Expediteur->getItinerairebyID($id);
+        
+             $Details= $this->Expediteur->createItiniraireDetails( $Itineraire);
       require_once 'C:\laragon\www\Sari3\app\views\expediteur\Details_Annonces.php';
     }
 
@@ -49,10 +51,10 @@ class ExpediteurController{
     }
 
 
-    public function addAnnonce() {
-    //  check if all data $_POST are good 
-        // mn b3d  call this function $this->Expediteur->addAnnonce($data);
-    
+    public function makeRequest() {
+   
+    $this->Expediteur->MakeRequest($_POST);
+
   }
 
   public function deleteAnnonce($id) {

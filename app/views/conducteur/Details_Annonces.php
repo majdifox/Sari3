@@ -84,10 +84,31 @@
 
         function addCityMarkers() {
             const moroccanCities = [
-                { name: 'Casablanca', coords: [33.5731, -7.5898] },
-                { name: 'Rabat', coords: [34.0209, -6.8417] },
-                { name: 'Marrakech', coords: [31.6295, -7.9811] }
-            ];
+      { name: 'Casablanca', coords: [33.5731, -7.5898] },
+      { name: 'Rabat', coords: [34.0209, -6.8417] },
+      { name: 'Marrakech', coords: [31.6295, -7.9811] },
+      { name: 'Fes', coords: [34.0181, -5.0078] },
+      { name: 'Tangier', coords: [35.7595, -5.8340] },
+      { name: 'Agadir', coords: [30.4278, -9.5981] },
+      { name: 'Meknes', coords: [33.8945, -5.5475] },
+      { name: 'Oujda', coords: [34.6816, -1.9078] },
+      { name: 'Kenitra', coords: [34.2610, -6.5802] },
+      { name: 'Tetouan', coords: [35.5764, -5.3684] },
+      { name: 'Safi', coords: [32.2994, -9.2372] },
+      { name: 'El Jadida', coords: [33.2311, -8.5002] },
+      { name: 'Nador', coords: [35.1684, -2.9335] },
+      { name: 'Taza', coords: [34.2133, -4.0088] },
+      { name: 'Settat', coords: [33.0011, -7.6166] },
+      { name: 'Mohammedia', coords: [33.6844, -7.3874] },
+      { name: 'Khemisset', coords: [33.8248, -6.0661] },
+      { name: 'Guelmim', coords: [28.987, -10.0574] },
+      { name: 'Khouribga', coords: [32.8826, -6.9063] },
+      { name: 'Beni Mellal', coords: [32.3394, -6.3608] },
+      { name: 'Errachidia', coords: [31.9314, -4.4244] },
+      { name: 'Tiznit', coords: [29.6974, -9.7316] },
+      { name: 'Laayoune', coords: [27.1501, -13.1993] },
+      { name: 'Dakhla', coords: [23.6848, -15.9570] }
+    ];
 
             moroccanCities.forEach(city => {
                 const marker = L.marker(city.coords).addTo(map);
