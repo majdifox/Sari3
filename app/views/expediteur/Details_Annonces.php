@@ -106,9 +106,6 @@
     </main>
 
 
-
-
-
     <script>
         function coursInscription(ID_cours) {
         document.getElementById("ID_cours").value = ID_cours;
