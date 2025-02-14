@@ -198,13 +198,13 @@
                                     } ?></h5>
                                     <p class="mb-1">
                                         <i class="fas fa-truck me-2"></i>
-                                        <?php echo htmlspecialchars($ville->getVille()); ?>
+                                        <?php echo $ville->getVille(); ?>
                                     </p>
                                     
                                 </div>
                                 <div class="text-end">
                                     <span class="status-badge status-active">
-                                        <?php echo htmlspecialchars($ville->getOrders()); ?>
+                                        <?php echo $ville->getOrders(); ?>
                                     </span>
                                    
                                 </div>
