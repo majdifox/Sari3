@@ -118,9 +118,11 @@ class User {
   }
 
    // Get all users by role
-   public function getAllByRole($role) {
+   public static function getAllByRole($role) {
+      $db = Database::getInstance()->getConnection();
+
       $query = "SELECT * FROM utilisateurs WHERE Role = :role";
-      $stmt = $this->db->prepare($query);
+      $stmt = $db->prepare($query);
       $stmt->bindParam(':role', $role, PDO::PARAM_STR);
       $stmt->execute();
       return $stmt->fetchAll(PDO::FETCH_ASSOC);
