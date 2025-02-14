@@ -15,19 +15,22 @@ use App\Models\ItineraireDetails;
 
        
         public function addItineraire($dataCity,$dataVehicle,$TimingData){
-            echo '<pre>';
-            var_dump($dataCity);
-            echo '</pre>';
-            echo '<pre>';
-            var_dump($dataVehicle);
-            echo '</pre>';
-            echo '<pre>';
-            var_dump($TimingData);
-            echo '</pre>';
+            // echo '<pre>';
+            // var_dump($dataCity);
+            // echo '</pre>';
+            // echo '<pre>';
+            // var_dump($dataVehicle);
+            // echo '</pre>';
+            // echo '<pre>';
+            // var_dump($TimingData);
+            // echo '</pre>';
           $id =   Itineraire::create($dataVehicle["id"],$TimingData);
-          
-            foreach ($dataVehicle as $city => $value) {
-               
+            $i =0 ; 
+            echo $id["id"];
+            foreach ($dataCity as $ville ) {
+                echo $ville;
+                ItineraireDetails::create($id["id"],$ville,$i);
+                $i++;
             }
         }
         public function createItiniraireDetails(Itineraire $Itineraire) {
