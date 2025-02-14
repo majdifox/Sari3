@@ -10,7 +10,7 @@ $router->add('GET', 'admin', 'AdminController', 'dashboard');
 
 //Les Actions du Conducteur
 $router->add('GET', 'Conducteur', 'ConducteurController', 'dashboard');
-$router->add('GET', 'MesAnnonces', 'ConducteurController', 'mesannonces');
+$router->add('GET', 'MesAnnonces', 'ConducteurController', 'showItinirairesbyConducteur');
 $router->add('GET', 'DetailsAnnonce', 'ConducteurController', 'detailsannonce');
 $router->add('POST', 'addIteneraire', 'ConducteurController', 'addIteneraire');
 

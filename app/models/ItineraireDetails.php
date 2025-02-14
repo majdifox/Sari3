@@ -1,12 +1,12 @@
 <?php
 namespace App\Models;
 
+use PDO;
 use Core\Model;
+
 use Core\Database;
 
-use PDO;
-
-class ItineraireDetails extends Model {
+class ItineraireDetails {
     private $id;
     private $iteneraire_id;
     private $orders;
@@ -22,7 +22,19 @@ class ItineraireDetails extends Model {
         $this->status = $statut;
     }
 
-    // Get all itinerary details by conductor ID
+    public static function create($id,$ville,$order) {
+        echo $id;
+        $db = Database::getInstance()->getConnection();
+        $query = "INSERT INTO public.details_itineraire(
+	 itineraire_id, orders, ville)
+	VALUES ( :itineraire_id, :orders, :ville);";
+        $stmt = $db->prepare($query);
+        $stmt->bindParam(':itineraire_id', $id);
+        $stmt->bindParam(':orders', $order);
+        $stmt->bindParam(':ville', $ville);
+        return $stmt->execute();
+    }
+    
     public function getAllbyConducteur($id) {
         $query = "SELECT di.* FROM details_itineraire di
                   JOIN itineraire i ON di.itineraire_id = i.id

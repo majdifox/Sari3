@@ -2,7 +2,7 @@
  namespace App\Controllers;
 
  use App\Models\Conducteur;
-
+session_start();
 class ConducteurController{
     public $conducteur;
     public function __construct(){
@@ -10,14 +10,31 @@ class ConducteurController{
     }
 
       public function showItinirairesbyConducteur(){
-         
+            $id_condecteur = $_SESSION["user"]["id"];
+            $data = $this->conducteur->getItinerairebyCondicteur($id_condecteur);
+         require_once('C:\laragon\www\Sari3\app\views\conducteur\Mes_Annonces.php');
       }
       public function showItiniraire(){
             
       }
       public function addIteneraire(){
+            if ($_SERVER["REQUEST_METHOD"] === "POST") {
+                  // Decode JSON to get vehicle as an object
+                  $vehicleData = json_decode($_POST['vehicleData'], true);  // Decode JSON string to an array
+                  $selectedCities = $_POST['cities'] ?? [];
+              
+                  echo '<h2>Vehicle Data:</h2>';
+                  echo '<pre>';
+                  print_r($vehicleData); // This should now be an array (or object if casted)
+                  echo '</pre>';
+              
+                  echo '<h2>Selected Cities:</h2>';
+                  echo '<pre>';
+                  print_r($selectedCities);
+                  $this->conducteur->addAnnonce($selectedCities,$vehicleData,$_POST);
+                  echo '</pre>';
+              }
             var_dump($_POST);
-            $this->conducteur->addAnnonce($_POST);
       }
       public function dashboard(){
             // echo 'getItinerairebyCondicteur';

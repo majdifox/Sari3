@@ -14,11 +14,16 @@ use App\Models\ItineraireDetails;
        }
 
        
-        public function addItineraire($data){
-          $id =   Itineraire::create($data);
-            foreach ($data[""] as $key => $value) {
-               
+        public function addItineraire($dataCity,$dataVehicle,$TimingData){
+            var_dump($dataCity);
+          $data =   Itineraire::create($dataVehicle["id"],$TimingData);
+          $i = 0;
+            foreach ($dataCity as $city ) {
+                
+                ItineraireDetails::create($data["id"],$city,$i);
+                $i++;
             }
+            
         }
         public function createItiniraireDetails(Itineraire $Itineraire) {
             // ona  le id de Itineraire dans ghadi n9lb 3la details lkhrin dylo
@@ -37,9 +42,12 @@ use App\Models\ItineraireDetails;
         public function getItineraire($id){
             // n9lbo 3la iniraire f database 
             $Itineraire = Itineraire::get($id);
+            echo '<pre>';
+            var_dump($Itineraire);
+            echo '</pre>';
             if($Itineraire){
                 
-                return new Itineraire($id,$conducteur_id,$vehicule_id,$date_depart,$date_arriver,$statut);
+                return new Itineraire($Itineraire["id"],$Itineraire["conducteur_id"],$Itineraire["vehicule_id"],$Itineraire["date_depart"],$Itineraire["date_arriver"],$Itineraire["statut"]);
             }else{
                 false;
             }
@@ -50,6 +58,15 @@ use App\Models\ItineraireDetails;
         }
         public function getItinerairebyCondicteur($id_condecteur){
             // n9lbo 3la iniraire f database  + details
+           $data = Itineraire::getAllByConducteur($id_condecteur);
+           $objects = [];
+           $i = 0;
+           foreach ($data as $it) {
+            $objects[$i] = $this->getItineraire($it['id']);
+            $i++;
+            
+        }
+        return $objects;
             // b3d $result = fetchObject('itineraire');
         }
         

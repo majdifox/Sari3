@@ -30,8 +30,8 @@ class Conducteur  extends  User {
     public function getColis($id){
      $colis =  $this->ColisFactory->getColis($id);
     }
-    public function addAnnonce($data) {
-      $this->ItineraireFactory->addItineraire($data);
+    public function addAnnonce($dataCity,$dataVehicle,$TimingData) {
+      $this->ItineraireFactory->addItineraire($dataCity,$dataVehicle,$TimingData);
     }
   
   public function deleteAnnonce($id) {
@@ -79,9 +79,10 @@ class Conducteur  extends  User {
     $data = $this->vehicule->getByItineraire($id);
     $vehicule = new Vehicule();
    }
-   public function getItinerairebyCondicteur($id){
-   
-    echo $id;
+   public function getItinerairebyCondicteur($id_condecteur){
+    return  $data =  $this->ItineraireFactory->getItinerairebyCondicteur($id_condecteur);
+
+    
    }
    public function createItiniraireDetails( $Itineraire_id){
     // $this->ItineraireFactory-> createItiniraireDetails(Itineraire $Itineraire);

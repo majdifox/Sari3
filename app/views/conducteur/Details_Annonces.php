@@ -26,6 +26,7 @@
 </head>
 <body class="bg-gradient-to-t from-blue-300 via-blue-200 to-blue-100">
     <?php include_once('C:\laragon\www\Sari3\app\views\includes\NvHeader.php'); ?>
+
     <form action="addIteneraire" method="post" onsubmit="addCitiesToForm()">
         <main class="container mx-auto p-4">
             <h1 class="text-3xl font-bold text-center mb-4">Moroccan Cities Map</h1>
@@ -46,105 +47,50 @@
                                 <th class="border border-gray-300 p-2">Action</th>
                             </tr>
                         </thead>
-                        <tbody id="cityTableBody">
-                            <!-- Selected cities will appear here -->
-                        </tbody>
+                        <tbody id="cityTableBody"></tbody>
                     </table>
                 </div>
             </div>
         </main>
         <main>
             <div class="max-w-sm mx-auto mt-[4rem]">
-                <label for="vehicle-select" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Choisissez Votre Véhicule</label>
+                <label for="vehicle-select" class="block mb-2 text-sm font-medium text-gray-900">Choisissez Votre Véhicule</label>
                 <select id="vehicle-select" name="vehicle" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5">
-                    <option value=""></option>
+                    <option value="">Loading vehicles...</option>
                 </select>
+                
+                <!-- Hidden input to store vehicle data -->
+                <input type="hidden" id="vehicleData" name="vehicleData">
+
                 <div class="mt-4">
-                    <div class="mb-4">
-                        <label for="date_depart" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Date de Depart</label>
-                        <input type="datetime-local" name="date_depart" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5">
-                    </div>
-                    <div class="mb-4">
-                        <label for="date_arriver" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Date de Arriver</label>
-                        <input type="datetime-local" name="date_arriver" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5">
-                    </div>
+                    <label for="date_depart" class="block mb-2 text-sm font-medium text-gray-900">Date de Depart</label>
+                    <input type="datetime-local" name="date_depart" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5">
+
+                    <label for="date_arriver" class="block mb-2 text-sm font-medium text-gray-900">Date de Arriver</label>
+                    <input type="datetime-local" name="date_arriver" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5">
                 </div>
+                
                 <input type="submit" value="ADD" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600">
             </div>
         </main>
     </form>
+
     <?php include_once('C:\laragon\www\Sari3\app\views\includes\NvFooter.php'); ?>
+
     <!-- Leaflet JS -->
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <script>
-        // Define Morocco boundaries
-        const moroccoBounds = [
-            [21.0, -17.0], // Southwest
-            [36.0, -1.0]   // Northeast
-        ];
-
-        // Initialize the map
-        const map = L.map('map', {
-            center: [31.7917, -7.0926],
-            zoom: 6,
-            minZoom: 5,
-            maxZoom: 12,
-            maxBounds: moroccoBounds,
-            maxBoundsViscosity: 1.0
-        });
-
-        // Add OpenStreetMap tile layer
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '&copy; OpenStreetMap contributors'
-        }).addTo(map);
-
-        // Moroccan cities with coordinates
-        const moroccanCities = [
-            { name: 'Casablanca', coords: [33.5731, -7.5898] },
-            { name: 'Rabat', coords: [34.0209, -6.8417] },
-            { name: 'Marrakech', coords: [31.6295, -7.9811] },
-            { name: 'Fes', coords: [34.0181, -5.0078] },
-            { name: 'Tangier', coords: [35.7595, -5.8340] },
-            { name: 'Agadir', coords: [30.4278, -9.5981] },
-            { name: 'Meknes', coords: [33.8945, -5.5475] },
-            { name: 'Oujda', coords: [34.6816, -1.9078] },
-            { name: 'Kenitra', coords: [34.2610, -6.5802] },
-            { name: 'Tetouan', coords: [35.5764, -5.3684] },
-            { name: 'Safi', coords: [32.2994, -9.2372] },
-            { name: 'El Jadida', coords: [33.2311, -8.5002] },
-            { name: 'Nador', coords: [35.1684, -2.9335] },
-            { name: 'Taza', coords: [34.2133, -4.0088] },
-            { name: 'Settat', coords: [33.0011, -7.6166] },
-            { name: 'Mohammedia', coords: [33.6844, -7.3874] },
-            { name: 'Khemisset', coords: [33.8248, -6.0661] },
-            { name: 'Guelmim', coords: [28.987, -10.0574] },
-            { name: 'Khouribga', coords: [32.8826, -6.9063] },
-            { name: 'Beni Mellal', coords: [32.3394, -6.3608] },
-            { name: 'Errachidia', coords: [31.9314, -4.4244] },
-            { name: 'Tiznit', coords: [29.6974, -9.7316] },
-            { name: 'Laayoune', coords: [27.1501, -13.1993] },
-            { name: 'Dakhla', coords: [23.6848, -15.9570] }
-        ];
-
-        // List to store selected cities
         let selectedCities = [];
 
-        // Define green marker icon
-        const greenIcon = L.icon({
-            iconUrl: 'https://i.pinimg.com/originals/87/ee/a5/87eea5f5db0b138dc45dfb403570df6f.png',
-            iconSize: [25, 41],
-            iconAnchor: [12, 41],
-            popupAnchor: [1, -34]
-        });
-
-        // Store markers to update their icons
-        const markers = {};
-
         function addCityMarkers() {
+            const moroccanCities = [
+                { name: 'Casablanca', coords: [33.5731, -7.5898] },
+                { name: 'Rabat', coords: [34.0209, -6.8417] },
+                { name: 'Marrakech', coords: [31.6295, -7.9811] }
+            ];
+
             moroccanCities.forEach(city => {
                 const marker = L.marker(city.coords).addTo(map);
-                markers[city.name] = marker; // Store marker reference
-
                 marker.bindPopup(`
                     <b>${city.name}</b><br>
                     <div onclick="selectCity('${city.name}')" class="bg-blue-500 text-white px-2 py-1 rounded-lg hover:bg-blue-600">
@@ -159,67 +105,35 @@
                 alert("This city is already selected!");
                 return;
             }
-
             selectedCities.push(cityName);
             updateTable();
-
-            if (markers[cityName]) {
-                markers[cityName].setIcon(greenIcon);
-            }
         }
 
         function updateTable() {
             const tableBody = document.getElementById("cityTableBody");
-            tableBody.innerHTML = ""; // Clear table
-
+            tableBody.innerHTML = "";
             selectedCities.forEach((city, index) => {
-                const row = document.createElement("tr");
-
-                const orderCell = document.createElement("td");
-                orderCell.textContent = index + 1;
-                orderCell.className = "border border-gray-300 p-2";
-
-                const cityCell = document.createElement("td");
-                cityCell.textContent = city;
-                cityCell.className = "border border-gray-300 p-2";
-
-                const deleteCell = document.createElement("td");
-                const deleteButton = document.createElement("button");
-                deleteButton.textContent = "Delete";
-                deleteButton.className = "delete-btn";
-                deleteButton.onclick = () => deleteCity(city);
-
-                deleteCell.appendChild(deleteButton);
-                row.appendChild(orderCell);
-                row.appendChild(cityCell);
-                row.appendChild(deleteCell);
-
-                tableBody.appendChild(row);
+                const row = `<tr>
+                    <td class="border border-gray-300 p-2">${index + 1}</td>
+                    <td class="border border-gray-300 p-2">${city}</td>
+                    <td class="border border-gray-300 p-2">
+                        <button onclick="deleteCity('${city}')" class="delete-btn">Delete</button>
+                    </td>
+                </tr>`;
+                tableBody.innerHTML += row;
             });
         }
 
         function deleteCity(cityName) {
             selectedCities = selectedCities.filter(city => city !== cityName);
             updateTable();
-
-            // Restore original marker icon if removed
-            if (markers[cityName]) {
-                markers[cityName].setIcon(L.Icon.Default.prototype);
-            }
         }
 
         function clearTable() {
             selectedCities = [];
             updateTable();
-
-            // Reset all markers to default
-            Object.values(markers).forEach(marker => marker.setIcon(L.Icon.Default.prototype));
         }
 
-        // Add city markers to the map
-        addCityMarkers();
-
-        // Function to add selected cities to the form before submission
         function addCitiesToForm() {
             const form = document.querySelector('form');
             selectedCities.forEach((city, index) => {
@@ -229,28 +143,32 @@
                 input.value = city;
                 form.appendChild(input);
             });
+
+            const selectedVehicle = document.getElementById('vehicle-select').value;
+            document.getElementById('vehicleData').value = selectedVehicle;
         }
-    </script>
-    <script>
-        // Fetch vehicles data
+
+        // Load vehicles
         fetch('https://oussamaamou.github.io/Vehicules-Colliers-API/')
             .then(response => response.json())
             .then(data => {
                 const selectElement = document.getElementById('vehicle-select');
-                selectElement.innerHTML = '';
-
+                selectElement.innerHTML = '<option value="">Select a vehicle</option>';
                 data.vehicules.forEach(vehicule => {
                     const option = document.createElement('option');
-                    option.value = JSON.stringify(vehicule); // Send the entire vehicle object as JSON
+                    option.value = JSON.stringify(vehicule);
                     option.textContent = `${vehicule.marque} ${vehicule.modele} - ${vehicule.type_vehicule}`;
                     selectElement.appendChild(option);
                 });
             })
             .catch(error => {
                 console.error('Error fetching data:', error);
-                const selectElement = document.getElementById('vehicle-select');
-                selectElement.innerHTML = '<option value="">Failed to load vehicles</option>';
+                document.getElementById('vehicle-select').innerHTML = '<option value="">Failed to load vehicles</option>';
             });
+
+        const map = L.map('map').setView([31.7917, -7.0926], 6);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+        addCityMarkers();
     </script>
 </body>
 </html>
