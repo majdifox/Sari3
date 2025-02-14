@@ -47,7 +47,7 @@ class AdminController
     
     public function gestion_profile()
     {
-        $user = $this->getProfile($this->getId());
+       
         require_once 'C:\laragon\www\Sari3\app\views\Admin\Profile_Administrateur.php';
     }
     public function getDashboardStats() {
@@ -99,12 +99,12 @@ class AdminController
         $userFactory = new \App\Models\UserFactory();
         $expediteurs = $userFactory->getAllExpediteurs();
         return $expediteurs;
-        return $expediteurs;
     }
     public function getProfile()
     {
         $userFactory = new \App\Models\UserFactory();
-        $user = $userFactory->getProfile($id);
+        $user = $userFactory->getProfile(3);
+
         return $user;
     }
     public function ListUsers()
@@ -197,7 +197,7 @@ class AdminController
 }
     public function getId()
 {
-    return $this->getId();
+    return $this->admin->getId();
 }   
 
     
