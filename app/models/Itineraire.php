@@ -68,7 +68,7 @@ class Itineraire  {
 	 conducteur_id, vehicule_id, date_depart, date_arriver)
 	VALUES (:conducteur_id, :vehicule_id, :date_depart, :date_arriver) RETURNING  id;";
         $stmt = $db->prepare($query);
-        $stmt->bindParam(':conducteur_id', $_SESSION["user"]['id']);
+        $stmt->bindParam(':conducteur_id', $_SESSION["user"]->id);
         $stmt->bindParam(':vehicule_id', $id);
         $stmt->bindParam(':date_depart', $TimingData['date_depart']);
         $stmt->bindParam(':date_arriver', $TimingData['date_arriver']);

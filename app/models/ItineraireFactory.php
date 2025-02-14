@@ -14,10 +14,19 @@ use App\Models\ItineraireDetails;
        }
 
        
-        public function addItineraire($data){
-          $id =   Itineraire::create($data);
-          var_dump($data);
-            foreach ($data[""] as $key => $value) {
+        public function addItineraire($dataCity,$dataVehicle,$TimingData){
+            echo '<pre>';
+            var_dump($dataCity);
+            echo '</pre>';
+            echo '<pre>';
+            var_dump($dataVehicle);
+            echo '</pre>';
+            echo '<pre>';
+            var_dump($TimingData);
+            echo '</pre>';
+          $id =   Itineraire::create($dataVehicle["id"],$TimingData);
+          
+            foreach ($dataVehicle as $city => $value) {
                
             }
         }
