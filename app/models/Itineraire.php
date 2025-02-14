@@ -40,11 +40,13 @@ class Itineraire implements Model {
         $connexion = Database::getInstance()->getConnection();
         $query = "SELECT i.*, 
                         u.nom as conducteur_nom, 
-                        u.prenom as conducteur_prenom
+                        u.prenom as conducteur_prenom,
+                        i.date_depart,
+                        i.date_arriver,
+                        i.statut
                 FROM itineraire i
                 JOIN utilisateurs u ON i.conducteur_id = u.id
-                ORDER BY i.date_depart DESC 
-                LIMIT 5";
+                ORDER BY i.date_depart DESC";
                 
         $stmt = $connexion->prepare($query);
         $stmt->execute();

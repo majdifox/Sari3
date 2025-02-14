@@ -176,14 +176,12 @@ if (!isset($_SESSION['user']) || !isset($_SESSION['user']->prenom)) {
                 </div>
                 <div class="overflow-x-auto">
                 <?php if (!empty($itineraires)): ?>
-                    <?php foreach ($itineraires as $itineraire): ?>
                         <table class="w-full">
                         <thead>
                             <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b bg-gray-50">
                                 <th class="px-4 py-3">Conducteur</th>
-                                <th class="px-4 py-3">Départ</th>
-                                <th class="px-4 py-3">Arrivée</th>
                                 <th class="px-4 py-3">Date</th>
+                                <th class="px-4 py-3">Statut</th>
                             </tr>
                         </thead>
                         <tbody class="bg-white divide-y">
@@ -192,14 +190,13 @@ if (!isset($_SESSION['user']) || !isset($_SESSION['user']->prenom)) {
                                 <td class="px-4 py-3">
                                     <?= htmlspecialchars($itineraire['conducteur_nom'] . ' ' . $itineraire['conducteur_prenom']) ?>
                                 </td>
-                                <td class="px-4 py-3"><?= htmlspecialchars($itineraire['ville_depart']) ?></td>
-                                <td class="px-4 py-3"><?= htmlspecialchars($itineraire['ville_arrivee']) ?></td>
                                 <td class="px-4 py-3"><?= date('d/m/Y', strtotime($itineraire['date_depart'])) ?></td>
+                                <td class="px-4 py-3"><?= htmlspecialchars($itineraire['statut']) ?></td>
                             </tr>
                             <?php endforeach; ?>
                         </tbody>
                     </table>
-                    <?php endforeach; ?>
+
                 <?php else: ?>
                     <tr>
                         <td colspan="4" class="px-4 py-3 text-center text-gray-500">
