@@ -1,9 +1,9 @@
 <?php
 namespace App\Models;
-
+use Core\Database;
 use Core\Model;
 
-class Colis extends Model {
+class Colis implements Model {
     private $id;
     private $expediteur_id;
     private $itineraire_id;
@@ -81,7 +81,28 @@ class Colis extends Model {
         // return $this->execute($sql, array_values($data));
     }
 
+    public function delete(){
 
+    }
+    public function read(){
+
+    }
+    public static function CountAll() {
+        $connexion = Database::getInstance()->getConnection();
+        $sql = "SELECT COUNT(*) as numbertotal FROM colis ";
+        $stmt = $connexion->query($sql);
+        $result = $stmt->fetch(\PDO::FETCH_ASSOC);
+        return $result['numbertotal'];
+    }
+    public static function CountByStatus($status) {
+        $connexion = Database::getInstance()->getConnection();
+        $sql = "SELECT COUNT(*) as numbertotalcolis FROM colis where statut=:statut  ";
+        $stmt = $connexion->prepare($sql);
+        $stmt->bindValue(':statut', $status);
+        $stmt->execute();
+        $result = $stmt->fetch(\PDO::FETCH_ASSOC);
+        return $result['numbertotalcolis'];
+    }
 
 
 

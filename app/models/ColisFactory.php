@@ -50,5 +50,13 @@ class ColisFactory {
       $colis->create();
 
     }
+    public function CountAll(){
+        $colis= Colis::CountAll();
+        return $colis;
+    }
+    public function CountByStatus($status){
+        $colis= Colis::CountByStatus($status);
+        return $colis;
+    }
 }
 

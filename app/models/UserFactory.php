@@ -29,6 +29,16 @@ class UserFactory {
         }
         return null;
     }
+    /////////////////////////////////////////////////////////////////
+    public function CountAll() {
+    $user =   User::CountAll();
+       return  $user;
+    }
+    public function CountByRole($role) {
+        $user =   User::CountByRole($role);
+           return  $user;
+        }
+     ////////////////////////////////////////////////////////////
     public function authenticate($username, $password) {
         $sql = "SELECT * FROM users WHERE username = :username";
         $stmt = $this->db->prepare($sql);
@@ -55,3 +65,4 @@ class UserFactory {
         return User::getAllbyRole($role);
     }
 }
+

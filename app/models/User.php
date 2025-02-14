@@ -42,7 +42,28 @@ class User   {
       $stmt->bindParam(':id', $id);
       return $stmt->execute();
   }
+  //////////////////////////////////////////////////////////////////////////
+  public static function countAll() {
+   $connexion = Database::getInstance()->getConnection();
+   $sql = "SELECT COUNT(*) as numbertotal FROM utilisateurs";
+   $stmt = $connexion->query($sql);
+   $result = $stmt->fetch(\PDO::FETCH_ASSOC);
+   return $result['numbertotal'] ?? 0;
+}
 
+
+
+public static function countByRole($role) {
+   $connexion = Database::getInstance()->getConnection();
+   $sql = "SELECT COUNT(*) as numbertotalrole FROM utilisateurs WHERE role = :role";
+   $stmt = $connexion->prepare($sql);
+   $stmt->bindValue(':role', $role);
+   $stmt->execute();
+   $result = $stmt->fetch(\PDO::FETCH_ASSOC);
+   return $result['numbertotalrole'] ?? 0;
+}
+
+/////////////////////////////////////////////////////////////////////
   public function delete() {
       $sql = "DELETE FROM users WHERE id_user = :id";
       $stmt = $this->db->prepare($sql);

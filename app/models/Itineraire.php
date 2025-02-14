@@ -43,6 +43,22 @@ class Itineraire implements Model {
         $stmt->execute();
         return $stmt->fetchAll();
     }
+    public static function CountAll() {
+        $connexion = Database::getInstance()->getConnection();
+        $sql = "SELECT COUNT(*) as NumberTotal FROM  itineraire";
+        $stmt = $connexion->query($sql);
+        $result = $stmt->fetch(\PDO::FETCH_ASSOC);
+        return $result['NumberTotal'] ?? 0;
+    }
+    public static function CountByStatus($status) {
+        $connexion = Database::getInstance()->getConnection();
+        $sql = "SELECT COUNT(*) as NumberTotalit FROM itineraire where statut=:status ";
+        $stmt = $connexion->prepare($sql);
+        $stmt->bindValue(':status', $status);
+        $stmt->execute();
+        $result = $stmt->fetch(\PDO::FETCH_ASSOC);
+        return $result['NumberTotalit'] ?? 0;
+    }
     public function create() {
         
     }

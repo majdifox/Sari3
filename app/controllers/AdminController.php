@@ -27,11 +27,42 @@ class AdminController
         $date_depart = '2025-01-01'; // Example value, replace with actual logic
         $date_arriver = '2025-01-02'; // Example value, replace with actual logic
         $statut = 'active'; // Example value, replace with actual logic
-        // $dashboardData = $adminController->getDashboardData();
-
+        $stats = $this->getDashboardStats();
+        // $total_users = $this->admin->CountUtilisateurs();
         $itineraires = $this->admin->ListItineraires($conducteur_id, $vehicule_id, $date_depart, $date_arriver, $statut);
         require_once 'C:\laragon\www\Sari3\app\views\Admin\Dashboard_Administrateur.php';
         // return json_encode($itineraires);
+    }
+    public function getDashboardStats() {
+        $stats = [];
+        
+        // Statistiques des utilisateurs
+        $userFactory = new \App\Models\UserFactory();
+        $stats['users'] = [
+            'total' => $userFactory->CountAll(),         // Maintenant retourne directement le nombre
+            'conducteurs' => $userFactory->CountByRole('Conducteur'),  // Retourne directement le nombre
+            'expediteurs' => $userFactory->CountByRole('Expediteur'), // Retourne directement le nombre
+            'admins' => $userFactory->CountByRole('Admin')            // Retourne directement le nombre
+        ];
+        
+        // Statistiques des itinéraires
+        $itineraireFactory = new \App\Models\ItineraireFactory();
+        $stats['itineraires'] = [
+            'total' => $itineraireFactory->CountAll() ?? 0,
+            'actifs' => $itineraireFactory->CountByStatus('En préparation') ?? 0,
+            'termines' => $itineraireFactory->CountByStatus('En transit') ?? 0
+        ];
+        
+        // Statistiques des colis
+        $colisFactory = new \App\Models\ColisFactory();
+        $stats['colis'] = [
+            'total' => $colisFactory->CountAll() ?? 0,
+            'en_attente' => $colisFactory->CountByStatus('En préparation') ?? 0,
+            'en_cours' => $colisFactory->CountByStatus('En transit') ?? 0,
+            'livres' => $colisFactory->CountByStatus('Livré') ?? 0
+        ];
+        // var_dump($stats);
+        return $stats;
     }
 
     public function ListConducteurs()

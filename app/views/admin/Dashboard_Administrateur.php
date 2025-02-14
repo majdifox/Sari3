@@ -1,12 +1,10 @@
 <?php
-
-
 session_start();
 if (!isset($_SESSION['user']) || !isset($_SESSION['user']->prenom)) {
     header('Location: /login');
     exit();
 }
-echo $conducteur_id;
+
 ?>
 
 <!DOCTYPE html>
@@ -76,7 +74,7 @@ echo $conducteur_id;
                         <i class="fas fa-users text-xl"></i>
                     </div>
                     <div>
-                        <span class="block text-2xl font-bold"><?= $total_users ?></span>
+                        <span class="block text-2xl font-bold"><?= $stats['users']['total'] ?></span>
                         <span class="block text-gray-500">Utilisateurs</span>
                     </div>
                 </div>
@@ -87,7 +85,7 @@ echo $conducteur_id;
                         <i class="fas fa-car text-xl"></i>
                     </div>
                     <div>
-                        <span class="block text-2xl font-bold"><?= $conducteurs_count ?></span>
+                        <span class="block text-2xl font-bold"><?= $stats['users']['conducteurs'] ?></span>
                         <span class="block text-gray-500">Conducteurs</span>
                     </div>
                 </div>
@@ -98,7 +96,7 @@ echo $conducteur_id;
                         <i class="fas fa-user text-xl"></i>
                     </div>
                     <div>
-                        <span class="block text-2xl font-bold"><?= $expediteurs_count ?></span>
+                        <span class="block text-2xl font-bold"><?= $stats['users']['expediteurs'] ?></span>
                         <span class="block text-gray-500">Expéditeurs</span>
                     </div>
                 </div>
@@ -109,7 +107,7 @@ echo $conducteur_id;
                         <i class="fas fa-box text-xl"></i>
                     </div>
                     <div>
-                        <span class="block text-2xl font-bold"><?= $total_colis ?></span>
+                        <span class="block text-2xl font-bold"><?= $stats['colis']['total'] ?></span>
                         <span class="block text-gray-500">Colis</span>
                     </div>
                 </div>

@@ -42,6 +42,12 @@ class Admin extends User {
         $userFactory = new UserFactory();
         return $userFactory->getAllConducteurs(); 
     }
+    // public function CountUtilisateurs()
+    // {
+    //     $userFactory = new UserFactory();
+    //     $count =  $userFactory->CountUsers(); 
+    //     return $count["numbertotal"];
+    // }
     public function selectItineraires($conducteur_id, $vehicule_id, $date_depart, $date_arriver, $statut) {
         $itineraireModel = new Itineraire($conducteur_id, $vehicule_id, $date_depart, $date_arriver, $statut);
         return $itineraireModel->getItinerairesForDate($date_depart);
@@ -74,4 +80,5 @@ class Admin extends User {
         $vehiculeModel = new VehiculeModel(); // Assuming this model exists
         $vehiculeModel->delete($id_Vehicule); // Assuming this method exists
     }
+    
 }

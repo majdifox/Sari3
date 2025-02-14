@@ -29,6 +29,14 @@ use App\Models\ItineraireDetails;
             } 
             }
         }
+        public function CountAll(){
+            $itit= Itineraire::CountAll();
+            return $itit;
+        }
+        public function CountByStatus($status){
+            $itit= Itineraire::CountByStatus($status);
+            return $itit;
+        }
         public function getItineraire($id){
             // n9lbo 3la iniraire f database 
             $Itineraire = Itineraire::get($id);
