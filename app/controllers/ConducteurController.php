@@ -10,7 +10,7 @@ class ConducteurController{
     }
 
       public function showItinirairesbyConducteur(){
-            $id_condecteur = $_SESSION["user"]["id"];
+            $id_condecteur = $_SESSION["user"]['id'];
             $data = $this->conducteur->getItinerairebyCondicteur($id_condecteur);
          require_once('C:\laragon\www\Sari3\app\views\conducteur\Mes_Annonces.php');
       }
@@ -63,16 +63,13 @@ class ConducteurController{
       }
       
       public function mesannonces() {
-            
+            $id_condecteur = $_SESSION['user']['id'];
+            $data = $this->conducteur->getItinerairebyCondicteur($id_condecteur);
             require_once 'C:\laragon\www\Sari3\app\views\conducteur\Mes_Annonces.php';
     
       }
 
-      public function detailsannonce() {
-            
-            require_once 'C:\laragon\www\Sari3\app\views\conducteur\Details_Annonces.php';
-    
-      }
+      
       
       public function addAnnonce() {
             //  @oussamaamou
@@ -115,4 +112,3 @@ class ConducteurController{
       }
 }
 
-      

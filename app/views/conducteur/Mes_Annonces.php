@@ -82,7 +82,7 @@
     <?php
 
         foreach ($data as $itineraire ) {
-            var_dump($itineraire)
+            // var_dump($itineraire)
             ?>
         
         <!-- Les annonces du conducteur-->
@@ -90,8 +90,6 @@
             <div class="flex flex-col md:flex-row">
                 <div class="md:w-1/3 text-center mb-8 md:mb-0">
 
-                    <h2 class="text-xl font-semibold text-blue-500 mb-4  mt-[3rem]">Vehicule</h2>
-                    <p class="text-stone-700 font-semibold">Ford Transit - Camion</p>
 
                     <a  href='AnnonceDetails/<?=$itineraire->getId()?>'>
                     <button class="ml-[5.7rem] mt-[5rem] flex items-center rounded-md border border-blue-300 py-2 px-4 text-center text-sm transition-all shadow-sm hover:shadow-lg text-blue-600 hover:text-white hover:bg-blue-800 hover:border-blue-800 focus:text-white focus:bg-blue-800 focus:border-blue-800 active:border-blue-800 active:text-white active:bg-blue-800 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none" type="button">
