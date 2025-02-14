@@ -56,7 +56,6 @@
         </button>
     </form>
 
-
     <main class="overflow-hidden">  
         
         <div class="mt-[4rem] ml-[20rem] bg-white dark:bg-gray-800 rounded-xl shadow-2xl max-w-4xl w-full p-8 transition-all duration-300 animate-fade-in pt-[3.5rem]">
