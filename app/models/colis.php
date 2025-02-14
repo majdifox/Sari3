@@ -157,8 +157,28 @@ class Colis implements Model {
        return  $this->destination = $destination;
     }
     
+    // les 5 dernier colis
+    public static function getRecentColis()
+{
+    $connexion = Database::getInstance()->getConnection();
     
-    
+    // Join with utilisateurs table to get expediteur information
+    $query = "SELECT c.*, 
+                     u.prenom as expediteur_prenom, 
+                     u.nom as expediteur_nom
+              FROM colis c
+              JOIN utilisateurs u ON c.expediteur_id = u.id
+              ORDER BY c.date_depart DESC 
+              LIMIT 5";
+              
+    $stmt = $connexion->prepare($query);
+    $stmt->execute();
+    $recent_colis = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+
+    return $recent_colis;
+}
+
+
     
    
 }

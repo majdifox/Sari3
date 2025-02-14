@@ -21,15 +21,12 @@ class AdminController
 
     public function dashboard()
     {   
-        // Assuming you have the necessary parameters available
-        $conducteur_id = 1; // Example value, replace with actual logic
-        $vehicule_id = 1; // Example value, replace with actual logic
-        $date_depart = '2025-01-01'; // Example value, replace with actual logic
-        $date_arriver = '2025-01-02'; // Example value, replace with actual logic
-        $statut = 'active'; // Example value, replace with actual logic
         $stats = $this->getDashboardStats();
+        $recent_colis=$this->getRecentColis();
+        $conducteurs = $this->ListConducteurs();
+        $itineraires = $this->ListItineraires();
         // $total_users = $this->admin->CountUtilisateurs();
-        $itineraires = $this->admin->ListItineraires($conducteur_id, $vehicule_id, $date_depart, $date_arriver, $statut);
+        
         require_once 'C:\laragon\www\Sari3\app\views\Admin\Dashboard_Administrateur.php';
         // return json_encode($itineraires);
     }
@@ -39,10 +36,10 @@ class AdminController
         // Statistiques des utilisateurs
         $userFactory = new \App\Models\UserFactory();
         $stats['users'] = [
-            'total' => $userFactory->CountAll(),         // Maintenant retourne directement le nombre
-            'conducteurs' => $userFactory->CountByRole('Conducteur'),  // Retourne directement le nombre
-            'expediteurs' => $userFactory->CountByRole('Expediteur'), // Retourne directement le nombre
-            'admins' => $userFactory->CountByRole('Admin')            // Retourne directement le nombre
+            'total' => $userFactory->CountAll(),    
+            'conducteurs' => $userFactory->CountByRole('Conducteur'),
+            'expediteurs' => $userFactory->CountByRole('Expediteur'), 
+            'admins' => $userFactory->CountByRole('Admin')      
         ];
         
         // Statistiques des itinéraires
@@ -67,26 +64,28 @@ class AdminController
 
     public function ListConducteurs()
     {
-        $userFactory = new UserFactory();
+        $userFactory = new \App\Models\UserFactory();
         $conducteurs = $userFactory->getAllConducteurs();
-        return json_encode($conducteurs);
+        return $conducteurs;
     }
-    public function ListItineraires($conducteur_id, $vehicule_id, $date_depart, $date_arriver, $statut)
+    public function ListItineraires()
     {
-        $itineraires = Itineraire::getAllbyConducteur($this->admin->getId(), $conducteur_id, $vehicule_id, $date_depart, $date_arriver, $statut);
-        return json_encode($itineraires);
+        $itineraireFactory = new \App\Models\ItineraireFactory();
+        $itineraires = $itineraireFactory->getItineraire();
+        return $itineraires;
     }
     public function ListExpediteurs()
     {
-        $userFactory = new UserFactory();
+        $userFactory = new \App\Models\UserFactory();
         $expediteurs = $userFactory->getAllExpediteurs();
-        return json_encode($expediteurs);
+        return $expediteurs;
+        return $expediteurs;
     }
     public function ListUsers()
     {
         $userFactory = new UserFactory();
         $users = $userFactory->getAllUsers(); 
-        return json_encode($users);
+        return $users;
     }
 
     public function deleteUser($id_user)
@@ -112,7 +111,7 @@ class AdminController
 
     public function BanUser($id_user)
     {
-        $userFactory = new UserFactory();
+        $userFactory = new \App\Models\UserFactory();
         $userFactory->ban($id_user); 
         return json_encode(['status' => 'success']);
     }
@@ -158,6 +157,15 @@ class AdminController
         return json_encode(['status' => 'success']);
     }
     
+
+
+
+    public function getRecentColis()
+{
+    $colisFactory = new \App\Models\ColisFactory();
+    $recent_colis = $colisFactory->RecentColis(); 
+    return $recent_colis;
+}
 
     
 }

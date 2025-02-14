@@ -38,6 +38,24 @@ class UserFactory {
         $user =   User::CountByRole($role);
            return  $user;
         }
+
+        public function getAllConducteurs() {
+            $role = 'Conducteur';
+            $user = User::getAllbyRole($role);
+            return $user;
+
+        }
+        public function getAllExpediteurs() {
+            $role = 'Expediteur';
+            $user = User::getAllbyRole($role);
+            return $user;
+
+        }
+        public function getAllAdmins() {
+            $role = 'Admin';
+            $user= User::getAllbyRole($role);
+            return $user;
+        }
      ////////////////////////////////////////////////////////////
     public function authenticate($username, $password) {
         $sql = "SELECT * FROM users WHERE username = :username";
@@ -56,13 +74,6 @@ class UserFactory {
         User::create($data);
         
     }
-    public function getAllConducteurs() {
-        $role = 'Conducteur';
-        User::getAllbyRole($role);
-    }
-    public function getAllExpediteurs() {
-        $role = 'Expediteur';
-        return User::getAllbyRole($role);
-    }
+    
 }
 

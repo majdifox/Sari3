@@ -58,5 +58,10 @@ class ColisFactory {
         $colis= Colis::CountByStatus($status);
         return $colis;
     }
+    public function RecentColis(){
+        $colis= Colis::getRecentColis();
+        return $colis;
+    }
+
 }
 

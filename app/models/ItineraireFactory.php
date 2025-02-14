@@ -29,6 +29,7 @@ use App\Models\ItineraireDetails;
             } 
             }
         }
+        //////////////////////////////////////////////////
         public function CountAll(){
             $itit= Itineraire::CountAll();
             return $itit;
@@ -37,16 +38,13 @@ use App\Models\ItineraireDetails;
             $itit= Itineraire::CountByStatus($status);
             return $itit;
         }
-        public function getItineraire($id){
+        public function getItineraire(){
             // n9lbo 3la iniraire f database 
-            $Itineraire = Itineraire::get($id);
-            if($Itineraire){
-                
-                return new Itineraire($id,$conducteur_id,$vehicule_id,$date_depart,$date_arriver,$statut);
-            }else{
-                false;
-            }
+            $Itineraire = Itineraire::getAllItineraires();
+            return $Itineraire;
+            
         }
+        //////////////////////////////////////////////////////
         public function getItinerairebyExpediteur($id_expediteur){
             // n9lbo 3la iniraire f database  + details
             // b3d $result = fetchObject('itineraire');

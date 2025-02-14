@@ -131,24 +131,87 @@ if (!isset($_SESSION['user']) || !isset($_SESSION['user']->prenom)) {
                 </div>
             </section>
 
-            <section class="bg-white shadow rounded-lg">
-                <div class="px-6 py-5 font-semibold border-b border-gray-100">
-                    Liste des Conducteurs
-                </div>
-                <div class="overflow-x-auto conducteurs-list">
-                </div>
-            </section>
+            <!-- Liste des Conducteurs -->
+                <section class="bg-white shadow rounded-lg">
 
+                    <div class="px-6 py-5 font-semibold border-b border-gray-100">
+                        Liste des Conducteurs
+                    </div>
+
+                    <?php if (empty($conducteurs)): ?>
+                        <tr>
+                            <td colspan="3" class="px-4 py-3 text-center text-gray-500">
+                                Aucun conducteur disponible
+                            </td>
+                        </tr>
+                    <?php endif; ?>
+                    <div class="overflow-x-auto">
+                        <table class="w-full">
+                            <thead>
+                                <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b bg-gray-50">
+                                    <th class="px-4 py-3">Nom</th>
+                                    <th class="px-4 py-3">Email</th>
+                                    <th class="px-4 py-3">Téléphone</th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y">
+                                <?php foreach ($conducteurs as $conducteur): ?>
+                                <tr class="text-gray-700">
+                                    <td class="px-4 py-3">
+                                        <?= htmlspecialchars($conducteur['nom'] . ' ' . $conducteur['prenom']) ?>
+                                    </td>
+                                    <td class="px-4 py-3"><?= htmlspecialchars($conducteur['email']) ?></td>
+                                    <td class="px-4 py-3"><?= htmlspecialchars($conducteur['telephone']) ?></td>
+                                </tr>
+                                <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+            <!-- Liste des Itinéraires -->
             <section class="bg-white shadow rounded-lg">
                 <div class="px-6 py-5 font-semibold border-b border-gray-100">
                     Liste des Itinéraires
                 </div>
-                <div class="overflow-x-auto itineraire-list">
+                <div class="overflow-x-auto">
+                <?php if (!empty($itineraires)): ?>
+                    <?php foreach ($itineraires as $itineraire): ?>
+                        <table class="w-full">
+                        <thead>
+                            <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b bg-gray-50">
+                                <th class="px-4 py-3">Conducteur</th>
+                                <th class="px-4 py-3">Départ</th>
+                                <th class="px-4 py-3">Arrivée</th>
+                                <th class="px-4 py-3">Date</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y">
+                            <?php foreach ($itineraires as $itineraire): ?>
+                            <tr class="text-gray-700">
+                                <td class="px-4 py-3">
+                                    <?= htmlspecialchars($itineraire['conducteur_nom'] . ' ' . $itineraire['conducteur_prenom']) ?>
+                                </td>
+                                <td class="px-4 py-3"><?= htmlspecialchars($itineraire['ville_depart']) ?></td>
+                                <td class="px-4 py-3"><?= htmlspecialchars($itineraire['ville_arrivee']) ?></td>
+                                <td class="px-4 py-3"><?= date('d/m/Y', strtotime($itineraire['date_depart'])) ?></td>
+                            </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                    <?php endforeach; ?>
+                <?php else: ?>
+                    <tr>
+                        <td colspan="4" class="px-4 py-3 text-center text-gray-500">
+                            Aucun itinéraire disponible
+                        </td>
+                    </tr>
+                <?php endif; ?>
+                    
                 </div>
             </section>
-
             <!-- Derniers Colis -->
-            <section class="bg-white shadow rounded-lg">
+            <section id="last-colis" class="bg-white shadow rounded-lg">
                 <div class="px-6 py-5 font-semibold border-b border-gray-100">
                     Derniers Colis
                 </div>

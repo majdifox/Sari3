@@ -63,6 +63,21 @@ public static function countByRole($role) {
    return $result['numbertotalrole'] ?? 0;
 }
 
+
+public static function getAllbyRole($role)
+{
+    $connexion = Database::getInstance()->getConnection();
+    $query = "SELECT id, nom, prenom, email, telephone, role 
+              FROM utilisateurs 
+              WHERE role = :role
+              ORDER BY id DESC ";
+    $stmt = $connexion->prepare($query);
+    $stmt->bindValue(':role', $role);
+    $stmt->execute();
+    $results= $stmt->fetchAll(\PDO::FETCH_ASSOC);
+    return $results;
+}
+
 /////////////////////////////////////////////////////////////////////
   public function delete() {
       $sql = "DELETE FROM users WHERE id_user = :id";

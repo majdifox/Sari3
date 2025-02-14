@@ -37,11 +37,18 @@ class Itineraire implements Model {
         // return $stmt->fetchAll();
     }
     public static function getAllItineraires() {
-        $instance = new self(null, null, null, null, null);
-        $query = "SELECT * FROM " . $instance->table;
-        $stmt = Database::getInstance()->getConnection()->prepare($query);
+        $connexion = Database::getInstance()->getConnection();
+        $query = "SELECT i.*, 
+                        u.nom as conducteur_nom, 
+                        u.prenom as conducteur_prenom
+                FROM itineraire i
+                JOIN utilisateurs u ON i.conducteur_id = u.id
+                ORDER BY i.date_depart DESC 
+                LIMIT 5";
+                
+        $stmt = $connexion->prepare($query);
         $stmt->execute();
-        return $stmt->fetchAll();
+        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
     }
     public static function CountAll() {
         $connexion = Database::getInstance()->getConnection();
