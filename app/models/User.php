@@ -5,64 +5,87 @@ use Core\Database;
 use PDO;
 
 class User {
-   protected $id;
-   protected $cnie;
-   protected $nom;
-   protected $prenom;
-   protected $email;
-   protected $motdepasse;
-   protected $status;
-   protected $role;
-   protected $telephone;
-   protected $photo;
-   protected $datecreation;
-   protected $db;
+    protected $id;
+    protected $cnie;
+    protected $nom;
+    protected $prenom;
+    protected $email;
+    protected $motdepasse;
+    protected $status;
+    protected $role;
+    protected $telephone;
+    protected $photo;
+    protected $datecreation;
+    protected $db;
 
-   public function __construct($id = null, $cnie = null, $nom = null, $prenom = null, $email = null, $motdepasse = null, $status = null, $role = null, $telephone = null, $photo = null, $datecreation = null) {
-      $this->db = Database::getInstance()->getConnection();
-      $this->id = $id;
-      $this->cnie = $cnie;
-      $this->nom = $nom;
-      $this->prenom = $prenom;
-      $this->email = $email;
-      $this->telephone = $telephone;
-      $this->photo = $photo;
-      $this->motdepasse = $motdepasse;
-      $this->status = $status;
-      $this->role = $role;
-      $this->datecreation = $datecreation;
-   }
+    public function __construct($id = null, $cnie = null, $nom = null, $prenom = null, $email = null, $motdepasse = null, $status = null, $role = null, $telephone = null, $photo = null, $datecreation = null) {
+        $this->db = Database::getInstance()->getConnection();
+        $this->id = $id;
+        $this->cnie = $cnie;
+        $this->nom = $nom;
+        $this->prenom = $prenom;
+        $this->email = $email;
+        $this->telephone = $telephone;
+        $this->photo = $photo;
+        $this->motdepasse = $motdepasse;
+        $this->status = $status;
+        $this->role = $role;
+        $this->datecreation = $datecreation;
+    }
 
-   // Get a user by ID
-   public static function getByID($id) {
-      $db = Database::getInstance()->getConnection();
-      $query = "SELECT * FROM utilisateurs WHERE ID = :id";
-      $stmt = $db->prepare($query);
-      $stmt->bindParam(':id', $id, PDO::PARAM_INT);
-      $stmt->execute();
-      return $stmt->fetch(PDO::FETCH_OBJ);
-   }
+    // Get a user by ID
+    public static function getByID($id) {
+        $db = Database::getInstance()->getConnection();
+        $query = "SELECT * FROM utilisateurs WHERE ID = :id";
+        $stmt = $db->prepare($query);
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_OBJ);
+    }
 
-   // Update user data
-   public function updateUser() {
-      $query = "UPDATE utilisateurs 
-                SET nom = :nom, 
-                    prenom = :prenom, 
-                    email = :email, 
-                    motdepasse = :motdepasse, 
-                    telephone = :telephone, 
-                    photo = :photo 
-                WHERE id = :id";
-      $stmt = $this->db->prepare($query);
-      $stmt->bindParam(':id', $this->id, PDO::PARAM_INT);
-      $stmt->bindParam(':nom', $this->nom, PDO::PARAM_STR);
-      $stmt->bindParam(':prenom', $this->prenom, PDO::PARAM_STR);
-      $stmt->bindParam(':email', $this->email, PDO::PARAM_STR);
-      $stmt->bindParam(':motdepasse', $this->motdepasse, PDO::PARAM_STR);
-      $stmt->bindParam(':telephone', $this->telephone, PDO::PARAM_STR);
-      $stmt->bindParam(':photo', $this->photo, PDO::PARAM_STR);
-      return $stmt->execute();
-   }
+    // Update user data
+    public function updateUser() {
+        $query = "UPDATE utilisateurs 
+                  SET nom = :nom, 
+                      prenom = :prenom, 
+                      email = :email, 
+                      motdepasse = :motdepasse, 
+                      telephone = :telephone, 
+                      photo = :photo 
+                  WHERE id = :id";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindParam(':id', $this->id, PDO::PARAM_INT);
+        $stmt->bindParam(':nom', $this->nom, PDO::PARAM_STR);
+        $stmt->bindParam(':prenom', $this->prenom, PDO::PARAM_STR);
+        $stmt->bindParam(':email', $this->email, PDO::PARAM_STR);
+        $stmt->bindParam(':motdepasse', $this->motdepasse, PDO::PARAM_STR);
+        $stmt->bindParam(':telephone', $this->telephone, PDO::PARAM_STR);
+        $stmt->bindParam(':photo', $this->photo, PDO::PARAM_STR);
+        return $stmt->execute();
+    }
+
+    // Getters and Setters
+    public function getId() { return $this->id; }
+    public function getNom() { return $this->nom; }
+    public function getCnie() { return $this->cnie; }
+    public function getPrenom() { return $this->prenom; }
+    public function getEmail() { return $this->email; }
+    public function getMotDePasse() { return $this->motdepasse; }
+    public function getStatus() { return $this->status; }
+    public function getRole() { return $this->role; }
+    public function getDateCreation() { return $this->datecreation; }
+
+    public function setId($id) { $this->id = $id; }
+    public function setNom($nom) { $this->nom = $nom; }
+    public function setPrenom($prenom) { $this->prenom = $prenom; }
+    public function setEmail($email) { $this->email = $email; }
+    public function setPhoto($photo) { $this->photo = $photo; }
+    public function setTelephone($telephone) { $this->telephone = $telephone; }
+    public function setCnie($cnie) { $this->cnie = $cnie; }
+    public function setMotDePasse($motdepasse) { $this->motdepasse = $motdepasse; }
+    public function setStatus($status) { $this->status = $status; }
+    public function setRole($role) { $this->role = $role; }
+    public function setDateCreation($datecreation) { $this->datecreation = $datecreation; }
 
    // Get a user by email
    public static function getByEmail($email) {
@@ -120,58 +143,5 @@ class User {
       return $stmt->execute();
    }
 
-   // Getters
-   public function getId() {
-      return $this->id;
-   }
-   public function getNom() {
-      return $this->nom;
-   }
-   public function getCnie() {
-      return $this->cnie;
-   }
-   public function getPrenom() {
-      return $this->prenom;
-   }
-   public function getEmail() {
-      return $this->email;
-   }
-   public function getMotDePasse() {
-      return $this->motdepasse;
-   }
-   public function getStatus() {
-      return $this->status;
-   }
-   public function getRole() {
-      return $this->role;
-   }
-   public function getDateCreation() {
-      return $this->datecreation;
-   }
-
-   // Setters
-   public function setNom($nom) {
-      $this->nom = $nom;
-   }
-   public function setPrenom($prenom) {
-      $this->prenom = $prenom;
-   }
-   public function setEmail($email) {
-      $this->email = $email;
-   }
-   public function setCnie($cnie) {
-      $this->cnie = $cnie;
-   }
-   public function setMotDePasse($motdepasse) {
-      $this->motdepasse = $motdepasse;
-   }
-   public function setStatus($status) {
-      $this->status = $status;
-   }
-   public function setRole($role) {
-      $this->role = $role;
-   }
-   public function setDateCreation($datecreation) {
-      $this->datecreation = $datecreation;
-   }
+   
 }
