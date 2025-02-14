@@ -48,11 +48,27 @@ class UserFactory {
     }
     public function getAllConducteurs() {
         $role = 'Conducteur';
-        User::getAllbyRole($role);
+        $user=User::getAllbyRole($role);
+        return $user;
     }
     public function getAllExpediteurs() {
         $role = 'Expediteur';
-        User::getAllbyRole($role);
+        $user=User::getAllbyRole($role);
+        return $user;
+    }
+    public function getAllAdmins() {
+        $role = 'Admin';
+        $user=User::getAllbyRole($role);
+        return $user;
+    }
+
+    public function CountAll() {
+        $user =   User::CountAll();
+           return  $user;
+        }
+    public function CountByRole($role) {
+            $user =   User::CountByRole($role);
+               return  $user;
     }
 }
 

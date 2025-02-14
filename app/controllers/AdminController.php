@@ -1,5 +1,6 @@
 <?php
-namespace App\Controllers;
+ namespace App\Controllers;
+
 
 use Core\View;
 use App\Models\Admin;
@@ -20,10 +21,12 @@ class AdminController
 
     public function dashboard()
     {   
+        
         $stats = $this->getDashboardStats();
         $recent_colis=$this->getRecentColis();
         $conducteurs = $this->ListConducteurs();
         $itineraires = $this->ListItineraires();
+
         // $total_users = $this->admin->CountUtilisateurs();
         
         require_once 'C:\laragon\www\Sari3\app\views\Admin\Dashboard_Administrateur.php';

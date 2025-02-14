@@ -69,13 +69,18 @@ class User {
       return $stmt->fetch(PDO::FETCH_OBJ);
    }
 
-   // Get all users by role
-   public function getAllByRole($role) {
-      $query = "SELECT * FROM utilisateurs WHERE Role = :role";
-      $stmt = $this->db->prepare($query);
-      $stmt->bindParam(':role', $role, PDO::PARAM_STR);
-      $stmt->execute();
-      return $stmt->fetchAll(PDO::FETCH_ASSOC);
+   public static function getAllbyRole($role)
+   {
+       $connexion = Database::getInstance()->getConnection();
+       $query = "SELECT id, nom, prenom, email, telephone, role 
+                 FROM utilisateurs 
+                 WHERE role = :role
+                 ORDER BY id DESC ";
+       $stmt = $connexion->prepare($query);
+       $stmt->bindValue(':role', $role);
+       $stmt->execute();
+       $results= $stmt->fetchAll(\PDO::FETCH_ASSOC);
+       return $results;
    }
 
    // Update user details
@@ -173,5 +178,23 @@ class User {
    }
    public function setDateCreation($datecreation) {
       $this->datecreation = $datecreation;
+   }
+
+   public static function countAll() {
+      $connexion = Database::getInstance()->getConnection();
+      $sql = "SELECT COUNT(*) as numbertotal FROM utilisateurs";
+      $stmt = $connexion->query($sql);
+      $result = $stmt->fetch(\PDO::FETCH_ASSOC);
+      return $result['numbertotal'] ?? 0;
+   }
+   
+   public static function countByRole($role) {
+      $connexion = Database::getInstance()->getConnection();
+      $sql = "SELECT COUNT(*) as numbertotalrole FROM utilisateurs WHERE role = :role";
+      $stmt = $connexion->prepare($sql);
+      $stmt->bindValue(':role', $role);
+      $stmt->execute();
+      $result = $stmt->fetch(\PDO::FETCH_ASSOC);
+      return $result['numbertotalrole'] ?? 0;
    }
 }
