@@ -13,14 +13,14 @@ class AuthController  {
     {
         // echo 'hello';
     if($_SERVER['REQUEST_METHOD']==='POST'){
-        echo '$POST';
         $email = $_POST['email'] ;
         $password = $_POST['password'] ;
-       $user =  User::GetuserbyEmail($email);
+       $user =  User::getByEmail($email);
        if ($user) {
         $_SESSION['user'] = $user;
         
-        $role = $user->role;
+        $role = $user['role'];
+        echo $role;
         header("Location: http://sari3.test/index.php/".$role);
     }else {
         echo 'password incorrect';

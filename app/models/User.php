@@ -1,8 +1,8 @@
 <?php
 namespace App\Models;
 
-use Core\Database;
 use PDO;
+use Core\Database;
 
 class User {
    private $id;

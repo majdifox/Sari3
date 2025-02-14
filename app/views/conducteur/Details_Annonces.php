@@ -3,236 +3,254 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Lien du Tailwind -->
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Lien des Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css" integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ==" crossorigin="anonymous" referrerpolicy="no-referrer" /> 
-    
-    <title>Les Cours</title>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css" />
+    <title>Moroccan Cities Map</title>
+    <style>
+        #map { height: 500px; }
+        .delete-btn {
+            background-color: #ef4444;
+            color: white;
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.25rem;
+            cursor: pointer;
+        }
+        .delete-btn:hover {
+            background-color: #dc2626;
+        }
+    </style>
 </head>
 <body class="bg-gradient-to-t from-blue-300 via-blue-200 to-blue-100">
-
-    <header>
-        <nav class="bg-white border-gray-200 px-4 lg:px-6 py-2.5 dark:bg-gray-800">
-            <div class="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl">
-                <a class="flex items-center">
-                    <img src="https://export-download.canva.com/ZADgo/DAGey3ZADgo/3/0/0001-1456244851306253508.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAJHKNGJLC2J7OGJ6Q%2F20250212%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20250212T180648Z&X-Amz-Expires=64508&X-Amz-Signature=08e79dfdbd4060b752d74edc03c491b40e21570f0fd7ee31777b4cd6e1db3cbe&X-Amz-SignedHeaders=host&response-content-disposition=attachment%3B%20filename%2A%3DUTF-8%27%27Red%2520Blue%2520Modern%2520Logistics%2520Express%2520Logo.png&response-expires=Thu%2C%2013%20Feb%202025%2012%3A01%3A56%20GMT" class="mr-3 mt-[-1rem] w-[7rem]" alt="Site Web Logo" />
-                </a>
-                <div class="flex items-center lg:order-2 mt-[-1rem]">
-                    <a href="../templates/logout.php" class="text-white bg-blue-500 hover:opacity-80 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800">Logout</a>
-                    <button data-collapse-toggle="mobile-menu-2" type="button" class="inline-flex items-center p-2 ml-1 text-sm text-gray-500 rounded-lg lg:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" aria-controls="mobile-menu-2" aria-expanded="false">
-                        <span class="sr-only">Open main menu</span>
-                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd"></path></svg>
-                        <svg class="hidden w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
-                    </button>
-                </div>
-                <div class="hidden justify-between items-center w-full lg:flex lg:w-auto lg:order-1 mt-[-1rem]" id="mobile-menu-2">
-                    <ul class="flex flex-col mt-4 font-medium lg:flex-row lg:space-x-8 lg:mt-0">
-                        <li>
-                            <a href="MesAnnonces" class="block py-2 pr-4 pl-3 text-stone-700 rounded bg-primary-700 lg:bg-transparent lg:text-primary-700 lg:p-0 dark:text-white" aria-current="page">Home</a>
-                        </li>
-                        <li>
-                            <a href="Conducteur" class="block py-2 pr-4 pl-3 text-stone-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-primary-700 lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700">Profile</a>
-                        </li>
-                    </ul>
+    <?php include_once('C:\laragon\www\Sari3\app\views\includes\NvHeader.php'); ?>
+    <form action="addIteneraire" method="post" onsubmit="addCitiesToForm()">
+        <main class="container mx-auto p-4">
+            <h1 class="text-3xl font-bold text-center mb-4">Moroccan Cities Map</h1>
+            <div class="controls mb-4">
+                <button type="button" onclick="clearTable()" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600">
+                    Clear List
+                </button>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div id="map"></div>
+                <div>
+                    <h2 class="text-xl font-semibold mb-2">Selected Cities</h2>
+                    <table class="w-full border-collapse border border-gray-300">
+                        <thead>
+                            <tr class="bg-gray-100">
+                                <th class="border border-gray-300 p-2">Order</th>
+                                <th class="border border-gray-300 p-2">City Name</th>
+                                <th class="border border-gray-300 p-2">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="cityTableBody">
+                            <!-- Selected cities will appear here -->
+                        </tbody>
+                    </table>
                 </div>
             </div>
-        </nav>
-    </header>
-
-    <!-- Inscription -->
-    <form id="coursInscription" method="POST" action="">
-        <input type="hidden" name="cours_inscription" value="1">
-        <input type="hidden" name="ID_cours" id="ID_cours" value="">
+        </main>
+        <main>
+            <div class="max-w-sm mx-auto mt-[4rem]">
+                <label for="vehicle-select" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Choisissez Votre Véhicule</label>
+                <select id="vehicle-select" name="vehicle" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5">
+                    <option value=""></option>
+                </select>
+                <div class="mt-4">
+                    <div class="mb-4">
+                        <label for="date_depart" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Date de Depart</label>
+                        <input type="datetime-local" name="date_depart" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5">
+                    </div>
+                    <div class="mb-4">
+                        <label for="date_arriver" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Date de Arriver</label>
+                        <input type="datetime-local" name="date_arriver" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5">
+                    </div>
+                </div>
+                <input type="submit" value="ADD" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600">
+            </div>
+        </main>
     </form>
-
-    <!-- Cours Form-->
-    <div id="postform" class="hidden fixed left-[32rem] top-[0rem] flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
-        <div class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:pr-4 dark:bg-gray-800 dark:border-gray-700">
-            <i id="xmarkcsltion2" class="fa-solid fa-xmark ml-[26rem] text-2xl cursor-pointer mt-[1.2rem]" style="color: #2e2e2e;"></i>
-            <div class="space-y-6 py-8 px-10">
-                <h1 class="text-xl mt-[-2rem] font-bold leading-tight tracking-tight text-stone-700 md:text-2xl dark:text-white">
-                    Modifier votre Cours 
-                </h1>
-                <form class="space-y-1" method="POST" enctype="multipart/form-data">
-                    
-                    <input type="hidden" name="modifier_cours" value="1">
-                    <div>
-                        <label for="titre" class="block mb-2 text-sm font-medium text-stone-700 dark:text-white">Titre</label>
-                        <input type="text" name="titre" id="titre" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required="" >
-                    </div>
-                    <div>
-                        <label for="description" class="block mb-2 text-sm font-medium text-stone-700 dark:text-white">Description</label>
-                        <textarea name="description" id="description" rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Écrivez votre biographie ici..."></textarea>
-                    </div>
-                    <div class="grid gap-6 mb-6 md:grid-cols-2">
-                        <div>
-                            <label for="type" class="block mb-2 text-sm font-medium text-stone-700 dark:text-white">Type </label>
-                            <select id="type" name="type" class="bg-gray-50 border border-gray-300 text-gray-900 mb-6 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                <option value="1">Video</option>
-                                <option value="2">Document</option>
-                                
-                            </select>
-                        </div>
-                        <div>
-                            <label for="categorie" class="block mb-2 text-sm font-medium text-stone-700 dark:text-white">Categorie</label>
-                            <select id="categorie" name="categorie" class="bg-gray-50 border border-gray-300 text-gray-900 mb-6 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                <option value="">Categorie</option>
-                                
-                            </select>
-                        </div>
-                    </div>
-                    <div>
-                        <label for="contenu" class="block mb-2 text-sm font-medium text-stone-700 dark:text-white">Contenu</label>
-                        <input type="text" id="contenu" name="contenu" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required="" >
-                    </div>
-                    <div>
-                        <label class="block mb-2 text-sm font-medium text-stone-700 dark:text-white" for="thumbnail">Thumbnail</label>
-                        <input name="thumbnail" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-[7px] dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" type="file">
-                    </div>
-                    <div>
-                        <label for="tag" class="block mb-2 text-sm font-medium text-stone-700 dark:text-white">Tags</label>
-                        <select id="tag" name="tag" class="bg-gray-50 border border-gray-300 text-gray-900 mb-6 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                            
-                            <option value="">Categorie</option>
-                        </select>
-                    </div>
-                    
-                    <button type="submit" class="ml-[7rem] mt-[5rem] w-[8rem] text-white bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600 hover:bg-gradient-to-br font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Modifier</button>
-                </form>
-            </div>
-        </div>
-    </div>
-
-    <main class="overflow-hidden bg-white">
-        
-        <!-- Cours Details-->
-        <div >
-            <div class="container mx-auto px-4 py-8">
-                <div class="flex">
-                    <button id="ajtpost" type="button" class="ml-[84rem] text-white bg-yellow-300 hover:bg-yellow-400 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:focus:ring-yellow-900">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
-                        </svg>
-
-                    </button>
-
-                    <form id="" method="POST">
-                        <input type="hidden" name="supprimer_cours" value="1">
-
-                        <button class="text-white bg-red-500 hover:bg-red-600 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:focus:ring-red-900">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
-                            </svg>
-
-
-                        </button>
-                    </form>
-            
-                </div>
-            <div class="flex flex-wrap -mx-4">
-                
-                <div class="w-full md:w-1/2 px-4 mb-8">
-                    <iframe width="725" height="450"
-                    src="">
-                    </iframe>
-                </div>
-
-                <div class="w-full md:w-1/2 px-4">
-                    <div class="min-w-0 rounded-lg shadow-xs overflow-hidden bg-white dark:bg-gray-800">
-                        <div class="p-4 flex items-center">
-                            <div class="p-3 rounded-full text-red-500 dark:text-red-100 bg-red-600 dark:bg-red-500 mr-4">
-                                <svg fill="white" viewBox="0 0 20 20" class="w-5 h-5">
-                                <path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-3a5.972 5.972 0 00-.75-2.906A3.005 3.005 0 0119 15v3h-3zM4.75 12.094A5.973 5.973 0 004 15v3H1v-3a3 3 0 013.75-2.906z">
-                                </path>
-                                </svg>
-                            </div>
-                            <div>
-                                <p class="text-sm font-medium text-gray-700 dark:text-gray-400">
-                                    Etudiants inscrits
-                                </p>
-                                <p class="text-lg font-semibold text-gray-700 dark:text-gray-200">
-                                Categorie
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <h1 class="text-5xl font-bold leading-tight my-6 text-gray-800 dark:text-gray-100 underline underline-offset-3 decoration-6 decoration-blue-200">Categorie</h1>
-
-                    <span class="bg-blue-100 text-blue-800 text-sm font-semibold me-2 px-3.5 py-1.5 rounded dark:bg-blue-900 dark:text-blue-300">Categorie</span>
-                    <p class="text-gray-500 text-lg dark:text-gray-400 my-8">Categorie</p>
-                    <span class="bg-gray-100 text-gray-800 text-base font-medium me-2 px-3.5 py-1.5 rounded dark:bg-gray-700 dark:text-gray-300">Categorie</span>
-
-                </div>
-                
-                
-            </div>
-            
-            </div>
-        </div>
-        
-        <hr class="h-[0.1rem] w-[20rem]] mx-10 bg-blue-200 border-0 dark:bg-gray-700">
-        <section class="py-24 relative">
-        
-    </section>
-                                            
-
-    </main>
-
-   
-
+    <?php include_once('C:\laragon\www\Sari3\app\views\includes\NvFooter.php'); ?>
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <script>
-        function coursInscription(ID_cours) {
-        document.getElementById("ID_cours").value = ID_cours;
-        document.getElementById("coursInscription").submit();
-        };
+        // Define Morocco boundaries
+        const moroccoBounds = [
+            [21.0, -17.0], // Southwest
+            [36.0, -1.0]   // Northeast
+        ];
 
-        const ctnr2 = document.getElementById("postform");
-        const xmark2 = document.getElementById("xmarkcsltion2");
-        const ajtpost = document.getElementById("ajtpost");
-        const dropdownbutton = document.getElementById("dropdown-button");
-        const dropdown1 = document.getElementById("dropdown-1");
-        
-        xmark2?.addEventListener('click', function(){
-            ctnr2.classList.add('hidden');
+        // Initialize the map
+        const map = L.map('map', {
+            center: [31.7917, -7.0926],
+            zoom: 6,
+            minZoom: 5,
+            maxZoom: 12,
+            maxBounds: moroccoBounds,
+            maxBoundsViscosity: 1.0
         });
 
+        // Add OpenStreetMap tile layer
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; OpenStreetMap contributors'
+        }).addTo(map);
 
-        ajtpost?.addEventListener('click', function(){
-            ctnr2.classList.remove('hidden');
+        // Moroccan cities with coordinates
+        const moroccanCities = [
+            { name: 'Casablanca', coords: [33.5731, -7.5898] },
+            { name: 'Rabat', coords: [34.0209, -6.8417] },
+            { name: 'Marrakech', coords: [31.6295, -7.9811] },
+            { name: 'Fes', coords: [34.0181, -5.0078] },
+            { name: 'Tangier', coords: [35.7595, -5.8340] },
+            { name: 'Agadir', coords: [30.4278, -9.5981] },
+            { name: 'Meknes', coords: [33.8945, -5.5475] },
+            { name: 'Oujda', coords: [34.6816, -1.9078] },
+            { name: 'Kenitra', coords: [34.2610, -6.5802] },
+            { name: 'Tetouan', coords: [35.5764, -5.3684] },
+            { name: 'Safi', coords: [32.2994, -9.2372] },
+            { name: 'El Jadida', coords: [33.2311, -8.5002] },
+            { name: 'Nador', coords: [35.1684, -2.9335] },
+            { name: 'Taza', coords: [34.2133, -4.0088] },
+            { name: 'Settat', coords: [33.0011, -7.6166] },
+            { name: 'Mohammedia', coords: [33.6844, -7.3874] },
+            { name: 'Khemisset', coords: [33.8248, -6.0661] },
+            { name: 'Guelmim', coords: [28.987, -10.0574] },
+            { name: 'Khouribga', coords: [32.8826, -6.9063] },
+            { name: 'Beni Mellal', coords: [32.3394, -6.3608] },
+            { name: 'Errachidia', coords: [31.9314, -4.4244] },
+            { name: 'Tiznit', coords: [29.6974, -9.7316] },
+            { name: 'Laayoune', coords: [27.1501, -13.1993] },
+            { name: 'Dakhla', coords: [23.6848, -15.9570] }
+        ];
+
+        // List to store selected cities
+        let selectedCities = [];
+
+        // Define green marker icon
+        const greenIcon = L.icon({
+            iconUrl: 'https://i.pinimg.com/originals/87/ee/a5/87eea5f5db0b138dc45dfb403570df6f.png',
+            iconSize: [25, 41],
+            iconAnchor: [12, 41],
+            popupAnchor: [1, -34]
         });
 
-        dropdownbutton?.addEventListener('click', function(){
-            dropdown1.classList.remove('hidden');
-        });
+        // Store markers to update their icons
+        const markers = {};
 
-        dropdownbutton?.addEventListener('dblclick', function(){
-            dropdown1.classList.add('hidden');
-        });
+        function addCityMarkers() {
+            moroccanCities.forEach(city => {
+                const marker = L.marker(city.coords).addTo(map);
+                markers[city.name] = marker; // Store marker reference
 
-        document.addEventListener('DOMContentLoaded', function() {
-            
-            const morecmntButtons = document.querySelectorAll("#morecmnt");
-            const lesscmntButtons = document.querySelectorAll("#lesscmnt");
-            const cmntSections = document.querySelectorAll("#cmntsction");
-
-            morecmntButtons.forEach((button, index) => {
-                button.addEventListener('click', function() {
-                    cmntSections[index].classList.remove('hidden');
-                    button.classList.add('hidden'); 
-                    lesscmntButtons[index].classList.remove('hidden');
-                });
+                marker.bindPopup(`
+                    <b>${city.name}</b><br>
+                    <div onclick="selectCity('${city.name}')" class="bg-blue-500 text-white px-2 py-1 rounded-lg hover:bg-blue-600">
+                        Select City
+                    </div>
+                `);
             });
+        }
 
-            lesscmntButtons.forEach((button, index) => {
-                button.addEventListener('click', function() {
-                    cmntSections[index].classList.add('hidden');
-                    button.classList.add('hidden'); 
-                    morecmntButtons[index].classList.remove('hidden');
-                });
+        function selectCity(cityName) {
+            if (selectedCities.includes(cityName)) {
+                alert("This city is already selected!");
+                return;
+            }
+
+            selectedCities.push(cityName);
+            updateTable();
+
+            if (markers[cityName]) {
+                markers[cityName].setIcon(greenIcon);
+            }
+        }
+
+        function updateTable() {
+            const tableBody = document.getElementById("cityTableBody");
+            tableBody.innerHTML = ""; // Clear table
+
+            selectedCities.forEach((city, index) => {
+                const row = document.createElement("tr");
+
+                const orderCell = document.createElement("td");
+                orderCell.textContent = index + 1;
+                orderCell.className = "border border-gray-300 p-2";
+
+                const cityCell = document.createElement("td");
+                cityCell.textContent = city;
+                cityCell.className = "border border-gray-300 p-2";
+
+                const deleteCell = document.createElement("td");
+                const deleteButton = document.createElement("button");
+                deleteButton.textContent = "Delete";
+                deleteButton.className = "delete-btn";
+                deleteButton.onclick = () => deleteCity(city);
+
+                deleteCell.appendChild(deleteButton);
+                row.appendChild(orderCell);
+                row.appendChild(cityCell);
+                row.appendChild(deleteCell);
+
+                tableBody.appendChild(row);
             });
-        });
+        }
+
+        function deleteCity(cityName) {
+            selectedCities = selectedCities.filter(city => city !== cityName);
+            updateTable();
+
+            // Restore original marker icon if removed
+            if (markers[cityName]) {
+                markers[cityName].setIcon(L.Icon.Default.prototype);
+            }
+        }
+
+        function clearTable() {
+            selectedCities = [];
+            updateTable();
+
+            // Reset all markers to default
+            Object.values(markers).forEach(marker => marker.setIcon(L.Icon.Default.prototype));
+        }
+
+        // Add city markers to the map
+        addCityMarkers();
+
+        // Function to add selected cities to the form before submission
+        function addCitiesToForm() {
+            const form = document.querySelector('form');
+            selectedCities.forEach((city, index) => {
+                const input = document.createElement('input');
+                input.type = 'hidden';
+                input.name = `cities[${index}]`;
+                input.value = city;
+                form.appendChild(input);
+            });
+        }
+    </script>
+    <script>
+        // Fetch vehicles data
+        fetch('https://oussamaamou.github.io/Vehicules-Colliers-API/')
+            .then(response => response.json())
+            .then(data => {
+                const selectElement = document.getElementById('vehicle-select');
+                selectElement.innerHTML = '';
+
+                data.vehicules.forEach(vehicule => {
+                    const option = document.createElement('option');
+                    option.value = JSON.stringify(vehicule); // Send the entire vehicle object as JSON
+                    option.textContent = `${vehicule.marque} ${vehicule.modele} - ${vehicule.type_vehicule}`;
+                    selectElement.appendChild(option);
+                });
+            })
+            .catch(error => {
+                console.error('Error fetching data:', error);
+                const selectElement = document.getElementById('vehicle-select');
+                selectElement.innerHTML = '<option value="">Failed to load vehicles</option>';
+            });
     </script>
 </body>
 </html>

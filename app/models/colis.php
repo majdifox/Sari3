@@ -1,13 +1,13 @@
 <?php
 namespace App\Models;
 
+use PDO;
 use Core\Model;
+
+
 use Core\Database;
 
-
-use PDO;
-
-class Colis extends Model {
+class Colis {
     private $id;
     private $expediteur_id;
     private $itineraire_id;
