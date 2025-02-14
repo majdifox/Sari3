@@ -192,8 +192,6 @@
         </div>
     </footer>
 
-
-
     <script>
         const ctnr2 = document.getElementById("postform");
         const xmark2 = document.getElementById("xmarkcsltion2");
