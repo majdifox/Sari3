@@ -123,44 +123,23 @@ class AdminController
     public function deleteUser($id_user)
     {
         $userFactory = new UserFactory();
-        $userFactory->delete($id_user);
-        return json_encode(['status' => 'success']);
+        $userFactory->delete($id_user);;
     }
 
-    // public function ValidateUser($id_user)
-    // {
-    //     $userFactory = new UserFactory();
-    //     $userFactory->validate($id_user); 
-    //     return json_encode(['status' => 'success']);
-    // }
+    public function ValidateUser($id_user)
+    {
+        $userFactory = new UserFactory();
+        $userFactory->validate($id_user); 
+    }
 
-    // public function SuspendUser($id_user)
-    // {
-    //     $userFactory = new UserFactory();
-    //     $userFactory->suspend($id_user); 
-    //     return json_encode(['status' => 'success']);
-    // }
+   
 
-    // public function BanUser($id_user)
-    // {
-    //     $userFactory = new \App\Models\UserFactory();
-    //     $userFactory->ban($id_user); 
-    //     return json_encode(['status' => 'success']);
-    // }
+    public function BanUser($id_user)
+    {
+        $userFactory = new \App\Models\UserFactory();
+        $userFactory->ban($id_user); 
+    }
 
-    // public function UnbanUser($id_user)
-    // {
-    //     $userFactory = new UserFactory();
-    //     $userFactory->unban($id_user); 
-    //     return json_encode(['status' => 'success']);
-    // }
-
-    // public function ListAnnouncements()
-    // {
-    //     $annonceModel = new AnnonceModel(); 
-    //     $annonces = $annonceModel->getAll(); 
-    //     return json_encode($annonces);
-    // }
 
     public function CreateAnnouncement($data)
     {

@@ -82,16 +82,16 @@ if (!isset($_SESSION['user']) || !isset($_SESSION['user']->prenom)) {
         </header>
 
         <!-- Accepter -->
-        <form id="accepterDemande" method="POST" action="">
+        <!-- <form id="accepterDemande" method="POST" action="">
             <input type="hidden" name="accepter_demande" value="1">
             <input type="hidden" name="ID_accepter_demande" id="ID_accepter_demande" value="">
-        </form>
+        </form> -->
 
         <!-- Refuser -->
-        <form id="refuserDemande" method="POST" action="">
+        <!-- <form id="refuserDemande" method="POST" action="">
             <input type="hidden" name="refuser_demande" value="1">
             <input type="hidden" name="ID_refuser_demande" id="ID_refuser_demande" value="">
-        </form>
+        </form> -->
 
         <main>
             <h1 class='text-3xl font-semibold mb-4'>Gestion des Utilisateurs</h1>
@@ -113,7 +113,8 @@ if (!isset($_SESSION['user']) || !isset($_SESSION['user']->prenom)) {
                                 <td class='py-2 px-4 border-b'><?= $user['etat'] ?></td>
                                 <td class='py-2 px-auto border-b space-x-10'>
                                     <button onclick="validateUser(<?= $user['id'] ?>)" class='text-green-500'>Valider</button>
-                                    <button onclick="suspendUser(<?= $user['id'] ?>)" class='text-red-500'>Suspendre</button>
+                                    <button onclick="BanUser(<?= $user['id'] ?>)" class='text-red-500'>Suspendre</button>
+                                    <button onclick="deleteUser(<?= $user['id'] ?>)" class='text-red-500'>Suprimezr</button>
                                 </td>
                             </tr>
                         <?php } ?>

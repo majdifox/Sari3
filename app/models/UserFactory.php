@@ -79,5 +79,15 @@ class UserFactory {
         $user =   User::getProfile($id);
            return  $user;
     }
+    public function validate($id_user) {
+          User::validateUser($id_user);
+    }
+    public function delete($id_user) {
+        User::deleteAccount($id_user);
+    }
+    public function ban($id_user) {
+        User::suspend($id_user);
+    }   
+
 }
 

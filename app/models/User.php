@@ -219,4 +219,19 @@ class User {
       return $result;
       
    }
+   public static function validateUser($id_user) {
+      $connexion = Database::getInstance()->getConnection();
+      $query = "UPDATE utilisateurs SET etat = 'Normal' WHERE id = :id_user";
+      $stmt = $connexion->prepare($query);
+      $stmt->bindValue(':id_user', $id_user);
+      return $stmt->execute();
+   }
+   public static function suspend($id) {
+      $connexion = Database::getInstance()->getConnection();
+      $query = "UPDATE utilisateurs SET etat = 'Banne' WHERE id = :id";
+      $stmt = $connexion->prepare($query);
+      $stmt->bindValue(':id', $id);
+      return $stmt->execute();
+      
+   }
 }
