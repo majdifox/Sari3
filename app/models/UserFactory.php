@@ -1,8 +1,8 @@
 <?php
 namespace App\Models;
 
-use Exception;
 use PDO;
+use Exception;
 use App\Models\User;
 
 class UserFactory {
@@ -14,7 +14,7 @@ class UserFactory {
             case 'Expediteur':
                 return new Expediteur(null, $userData);
             case 'Conducteur':
-                return new Conducteur($userData->id,null,$userData->nom,$userData->prenom,$userData->email,$role,null);
+                return new Conducteur($userData['id'],null,$userData['nom'],$userData['prenom'],$userData['email'],$role,null);
             case 'Admin':
                 return new Admin(null, $userData);
             default:
@@ -24,7 +24,7 @@ class UserFactory {
     public function getUser($id) {
        $userData =  User::getByID($id);
         if ($userData) {
-            $role = $userData->role; 
+            $role = $userData['role']; 
             return $this->createUser($role, $userData);
         }
         return null;

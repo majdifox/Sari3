@@ -1,10 +1,11 @@
 <?php
 namespace App\Models;
+
+use PDO;
+use Core\Model;
 use Core\Database;
 
-use Core\Model;
-
-class Itineraire implements Model {
+class Itineraire  {
     private $id;
     private $conducteur_id;
     private $vehicule_id;
@@ -38,28 +39,7 @@ class Itineraire implements Model {
     }
    
   
-   
-    public function create() {
-        
-    }
-    public function update() {
-        
-    }   
-    public function read() {
-        
-    }
-    public function get() {
-        // $query = "SELECT * FROM public.utilisateurs u  left join public.medecins m  on    u.id  = m.utilisateur_id WHERE role LIKE 'medecin'";
-        // $stmt = $this->db->prepare($query);
-        // $stmt->execute();
-        // return $stmt->fetchAll();
-    }
-    public function delete() {
-        // $query = "SELECT * FROM public.utilisateurs u  left join public.medecins m  on    u.id  = m.utilisateur_id WHERE role LIKE 'medecin'";
-        // $stmt = $this->db->prepare($query);
-        // $stmt->execute();
-        // return $stmt->fetchAll();
-    }
+    
     public static function getAllItineraires() {
         $connexion = Database::getInstance()->getConnection();
         $query = "SELECT i.*, 
@@ -114,8 +94,28 @@ class Itineraire implements Model {
         $stmt = $connexion->prepare($sql);
         $stmt->bindValue(':status', $status);
         $stmt->execute();
-        $result = $stmt->fetch(\PDO::FETCH_ASSOC);
-        return $result['NumberTotalit'] ?? 0;
+        return $stmt->fetch(PDO::FETCH_ASSOC);
     }
-   
+
+    // Delete an itinerary by ID
+    // public  function delete($id) {
+    //     $query = "DELETE FROM itineraire WHERE id = :id";
+    //     $stmt = $this->db->prepare($query);
+    //     $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+    //     return $stmt->execute();
+    // }
+    // public static function create($data) {
+        
+    //     $db = Database::getInstance()->getConnection();
+    //     $query = "INSERT INTO public.itineraire(
+	//  conducteur_id, vehicule_id, date_depart, date_arriver, statut)
+	// VALUES (:conducteur_id, :vehicule_id, :date_depart, :date_arriver, :statut) returning id;";
+    //     $stmt = $db->prepare($query);
+    //     $stmt->bindParam(':conducteur_id', $id, PDO::PARAM_INT);
+    //     $stmt->bindParam(':vehicule_id', $id, PDO::PARAM_INT);
+    //     $stmt->bindParam(':date_depart', $id, PDO::PARAM_INT);
+    //     $stmt->bindParam(':date_arriver', $id, PDO::PARAM_INT);
+    //     $stmt->bindParam(':statut', $id, PDO::PARAM_INT);
+    //     return $stmt->execute();
+    // }
 }

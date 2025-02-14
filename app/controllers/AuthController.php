@@ -13,7 +13,6 @@ class AuthController  {
     {
         // echo 'hello';
     if($_SERVER['REQUEST_METHOD']==='POST'){
-        echo '$POST';
         $email = $_POST['email'] ;
         $password = $_POST['password'] ;
         $user =  User::getByEmail($email);

@@ -3,7 +3,7 @@
 <!-- <?php
 echo 'hello';
 echo '<pre>';
-var_dump($user);
+// var_dump($user);
 echo '</pre>';
 ?> -->
 

@@ -15,13 +15,17 @@ class ConducteurController{
       public function showItiniraire(){
             
       }
+      public function addIteneraire(){
+            // var_dump($_POST);
+            $this->conducteur->addAnnonce($_POST);
+      }
       public function dashboard(){
             // echo 'getItinerairebyCondicteur';
             session_start();
             echo '<pre>';
-            // var_dump($_SESSION['user']->id);
+            // var_dump($_SESSION['user']);
             echo '</pre>';
-            $id_condecteur = $_SESSION['user']->id;
+            $id_condecteur = $_SESSION['user']['id'];
             $user =   $this->conducteur->getProfileInfos($id_condecteur);
            
             require_once 'C:\laragon\www\Sari3\app\views\conducteur\Profile_Conducteur.php';
@@ -50,9 +54,11 @@ class ConducteurController{
       
       public function addAnnonce() {
             //  @oussamaamou
-        // mn b3d  call this function $this->conducteur->addAnnonce($data);
+
+
+           $this->conducteur->addAnnonce($data);
     
-      }
+      }     
       
       public function deleteAnnonce($id) {
             //  just call $this->conducteur->deleteAnnonce($id);

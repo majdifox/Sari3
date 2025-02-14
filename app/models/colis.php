@@ -1,9 +1,13 @@
 <?php
 namespace App\Models;
-use Core\Database;
+
+use PDO;
 use Core\Model;
 
-class Colis implements Model {
+
+use Core\Database;
+
+class Colis {
     private $id;
     private $expediteur_id;
     private $itineraire_id;

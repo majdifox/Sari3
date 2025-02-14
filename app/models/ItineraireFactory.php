@@ -14,7 +14,12 @@ use App\Models\ItineraireDetails;
        }
 
        
-        
+        public function addItineraire($data){
+          $id =   Itineraire::create($data);
+            foreach ($data[""] as $key => $value) {
+               
+            }
+        }
         public function createItiniraireDetails(Itineraire $Itineraire) {
             // ona  le id de Itineraire dans ghadi n9lb 3la details lkhrin dylo
             $list = ItineraireDetails::getDetailsOfItiniraire($Itineraire->getId());
