@@ -44,16 +44,16 @@ class ExpediteurController{
     public function showItiniraire($idItineraire){
         
     }
-    public function showItinirairedetails($idItineraire){
-        $this->Expediteur->deleteColis( $Itineraire);
-    }
+    // public function showItinirairedetails($idItineraire){
+    //     $this->Expediteur->deleteColis( $Itineraire);
+    // }
 
 
     public function addAnnonce() {
     //  check if all data $_POST are good 
         // mn b3d  call this function $this->Expediteur->addAnnonce($data);
     
-  }
+    }
 
   public function deleteAnnonce($id) {
     //  just call $this->Expediteur->deleteAnnonce($id);
