@@ -1,3 +1,12 @@
+<?php
+session_start();
+if (!isset($_SESSION['user']) || !isset($_SESSION['user']->prenom)) {
+    header('Location: /login');
+    exit();
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -10,27 +19,27 @@
 </head>
 <body class="flex bg-gray-100 min-h-screen">
     <aside class="hidden sm:flex sm:flex-col">
-        <a href="/admin/dashboard" class="inline-flex items-center justify-center h-20 w-20 bg-green-600 hover:bg-green-500">
+        <a href="/Admin/dashboard" class="inline-flex items-center justify-center h-20 w-20 bg-green-600 hover:bg-green-500">
             <span class="text-white font-bold text-2xl">S3</span>
         </a>
         <div class="flex-grow flex flex-col justify-between text-gray-500 bg-gray-800">
             <nav class="flex flex-col mx-4 my-6 space-y-4">
-                <a href="/admin/dashboard" class="inline-flex items-center justify-center py-3 text-green-600 bg-white rounded-lg">
+                <a href="/Admin/dashboard" class="inline-flex items-center justify-center py-3 text-green-600 bg-white rounded-lg">
                     <span class="sr-only">Dashboard</span>
                     <i class="fas fa-chart-line text-xl"></i>
                 </a>
 
-                <a href="/admin/users" class="inline-flex items-center justify-center py-3 hover:text-gray-400 hover:bg-gray-700 focus:text-gray-400 focus:bg-gray-700 rounded-lg">
+                <a href="/Admin/users" class="inline-flex items-center justify-center py-3 hover:text-gray-400 hover:bg-gray-700 focus:text-gray-400 focus:bg-gray-700 rounded-lg">
                     <span class="sr-only">Utilisateurs</span>
                     <i class="fas fa-users text-xl"></i>
                 </a>
 
-                <a href="/admin/colis" class="inline-flex items-center justify-center py-3 hover:text-gray-400 hover:bg-gray-700 focus:text-gray-400 focus:bg-gray-700 rounded-lg">
+                <a href="/Admin/colis" class="inline-flex items-center justify-center py-3 hover:text-gray-400 hover:bg-gray-700 focus:text-gray-400 focus:bg-gray-700 rounded-lg">
                     <span class="sr-only">Colis</span>
                     <i class="fas fa-box text-xl"></i>
                 </a>
 
-                <a href="/admin/statistiques" class="inline-flex items-center justify-center py-3 hover:text-gray-400 hover:bg-gray-700 focus:text-gray-400 focus:bg-gray-700 rounded-lg">
+                <a href="/Admin/statistiques" class="inline-flex items-center justify-center py-3 hover:text-gray-400 hover:bg-gray-700 focus:text-gray-400 focus:bg-gray-700 rounded-lg">
                     <span class="sr-only">Statistiques</span>
                     <i class="fas fa-chart-bar text-xl"></i>
                 </a>
@@ -42,7 +51,7 @@
         <header class="flex items-center h-20 px-6 sm:px-10 bg-white">
             <div class="flex flex-shrink-0 items-center ml-auto">
                 <div class="flex items-center">
-                    <span class="text-gray-800 text-sm mr-4">Bienvenue, <?= $_SESSION['user']['prenom'] ?></span>
+                    <span class="text-gray-800 text-sm mr-4">Bienvenue, <?= $_SESSION['user']->prenom ?></span>
                     <a href="/logout" class="text-gray-800 hover:text-red-500">
                         <i class="fas fa-sign-out-alt"></i>
                     </a>
@@ -65,7 +74,7 @@
                         <i class="fas fa-users text-xl"></i>
                     </div>
                     <div>
-                        <span class="block text-2xl font-bold"><?= $total_users ?></span>
+                        <span class="block text-2xl font-bold"><?= $stats['users']['total'] ?></span>
                         <span class="block text-gray-500">Utilisateurs</span>
                     </div>
                 </div>
@@ -76,7 +85,7 @@
                         <i class="fas fa-car text-xl"></i>
                     </div>
                     <div>
-                        <span class="block text-2xl font-bold"><?= $conducteurs_count ?></span>
+                        <span class="block text-2xl font-bold"><?= $stats['users']['conducteurs'] ?></span>
                         <span class="block text-gray-500">Conducteurs</span>
                     </div>
                 </div>
@@ -87,7 +96,7 @@
                         <i class="fas fa-user text-xl"></i>
                     </div>
                     <div>
-                        <span class="block text-2xl font-bold"><?= $expediteurs_count ?></span>
+                        <span class="block text-2xl font-bold"><?= $stats['users']['expediteurs'] ?></span>
                         <span class="block text-gray-500">Expéditeurs</span>
                     </div>
                 </div>
@@ -98,7 +107,7 @@
                         <i class="fas fa-box text-xl"></i>
                     </div>
                     <div>
-                        <span class="block text-2xl font-bold"><?= $total_colis ?></span>
+                        <span class="block text-2xl font-bold"><?= $stats['colis']['total'] ?></span>
                         <span class="block text-gray-500">Colis</span>
                     </div>
                 </div>
@@ -122,8 +131,84 @@
                 </div>
             </section>
 
-            <!-- Derniers Colis -->
+            <!-- Liste des Conducteurs -->
+                <section class="bg-white shadow rounded-lg">
+
+                    <div class="px-6 py-5 font-semibold border-b border-gray-100">
+                        Liste des Conducteurs
+                    </div>
+
+                    <?php if (empty($conducteurs)): ?>
+                        <tr>
+                            <td colspan="3" class="px-4 py-3 text-center text-gray-500">
+                                Aucun conducteur disponible
+                            </td>
+                        </tr>
+                    <?php endif; ?>
+                    <div class="overflow-x-auto">
+                        <table class="w-full">
+                            <thead>
+                                <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b bg-gray-50">
+                                    <th class="px-4 py-3">Nom</th>
+                                    <th class="px-4 py-3">Email</th>
+                                    <th class="px-4 py-3">Téléphone</th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y">
+                                <?php foreach ($conducteurs as $conducteur): ?>
+                                <tr class="text-gray-700">
+                                    <td class="px-4 py-3">
+                                        <?= htmlspecialchars($conducteur['nom'] . ' ' . $conducteur['prenom']) ?>
+                                    </td>
+                                    <td class="px-4 py-3"><?= htmlspecialchars($conducteur['email']) ?></td>
+                                    <td class="px-4 py-3"><?= htmlspecialchars($conducteur['telephone']) ?></td>
+                                </tr>
+                                <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+            <!-- Liste des Itinéraires -->
             <section class="bg-white shadow rounded-lg">
+                <div class="px-6 py-5 font-semibold border-b border-gray-100">
+                    Liste des Itinéraires
+                </div>
+                <div class="overflow-x-auto">
+                <?php if (!empty($itineraires)): ?>
+                        <table class="w-full">
+                        <thead>
+                            <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b bg-gray-50">
+                                <th class="px-4 py-3">Conducteur</th>
+                                <th class="px-4 py-3">Date</th>
+                                <th class="px-4 py-3">Statut</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y">
+                            <?php foreach ($itineraires as $itineraire): ?>
+                            <tr class="text-gray-700">
+                                <td class="px-4 py-3">
+                                    <?= htmlspecialchars($itineraire['conducteur_nom'] . ' ' . $itineraire['conducteur_prenom']) ?>
+                                </td>
+                                <td class="px-4 py-3"><?= date('d/m/Y', strtotime($itineraire['date_depart'])) ?></td>
+                                <td class="px-4 py-3"><?= htmlspecialchars($itineraire['statut']) ?></td>
+                            </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
+
+                <?php else: ?>
+                    <tr>
+                        <td colspan="4" class="px-4 py-3 text-center text-gray-500">
+                            Aucun itinéraire disponible
+                        </td>
+                    </tr>
+                <?php endif; ?>
+                    
+                </div>
+            </section>
+            <!-- Derniers Colis -->
+            <section id="last-colis" class="bg-white shadow rounded-lg">
                 <div class="px-6 py-5 font-semibold border-b border-gray-100">
                     Derniers Colis
                 </div>
@@ -223,6 +308,30 @@
                 }
             }
         });
+
+        // Fetch Conducteurs
+        fetch('/Admin/conducteurs')
+            .then(response => response.json())
+            .then(data => {
+                const conducteursContainer = document.querySelector('.conducteurs-list');
+                data.forEach(conducteur => {
+                    const conducteurElement = document.createElement('div');
+                    conducteurElement.textContent = conducteur.name; // Adjust to your data structure
+                    conducteursContainer.appendChild(conducteurElement);
+                });
+            });
+
+        // Fetch Itinéraires
+        fetch('/Admin/itineraire')
+            .then(response => response.json())
+            .then(data => {
+                const itinerairesContainer = document.querySelector('.itineraire-list');
+                data.forEach(itineraire => {
+                    const itineraireElement = document.createElement('div');
+                    itineraireElement.textContent = itineraire.destination; // Adjust to your data structure
+                    itinerairesContainer.appendChild(itineraireElement);
+                });
+            });
     </script>
 </body>
 </html>

@@ -5,53 +5,67 @@ use PDO;
 use Core\Model;
 use Core\Database;
 
-class Itineraire extends Model {
+class Itineraire implements Model {
     private $id;
     private $conducteur_id;
     private $vehicule_id;
     private $date_depart;
     private $date_arriver;
     private $statut;
+    
     private $db;
-
-    public function __construct($id = null, $conducteur_id = null, $vehicule_id = null, $date_depart = null, $date_arriver = null, $statut = null) {
+    protected $table = 'itineraire'; // Assuming the doctors table is named 'medcins'
+     
+    public function __construct($conducteur_id, $vehicule_id, $date_depart, $date_arriver, $statut, $id = null) {
         $this->db = Database::getInstance()->getConnection();
-        $this->id = $id;
         $this->conducteur_id = $conducteur_id;
         $this->vehicule_id = $vehicule_id;
         $this->date_depart = $date_depart;
         $this->date_arriver = $date_arriver;
         $this->statut = $statut;
+        $this->id = $id;
     }
-
-    // Get all itineraries by driver ID
-    public static function getAllByConducteur($id) {
-        $db = Database::getInstance()->getConnection();
-        $query = "SELECT * FROM itineraire WHERE conducteur_id = :conducteur_id";
-        $stmt = $db->prepare($query);
-        $stmt->bindParam(':conducteur_id', $id, PDO::PARAM_INT);
+    public static function getAllbyConducteur($id) {
+        // $query = "SELECT * FROM public.utilisateurs u  left join public.medecins m  on    u.id  = m.utilisateur_id WHERE role LIKE 'medecin'";
+        // $stmt = $this->db->prepare($query);
+        // $stmt->execute();
+        // return $stmt->fetchAll();
+    }
+    public static function getAllbyExpediteur($id) {
+        // $query = "SELECT * FROM public.utilisateurs u  left join public.medecins m  on    u.id  = m.utilisateur_id WHERE role LIKE 'medecin'";
+        // $stmt = $this->db->prepare($query);
+        // $stmt->execute();
+        // return $stmt->fetchAll();
+    }
+   
+  
+    
+    public static function getAllItineraires() {
+        $connexion = Database::getInstance()->getConnection();
+        $query = "SELECT i.*, 
+                        u.nom as conducteur_nom, 
+                        u.prenom as conducteur_prenom
+                FROM itineraire i
+                JOIN utilisateurs u ON i.conducteur_id = u.id
+                ORDER BY i.date_depart DESC 
+                LIMIT 5";
+                
+        $stmt = $connexion->prepare($query);
         $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
     }
-
-    // Get all itineraries by sender ID (expediteur)
-    public static function getAllByExpediteur($id) {
-        $db = Database::getInstance()->getConnection();
-        $query = "SELECT i.* FROM itineraire i
-                  JOIN colis c ON i.id = c.itineraire_id
-                  WHERE c.expediteur_id = :expediteur_id";
-        $stmt = $db->prepare($query);
-        $stmt->bindParam(':expediteur_id', $id, PDO::PARAM_INT);
-        $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    public static function CountAll() {
+        $connexion = Database::getInstance()->getConnection();
+        $sql = "SELECT COUNT(*) as NumberTotal FROM  itineraire";
+        $stmt = $connexion->query($sql);
+        $result = $stmt->fetch(\PDO::FETCH_ASSOC);
+        return $result['NumberTotal'] ?? 0;
     }
-
-    // Get a specific itinerary by ID
-    public static function get($id) {
-        $db = Database::getInstance()->getConnection();
-        $query = "SELECT * FROM itineraire WHERE id = :id";
-        $stmt = $db->prepare($query);
-        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+    public static function CountByStatus($status) {
+        $connexion = Database::getInstance()->getConnection();
+        $sql = "SELECT COUNT(*) as NumberTotalit FROM itineraire where statut=:status ";
+        $stmt = $connexion->prepare($sql);
+        $stmt->bindValue(':status', $status);
         $stmt->execute();
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }

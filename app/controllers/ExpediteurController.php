@@ -1,63 +1,95 @@
 <?php
- namespace App\Controllers;
+namespace App\Controllers;
 
- use App\Models\Expediteur;
+use App\Models\User;
+use App\Models\Expediteur;
 
-class ExpediteurController{
-    public $Expediteur;
-    public function __construct(){
-        $this->Expediteur = new Expediteur;
-    }
+class ExpediteurController {
+  public $Expediteur;
 
-   
-    public function showItinirairesbyExpediteur($id){
-
-    }
-
-    public function dashboard(){
-      session_start();
-      echo '<pre>';
-      // var_dump($_SESSION['user']->id);
-      echo '</pre>';
-      $id_expediteur = $_SESSION['user']->id;
-      $user =   $this->Expediteur->getProfileInfos($id_expediteur);
-      
-      require_once 'C:\laragon\www\Sari3\app\views\expediteur\Home_Annonces.php';
-    }
-
-    public function detailsannonceexp(){
-
-      require_once 'C:\laragon\www\Sari3\app\views\expediteur\Details_Annonces.php';
-    }
-
-    public function mescolis(){
-
-      require_once 'C:\laragon\www\Sari3\app\views\expediteur\Mes_Colis.php';
-    }
-
-    public function prflexpediteur(){
+  public function __construct(){
+      $this->Expediteur = new Expediteur;
+  }
+  public function modifyProfile() {
+      $userId = $_SESSION['user_id'];
+      $userModel = new User();
+      $user = $userModel->getByID($userId);
 
       require_once 'C:\laragon\www\Sari3\app\views\expediteur\Profile_Expediteur.php';
-    }
+  }
 
+  public function updateProfile() {
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-    public function showItiniraire($idItineraire){
-        
-    }
-    public function showItinirairedetails($idItineraire){
-        $this->Expediteur->deleteColis( $Itineraire);
-    }
+      $userId = $_SESSION['user_id'];
+      $nom = $_POST['nom'];
+      $prenom = $_POST['prenom'];
+      $email = $_POST['email'];
+      $telephone = $_POST['telephone'];
+      $photoUrl = $_POST['photo_url'];
 
-
-    public function addAnnonce() {
-    //  check if all data $_POST are good 
-        // mn b3d  call this function $this->Expediteur->addAnnonce($data);
+      $userModel = new User();
+      $userModel->setId($userId);
+      $userModel->setNom($nom);
+      $userModel->setPrenom($prenom);
+      $userModel->setEmail($email);
+      $userModel->setTelephone($telephone);
+      $userModel->setPhoto($photoUrl);
     
+      // Save the updated user data
+      $userModel->updateUser();
+    }
+  }
+
+
+  public function showItinirairesbyExpediteur($id){
+
+  }
+
+  public function dashboard(){
+    session_start();
+    echo '<pre>';
+    // var_dump($_SESSION['user']->id);
+    echo '</pre>';
+    $id_expediteur = $_SESSION['user']->id;
+    $user =   $this->Expediteur->getProfileInfos($id_expediteur);
+    
+    require_once 'C:\laragon\www\Sari3\app\views\expediteur\Home_Annonces.php';
+  }
+
+  public function detailsannonceexp(){
+
+    require_once 'C:\laragon\www\Sari3\app\views\expediteur\Details_Annonces.php';
+  }
+
+  public function mescolis(){
+
+    require_once 'C:\laragon\www\Sari3\app\views\expediteur\Mes_Colis.php';
+  }
+
+  public function prflexpediteur(){
+
+    require_once 'C:\laragon\www\Sari3\app\views\expediteur\Profile_Expediteur.php';
+  }
+
+
+  public function showItiniraire($idItineraire){
+      
+  }
+  // public function showItinirairedetails($idItineraire){
+  //     $this->Expediteur->deleteColis( $Itineraire);
+  // }
+
+
+  public function addAnnonce() {
+  //  check if all data $_POST are good 
+      // mn b3d  call this function $this->Expediteur->addAnnonce($data);
+  
   }
 
   public function deleteAnnonce($id) {
     //  just call $this->Expediteur->deleteAnnonce($id);
- 
+
   }
 
   public function AcceptRequest($id_colis){

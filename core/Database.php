@@ -14,6 +14,7 @@ class Database {
         $host = "localhost";
         $port = "5432";
         $dbname = "Sarri";
+        
         $user = "postgres";
         $pass = "Youness";
 

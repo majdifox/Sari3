@@ -9,6 +9,8 @@ use App\Models\ItineraireFactory;
 
 class Expediteur extends  User {
     private $ItineraireFactory;
+    private $ColisFactory;
+    private $UserFactory;
     
 
     public function __construct($id = null ,$cnie = null,$nom = null  ,$prenom = null,$email = null,$role = null,$datecreation = null){
@@ -37,7 +39,7 @@ class Expediteur extends  User {
 
   public function deleteColis($idColis) {
     //  search itineraire by idColis and check if status still en preparation and delete it from the table colis
-    $colis = $this->colisFactory->getColis($idColis);
+    $colis = $this->ColisFactory->getColis($idColis);
   }
   public function showIniteraire() {
     //  search itineraire by Exp 

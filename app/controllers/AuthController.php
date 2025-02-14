@@ -15,19 +15,18 @@ class AuthController  {
     if($_SERVER['REQUEST_METHOD']==='POST'){
         $email = $_POST['email'] ;
         $password = $_POST['password'] ;
-       $user =  User::getByEmail($email);
-       if ($user) {
-        $_SESSION['user'] = $user;
-        
-        $role = $user['role'];
-        echo $role;
-        header("Location: http://sari3.test/index.php/".$role);
-    }else {
-        echo 'password incorrect';
-       }
-    }else {
-        require_once('C:\laragon\www\Sari3\app\views\auth\login.php');
-    }
+        $user =  User::getByEmail($email);
+        if ($user) {
+            $_SESSION['user'] = $user;
+            
+            $role = $user->role;
+            header("Location: http://sari3.test/index.php/".$role);
+        }else {
+            echo 'password incorrect';
+        }
+        }else {
+            require_once('C:\laragon\www\Sari3\app\views\auth\login.php');
+        }
 
     }
 
