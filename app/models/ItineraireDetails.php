@@ -6,32 +6,25 @@ use Core\Model;
 
 use Core\Database;
 
-class ItineraireDetails      {
+class ItineraireDetails {
     private $id;
     private $iteneraire_id;
     private $orders;
     private $ville;
     private $status;
+    private $date_arriver;
     private $db;
 
-    public function __construct($itineraire_id = null, $orders = null, $ville = null, $statut = null) {
+    public function __construct($id,$itineraire_id = null, $orders = null, $ville = null, $statut = null) {
         $this->db = Database::getInstance()->getConnection();
+
+        $this->id = $id;
         $this->iteneraire_id = $itineraire_id;
         $this->orders = $orders;
         $this->ville = $ville;
         $this->status = $statut;
     }
 
-    // Get all itinerary details by conductor ID
-    public function getAllbyConducteur($id) {
-        $query = "SELECT di.* FROM details_itineraire di
-                  JOIN itineraire i ON di.itineraire_id = i.id
-                  WHERE i.conducteur_id = :conducteur_id";
-        $stmt = $this->db->prepare($query);
-        $stmt->bindParam(':conducteur_id', $id, PDO::PARAM_INT);
-        $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    }
     public static function create($id,$ville,$order) {
         echo $id;
         $db = Database::getInstance()->getConnection();
@@ -44,6 +37,17 @@ class ItineraireDetails      {
         $stmt->bindParam(':ville', $ville);
         return $stmt->execute();
     }
+    
+    public function getAllbyConducteur($id) {
+        $query = "SELECT di.* FROM details_itineraire di
+                  JOIN itineraire i ON di.itineraire_id = i.id
+                  WHERE i.conducteur_id = :conducteur_id";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindParam(':conducteur_id', $id, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
     // Get details of a specific itinerary
     public static function getDetailsOfItiniraire($itineraire_id) {
         $db = Database::getInstance()->getConnection();
@@ -51,7 +55,7 @@ class ItineraireDetails      {
         $stmt = $db->prepare($query);
         $stmt->bindParam(':itineraire_id', $itineraire_id, PDO::PARAM_INT);
         $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $stmt->fetchAll(PDO::FETCH_OBJ);
     }
 
     // Update status to 'En Transit'

@@ -24,11 +24,11 @@ class ExpediteurController{
       
       require_once 'C:\laragon\www\Sari3\app\views\expediteur\Home_Annonces.php';
     }
-
     public function detailsannonceexp($id){
-        $Itineraire = $this->Expediteur->getItinerairebyID($id);
-        
-             $Details= $this->Expediteur->createItiniraireDetails( $Itineraire);
+      $Itineraire = $this->Expediteur->getItinerairebyID($id);
+      
+      $Details= $this->Expediteur->createItiniraireDetails( $Itineraire);
+             
       require_once 'C:\laragon\www\Sari3\app\views\expediteur\Details_Annonces.php';
     }
 
