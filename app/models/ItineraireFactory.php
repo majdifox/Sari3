@@ -49,6 +49,12 @@ use App\Models\ItineraireDetails;
             return $Itineraire;
             
         }
+        public function getAnnonce(){
+            // n9lbo 3la iniraire f database 
+            $Itineraire = Itineraire::getAllItinerairesavecDetails();
+            return $Itineraire;
+            
+        }
         //////////////////////////////////////////////////////
         public function getItinerairebyExpediteur($id_expediteur){
             // n9lbo 3la iniraire f database  + details

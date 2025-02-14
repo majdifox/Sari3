@@ -54,6 +54,33 @@ class Itineraire  {
         $stmt->execute();
         return $stmt->fetchAll(\PDO::FETCH_ASSOC);
     }
+    public static function getAllItinerairesavecDetails() {
+        $connexion = Database::getInstance()->getConnection();
+        $query = "SELECT 
+            i.*,
+            u.nom as conducteur_nom,
+            u.prenom as conducteur_prenom,
+            u.email as conducteur_email,
+            u.telephone as conducteur_telephone,
+            di.ville_depart,
+            di.ville_destination,
+            di.date_depart,
+            di.heure_depart,
+            di.prix,
+            di.nombre_place
+        FROM itineraire i
+        JOIN utilisateurs u ON i.conducteur_id = u.id
+        JOIN details_itineraire di ON i.id = di.itineraire_id
+        ORDER BY di.date_depart DESC";
+        
+        $stmt = $connexion->prepare($query);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+ 
+    public function getItineraireDetails($itineraire_id) {
+        return Itineraire::getItineraireWithDetails($itineraire_id);
+    }
     public static function CountAll() {
         $connexion = Database::getInstance()->getConnection();
         $sql = "SELECT COUNT(*) as NumberTotal FROM  itineraire";

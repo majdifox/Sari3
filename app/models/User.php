@@ -162,5 +162,43 @@ class User {
       $result = $stmt->fetch(\PDO::FETCH_ASSOC);
       return $result['numbertotalrole'] ?? 0;
    }
-   
+
+
+   public static function getAll() {
+      $connexion = Database::getInstance()->getConnection();
+      $query = "SELECT id, nom, prenom, email, telephone, role ,etat
+                 FROM utilisateurs 
+                 ORDER BY id DESC ";
+      $stmt = $connexion->query($query);
+      $results= $stmt->fetchAll(\PDO::FETCH_ASSOC);
+      return $results;
+   }
+   public static function getProfile($id) {
+      $connexion = Database::getInstance()->getConnection();
+      $query = "SELECT id, nom, prenom, email, telephone, role ,etat
+                 FROM utilisateurs 
+                 WHERE id = :id";
+      $stmt = $connexion->prepare($query);
+      $stmt->bindValue(':id', $id);
+      $stmt->execute();
+      $result = $stmt->fetch(\PDO::FETCH_ASSOC);
+      return $result;
+      
+   }
+   public static function validateUser($id_user) {
+      $connexion = Database::getInstance()->getConnection();
+      $query = "UPDATE utilisateurs SET etat = 'Normal' WHERE id = :id_user";
+      $stmt = $connexion->prepare($query);
+      $stmt->bindValue(':id_user', $id_user);
+      return $stmt->execute();
+   }
+   public static function suspend($id) {
+      $connexion = Database::getInstance()->getConnection();
+      $query = "UPDATE utilisateurs SET etat = 'Banne' WHERE id = :id";
+      $stmt = $connexion->prepare($query);
+      $stmt->bindValue(':id', $id);
+      return $stmt->execute();
+      
+   }
+
 }
