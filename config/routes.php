@@ -9,6 +9,8 @@ $router->add('GET', '/expediteur/AccountVerification', 'expoditeurController', '
 $router->add('GET', '/expediteur/IneatieareDemande/{@}', 'expoditeurController', 'sendRequest');
 $router->add('GET', 'login', 'ConducteurController', 'showItiniraire');
 $router->add('GET', '/logout', 'authController', 'logout');
+$router->add('GET', 'register', 'authController', 'register');
+$router->add('POST', 'register', 'authController', 'register');
 $router->add('GET', '/conducteur/IneatieareAnnoncement', 'conducteurController', 'annoncement');
 $router->add('GET', '/conducteur/IneatieareDeletion', 'conducteurController', 'DeleteIneatieare');
 

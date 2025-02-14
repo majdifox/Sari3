@@ -43,31 +43,37 @@ class AuthController  {
     }
 
     public function register() {
+        echo 'hhhhhh';
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            // Common fields
             $userData = [
-                'prenom' => $_POST['Prenom'] ?? '',
-                'nom' => $_POST['Nom'] ?? '',
-                'email' => $_POST['Email'] ?? '',
-                'motdepasse' => password_hash($_POST['Mot_de_passe'] ?? '', PASSWORD_DEFAULT),
-                'status' => 'pending', // or whatever default status you want
-                'role' => $_POST['Role'] ?? '',
-                'datecreation' => date('Y-m-d H:i:s')
+                'prenom' => $_POST['prenom'] ?? '',
+                'nom' => $_POST['nom'] ?? '',
+                'email' => 'bou@gmail.com' ?? '',
+                'telephone' => $_POST['telephone'] ?? '',
+                'motdepasse' => password_hash($_POST['mot_de_passe'] ?? '', PASSWORD_DEFAULT),
+                // or whatever default status you want
+                'role' => $_POST['role']
             ];
-
+            
+            echo '<pre>';
+            var_dump($userData['email'],);
+            echo '</pre>';
             // Register the user
             if (User::register(
-                null, // CNIE (if needed)
+                 // CNIE (if needed)
                 $userData['nom'],
                 $userData['prenom'],
                 $userData['email'],
+                $userData['telephone'],
                 $userData['motdepasse'],
-                $userData['status'],
                 $userData['role'],
-                $userData['datecreation']
+                
             )) {
+                
                 // Get the registered user's data
+                var_dump($userData["email"]);
                 $user = User::getByEmail($userData['email']);
+                echo 'dd';
                 if ($user) {
                     // Send registration email
                     $this->emailNotification->sendRegistrationNotification([
@@ -79,14 +85,14 @@ class AuthController  {
                     ]);
                 }
                 
-                header("Location: /login");
+                header("Location: /index.php/login");
                 exit();
             } else {
                 // Handle registration failure
                 echo "Registration failed!";
             }
         } else {
-            require_once(__DIR__ . '/../views/auth/register.php');
+            require_once(__DIR__.'/../views/auth/inscription.php');
         }
     }
    

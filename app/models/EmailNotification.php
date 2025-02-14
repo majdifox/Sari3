@@ -1,10 +1,10 @@
 <?php
 namespace App\Models;
 
-use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\Exception;
-use PHPMailer\PHPMailer\SMTP;
 use Core\Database;
+use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\Exception;
+use PHPMailer\PHPMailer\PHPMailer;
 
 class EmailNotification {
     private $mailer;
@@ -60,15 +60,7 @@ class EmailNotification {
             
             $success = $this->mailer->send();
             
-            if ($success) {
-                // Record notification in database if needed
-                $query = "INSERT INTO email_notifications (user_id, type, sent_at) 
-                         VALUES (:user_id, 'registration', NOW())";
-                $stmt = $this->db->prepare($query);
-                $stmt->execute([
-                    ':user_id' => $userData['id']
-                ]);
-            }
+          
             
             return $success;
         } catch (Exception $e) {

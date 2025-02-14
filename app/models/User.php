@@ -1,8 +1,8 @@
 <?php
 namespace App\Models;
 
-use Core\Database;
 use PDO;
+use Core\Database;
 
 class User {
    protected $id;
@@ -31,6 +31,7 @@ class User {
 
    // Get a user by email
    public static function getByEmail($email) {
+      echo 'work';
       $db = Database::getInstance()->getConnection();
       $query = "SELECT * FROM utilisateurs WHERE email = :email";
       $stmt = $db->prepare($query);
@@ -40,21 +41,19 @@ class User {
    }
 
    // Register a new user
-   public static function register($cnie, $nom, $prenom, $email, $motdepasse, $status, $role, $datecreation) {
+   public static function register( $nom, $prenom, $email, $telephone,$motdepasse, $role) {
       $db = Database::getInstance()->getConnection();
   
-      $query = "INSERT INTO utilisateurs (cnie, nom, prenom, email, motdepasse, status, role, datecreation) 
-                VALUES (:cnie, :nom, :prenom, :email, :motdepasse, :status, :role, :datecreation)";
+      $query = "INSERT INTO utilisateurs ( nom, prenom,telephone, email, mot_de_passe, role) 
+                VALUES ( :nom, :prenom, :email,:telephone ,:motdepasse,  :role )";
       $stmt = $db->prepare($query);
   
-      $stmt->bindParam(':cnie', $cnie, PDO::PARAM_STR);
       $stmt->bindParam(':nom', $nom, PDO::PARAM_STR);
       $stmt->bindParam(':prenom', $prenom, PDO::PARAM_STR);
-      $stmt->bindParam(':email', $email, PDO::PARAM_STR);
+      $stmt->bindParam(':email', $telephone, PDO::PARAM_STR);
       $stmt->bindParam(':motdepasse', $motdepasse, PDO::PARAM_STR);
-      $stmt->bindParam(':status', $status, PDO::PARAM_STR);
       $stmt->bindParam(':role', $role, PDO::PARAM_STR);
-      $stmt->bindParam(':datecreation', $datecreation, PDO::PARAM_STR);
+      $stmt->bindParam(':telephone', $email, PDO::PARAM_STR);
   
       return $stmt->execute();
   }
