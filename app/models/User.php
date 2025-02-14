@@ -2,6 +2,7 @@
 namespace App\Models;
 
 use PDO;
+use PDO;
 use Core\Database;
 
 class User {
@@ -115,7 +116,7 @@ class User {
       $stmt->bindParam(':datecreation', $datecreation, PDO::PARAM_STR);
   
       return $stmt->execute();
-  }
+   }
 
    // Get all users by role
    public static function getAllByRole($role) {
@@ -142,7 +143,16 @@ class User {
       $stmt = $this->db->prepare($query);
       $stmt->bindParam(':cnie', $cnie, PDO::PARAM_STR);
       $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+   }
+
+   // Activate a user account
+   public function activateAccount($cnie, $id) {
+      $query = "UPDATE utilisateurs SET status = 'active' WHERE cnie = :cnie AND id = :id";
+      $stmt = $this->db->prepare($query);
+      $stmt->bindParam(':cnie', $cnie, PDO::PARAM_STR);
+      $stmt->bindParam(':id', $id, PDO::PARAM_INT);
       return $stmt->execute();
+   }
    }
 
    public static function countAll() {

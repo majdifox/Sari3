@@ -2,17 +2,22 @@
 namespace App\Controllers;
 
 use App\Models\User;
+use App\Models\EmailNotification;
+
 session_start();
 class AuthController  {
     
 
-    
+    public function __construct() {
+        $this->emailNotification = new EmailNotification();
+    }
     
 
     public function login ()
     {
         // echo 'hello';
     if($_SERVER['REQUEST_METHOD']==='POST'){
+        echo '$POST';
         $email = $_POST['email'] ;
         $password = $_POST['password'] ;
         $user =  User::getByEmail($email);
@@ -38,24 +43,56 @@ class AuthController  {
     }
 
     public function register() {
+        echo 'hhhhhh';
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            // Common fields
-            $Prenom = $_POST['Prenom'] ?? '';
-            $Nom  = $_POST['Nom'] ?? '';
-            $Email      = $_POST['Email'] ?? '';
-            $Mot_de_passe   = $_POST['Mot_de_passe'] ?? '';
-            $Telephone      = $_POST['Telephone'] ?? '';
-            $Photo      = $_POST['Photo'] ?? '';
-            $Role       = $_POST['Role'] ?? '';
+            $userData = [
+                'prenom' => $_POST['prenom'] ?? '',
+                'nom' => $_POST['nom'] ?? '',
+                'email' => 'bou@gmail.com' ?? '',
+                'telephone' => $_POST['telephone'] ?? '',
+                'motdepasse' => password_hash($_POST['mot_de_passe'] ?? '', PASSWORD_DEFAULT),
+                // or whatever default status you want
+                'role' => $_POST['role']
+            ];
             
-            if ($this->userModel->register($Prenom, $Nom, $Email, $Mot_de_passe, $Telephone, $Photo, $Role)) {
-                header("Location: index.php?action=login_form");
+            echo '<pre>';
+            var_dump($userData['email'],);
+            echo '</pre>';
+            // Register the user
+            if (User::register(
+                 // CNIE (if needed)
+                $userData['nom'],
+                $userData['prenom'],
+                $userData['email'],
+                $userData['telephone'],
+                $userData['motdepasse'],
+                $userData['role'],
+                
+            )) {
+                
+                // Get the registered user's data
+                var_dump($userData["email"]);
+                $user = User::getByEmail($userData['email']);
+                echo 'dd';
+                if ($user) {
+                    // Send registration email
+                    $this->emailNotification->sendRegistrationNotification([
+                        'id' => $user->id,
+                        'prenom' => $user->prenom,
+                        'nom' => $user->nom,
+                        'email' => $user->email,
+                        'role' => $user->role
+                    ]);
+                }
+                
+                header("Location: /index.php/login");
                 exit();
             } else {
+                // Handle registration failure
                 echo "Registration failed!";
             }
         } else {
-            include __DIR__ . '/../views/register.php';
+            require_once(__DIR__.'/../views/auth/inscription.php');
         }
     }
    
