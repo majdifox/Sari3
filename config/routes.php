@@ -21,6 +21,8 @@ $router->add('GET', 'AnnonceDetails/{id}', 'ConducteurController', 'annoncedetai
 
 //Les Actions d'Expediteur
 $router->add('GET', 'Expediteur', 'ExpediteurController', 'dashboard');
+$router->add('GET', 'DetailsAnnonceExp/{id}', 'ExpediteurController', 'detailsannonceexp');
+
 $router->add('GET', 'DetailsAnnonceExp', 'ExpediteurController', 'detailsannonceexp');
 $router->add('GET', 'MesColis', 'ExpediteurController', 'mescolis');
 $router->add('GET', 'PrflExpediteur', 'ExpediteurController', 'prflexpediteur');
