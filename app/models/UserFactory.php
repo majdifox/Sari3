@@ -22,29 +22,20 @@ class UserFactory {
         }
     }
     public function getUser($id) {
-       $userData =  User::get($id);
-    
-        $sql = "SELECT * FROM users WHERE id_user = :id";
-        $stmt = $this->db->prepare($sql);
-        $stmt->bindParam(':id', $id);
-        $stmt->execute();
-        $userData = $stmt->fetch(\PDO::FETCH_ASSOC);
-
+       $userData =  User::getByID($id);
         if ($userData) {
             $role = $userData->role; 
             return $this->createUser($role, $userData);
         }
         return null;
     }
-    public function authenticate($username, $password) {
-        $sql = "SELECT * FROM users WHERE username = :username";
-        $stmt = $this->db->prepare($sql);
-        $stmt->bindParam(':username', $username);
-        $stmt->execute();
-        $userData = $stmt->fetch(\PDO::FETCH_ASSOC);
 
-        if ($userData && password_verify($password, $userData['password'])) {
-            return $this->createUser($userData["role"], $userData);
+    public function authenticate($email, $password) {
+        $userData =  User::getByEmail($email);
+
+
+        if ($userData && password_verify($password, $userData->password)) {
+            return $this->createUser($userData->role, $userData);
         }
         return null;
     }

@@ -5,16 +5,16 @@ use Core\Database;
 use PDO;
 
 class User {
-   private $id;
-   private $cnie;
-   private $nom;
-   private $prenom;
-   private $email;
-   private $motdepasse;
-   private $status;
-   private $role;
-   private $datecreation;
-   private $db;
+   protected $id;
+   protected $cnie;
+   protected $nom;
+   protected $prenom;
+   protected $email;
+   protected $motdepasse;
+   protected $status;
+   protected $role;
+   protected $datecreation;
+   protected $db;
 
    public function __construct($id = null, $cnie = null, $nom = null, $prenom = null, $email = null, $motdepasse = null, $status = null, $role = null, $datecreation = null) {
       $this->db = Database::getInstance()->getConnection();
@@ -36,7 +36,7 @@ class User {
       $stmt = $db->prepare($query);
       $stmt->bindParam(':email', $email, PDO::PARAM_STR);
       $stmt->execute();
-      return $stmt->fetch(PDO::FETCH_ASSOC);
+      return $stmt->fetch(PDO::FETCH_OBJ);
    }
 
    // Register a new user
@@ -62,16 +62,16 @@ class User {
    // Get a user by ID
    public static function getByID($id) {
       $db = Database::getInstance()->getConnection();
-      $query = "SELECT * FROM utilisateurs WHERE id = :id";
+      $query = "SELECT * FROM utilisateurs WHERE ID = :id";
       $stmt = $db->prepare($query);
       $stmt->bindParam(':id', $id, PDO::PARAM_INT);
       $stmt->execute();
-      return $stmt->fetch(PDO::FETCH_ASSOC);
+      return $stmt->fetch(PDO::FETCH_OBJ);
    }
 
    // Get all users by role
    public function getAllByRole($role) {
-      $query = "SELECT * FROM utilisateurs WHERE role = :role";
+      $query = "SELECT * FROM utilisateurs WHERE Role = :role";
       $stmt = $this->db->prepare($query);
       $stmt->bindParam(':role', $role, PDO::PARAM_STR);
       $stmt->execute();
