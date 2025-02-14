@@ -45,37 +45,40 @@ class Router {
         }
 
         public function dispatch() {
+            // Remove index.php from the URL
             $uri = $_SERVER['REQUEST_URI'];
+            $path = explode('/',$uri);
+            $id = end($path);
+            $uri = str_replace('/index.php', '', $uri);
+            $uri = trim(parse_url($uri, PHP_URL_PATH), '/');
             $method = $_SERVER['REQUEST_METHOD'];
-            $paths = explode('/',$uri,3);
-            $path =  $paths[2];
-           
+            
             foreach ($this->routes as $route) {
-                
-                if ($path == $route['path'] && $method === $route['method']) {
-                   
-                    
-                   
+                $pattern = preg_replace('/\{(\w+)\}/', '(?P<$1>\d+)', $route['path']);
+                $pattern = str_replace('/', '\/', $pattern);
+                $pattern = '/^' . $pattern . '$/';
+        
+                if ($method === $route['method'] && preg_match($pattern, $uri, $matches)) {
                     $controller = "App\\Controllers\\" . $route['controller'];
-                   
                     
-
                     if (class_exists($controller)) {
-                        $action = $route['action']; 
-                       
-                        
-                        // var_dump($result);
+                        $action = $route['action'];
                         $controllerInstance = new $controller();
-                        if (method_exists($controllerInstance, $action)) {
                         
-
-                            return $controllerInstance->$action();
+                        if (method_exists($controllerInstance, $action)) {
+                            $params = array_filter($matches, 'is_string', ARRAY_FILTER_USE_KEY);
+                            // echo $id;
+                            return $controllerInstance->$action($id);
                         }
                     }
                 }
             }
-            
+        
+            http_response_code(404);
+            echo "404 Not Found";
         }
+        
+        
 
         private function matchRoute($uri, $path) {
  

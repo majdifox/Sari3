@@ -84,9 +84,14 @@ class Conducteur  extends  User {
 
     
    }
-   public function createItiniraireDetails( $Itineraire_id){
-    // $this->ItineraireFactory-> createItiniraireDetails(Itineraire $Itineraire);
+   public function getItinerairebyID($id){
+     return $Itineraire =  $this->ItineraireFactory->getItineraire($id);
+    
    }
+   public function createItiniraireDetails(Itineraire $Itineraire){
+   return $details =  $this->ItineraireFactory->createItiniraireDetails($Itineraire);
+   
+  }
    public function getProfileInfos($id_condecteur){
     return  $user =  $this->UserFactory->getUser($id_condecteur);
   }

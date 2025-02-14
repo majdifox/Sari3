@@ -75,4 +75,47 @@ class Itineraire  {
         $stmt->execute();
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
+    public function getId() {
+        return $this->id;
+     }
+     public function getConducteurID(){
+        return $this->conducteur_id;
+    }
+
+    public function getVehiculeID(){
+        return $this->vehicule_id;
+    }
+
+    public function getDateDepart(){
+        return $this->date_depart;
+    }
+
+    public function getDateArriver(){
+        return $this->date_arriver;
+    }
+
+    public function getStatut(){
+        return $this->statut;
+    }
+
+   
+
+
+    // setters
+
+    public function setVehiculeID($vehicule_id){
+        $this->vehicule_id = $vehicule_id;
+    }
+
+    public function setDateDepart($date_depart){
+        $this->date_depart = $date_depart;
+    }
+
+    public function setDateArriver($date_arriver){
+        $this->date_arriver = $date_arriver;
+    }
+
+    public function setStatut($statut){
+        $this->statut = $statut;
+    }
 }

@@ -12,6 +12,7 @@ $router->add('GET', 'admin', 'AdminController', 'dashboard');
 $router->add('GET', 'Conducteur', 'ConducteurController', 'dashboard');
 $router->add('GET', 'MesAnnonces', 'ConducteurController', 'showItinirairesbyConducteur');
 $router->add('GET', 'DetailsAnnonce', 'ConducteurController', 'detailsannonce');
+$router->add('GET', 'AnnonceDetails/{id}', 'ConducteurController', 'annoncedetails');
 $router->add('POST', 'addIteneraire', 'ConducteurController', 'addIteneraire');
 
 

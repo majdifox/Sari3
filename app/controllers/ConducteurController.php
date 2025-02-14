@@ -14,8 +14,13 @@ class ConducteurController{
             $data = $this->conducteur->getItinerairebyCondicteur($id_condecteur);
          require_once('C:\laragon\www\Sari3\app\views\conducteur\Mes_Annonces.php');
       }
-      public function showItiniraire(){
-            
+      public function annoncedetails($id){
+             $Itineraire = $this->conducteur->getItinerairebyID($id);
+             $Details= $this->conducteur->createItiniraireDetails( $Itineraire);
+             echo '<pre>';
+             var_dump($Details);
+             echo '</pre>';
+            require_once('C:\laragon\www\Sari3\app\views\conducteur\Annonce_details.php');
       }
       public function addIteneraire(){
             if ($_SERVER["REQUEST_METHOD"] === "POST") {

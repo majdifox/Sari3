@@ -52,7 +52,7 @@ class ItineraireDetails {
         $stmt = $db->prepare($query);
         $stmt->bindParam(':itineraire_id', $itineraire_id, PDO::PARAM_INT);
         $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $stmt->fetchAll(PDO::FETCH_OBJ);
     }
 
     // Update status to 'En Transit'
