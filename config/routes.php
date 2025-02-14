@@ -4,7 +4,9 @@
 $router->add('GET', 'login', 'authController', 'login');
 $router->add('POST', 'login', 'authController', 'login');
 $router->add('GET', 'logout', 'authController', 'logout');
-
+$router->add('GET', 'logout', 'authController', 'logout');
+$router->add('GET', 'register', 'authController', 'register');
+$router->add('POST', 'register', 'authController', 'register');
 //Les Actions d'Administrateurs
 $router->add('GET', 'Admin', 'AdminController', 'dashboard');
 $router->add('GET', 'Admin/users', 'AdminController', 'gestion_utilisateur');

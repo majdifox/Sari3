@@ -16,6 +16,7 @@ use App\Models\ItineraireDetails;
        
         public function addItineraire($data){
           $id =   Itineraire::create($data);
+          var_dump($data);
             foreach ($data[""] as $key => $value) {
                
             }

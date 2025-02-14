@@ -77,18 +77,20 @@ class Itineraire  {
     //     $stmt->bindParam(':id', $id, PDO::PARAM_INT);
     //     return $stmt->execute();
     // }
-    // public static function create($data) {
-        
-    //     $db = Database::getInstance()->getConnection();
-    //     $query = "INSERT INTO public.itineraire(
-	//  conducteur_id, vehicule_id, date_depart, date_arriver, statut)
-	// VALUES (:conducteur_id, :vehicule_id, :date_depart, :date_arriver, :statut) returning id;";
-    //     $stmt = $db->prepare($query);
-    //     $stmt->bindParam(':conducteur_id', $id, PDO::PARAM_INT);
-    //     $stmt->bindParam(':vehicule_id', $id, PDO::PARAM_INT);
-    //     $stmt->bindParam(':date_depart', $id, PDO::PARAM_INT);
-    //     $stmt->bindParam(':date_arriver', $id, PDO::PARAM_INT);
-    //     $stmt->bindParam(':statut', $id, PDO::PARAM_INT);
-    //     return $stmt->execute();
-    // }
+    public static function create($data) {
+        echo '<pre>';
+        var_dump($data);
+        echo '</pre>';
+        $db = Database::getInstance()->getConnection();
+        $query = "INSERT INTO public.itineraire(
+	 conducteur_id, vehicule_id, date_depart, date_arriver, statut)
+	VALUES (:conducteur_id, :vehicule_id, :date_depart, :date_arriver, :statut) returning id;";
+        $stmt = $db->prepare($query);
+        $stmt->bindParam(':conducteur_id', $id, PDO::PARAM_INT);
+        $stmt->bindParam(':vehicule_id', $id, PDO::PARAM_INT);
+        $stmt->bindParam(':date_depart', $id, PDO::PARAM_INT);
+        $stmt->bindParam(':date_arriver', $id, PDO::PARAM_INT);
+        $stmt->bindParam(':statut', $id, PDO::PARAM_INT);
+        return $stmt->execute();
+    }
 }

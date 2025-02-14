@@ -25,7 +25,7 @@ class ConducteurController{
             echo '<pre>';
             // var_dump($_SESSION['user']);
             echo '</pre>';
-            $id_condecteur = $_SESSION['user']['id'];
+            $id_condecteur = $_SESSION['user']->id;
             $user =   $this->conducteur->getProfileInfos($id_condecteur);
            
             require_once 'C:\laragon\www\Sari3\app\views\conducteur\Profile_Conducteur.php';

@@ -2,7 +2,7 @@
 namespace App\Models;
 
 use PDO;
-use PDO;
+
 use Core\Database;
 
 class User {
@@ -138,12 +138,7 @@ class User {
    }
 
    // Activate a user account
-   public function activateAccount($cnie, $id) {
-      $query = "UPDATE utilisateurs SET status = 'active' WHERE cnie = :cnie AND id = :id";
-      $stmt = $this->db->prepare($query);
-      $stmt->bindParam(':cnie', $cnie, PDO::PARAM_STR);
-      $stmt->bindParam(':id', $id, PDO::PARAM_INT);
-   }
+  
 
    // Activate a user account
    public function activateAccount($cnie, $id) {
@@ -153,9 +148,9 @@ class User {
       $stmt->bindParam(':id', $id, PDO::PARAM_INT);
       return $stmt->execute();
    }
-   }
+   
 
-   public static function countAll() {
+   public static function countAll () {
       $connexion = Database::getInstance()->getConnection();
       $sql = "SELECT COUNT(*) as numbertotal FROM utilisateurs";
       $stmt = $connexion->query($sql);
