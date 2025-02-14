@@ -38,6 +38,18 @@ class AdminController
         
         require_once 'C:\laragon\www\Sari3\app\views\Admin\Gestion_Utilisateur.php';
     }
+    public function gestion_annonce()
+    {
+        $itineraires = $this->ListAnnonces();
+        
+        require_once 'C:\laragon\www\Sari3\app\views\Admin\Gestion_Annonces.php';
+    }
+    
+    public function gestion_profile()
+    {
+        $user = $this->getProfile($this->getId());
+        require_once 'C:\laragon\www\Sari3\app\views\Admin\Profile_Administrateur.php';
+    }
     public function getDashboardStats() {
         $stats = [];
         
@@ -89,11 +101,23 @@ class AdminController
         return $expediteurs;
         return $expediteurs;
     }
+    public function getProfile()
+    {
+        $userFactory = new \App\Models\UserFactory();
+        $user = $userFactory->getProfile($id);
+        return $user;
+    }
     public function ListUsers()
     {
         $userFactory = new UserFactory();
         $users = $userFactory->getAllUsers(); 
         return $users;
+    }
+    public function ListAnnonces()
+    {
+        $annonceFactory = new \App\Models\ItineraireFactory();
+        $annonces = $annonceFactory->getAnnonce(); 
+        return $annonces;
     }
 
     public function deleteUser($id_user)
@@ -103,40 +127,40 @@ class AdminController
         return json_encode(['status' => 'success']);
     }
 
-    public function ValidateUser($id_user)
-    {
-        $userFactory = new UserFactory();
-        $userFactory->validate($id_user); 
-        return json_encode(['status' => 'success']);
-    }
+    // public function ValidateUser($id_user)
+    // {
+    //     $userFactory = new UserFactory();
+    //     $userFactory->validate($id_user); 
+    //     return json_encode(['status' => 'success']);
+    // }
 
-    public function SuspendUser($id_user)
-    {
-        $userFactory = new UserFactory();
-        $userFactory->suspend($id_user); 
-        return json_encode(['status' => 'success']);
-    }
+    // public function SuspendUser($id_user)
+    // {
+    //     $userFactory = new UserFactory();
+    //     $userFactory->suspend($id_user); 
+    //     return json_encode(['status' => 'success']);
+    // }
 
-    public function BanUser($id_user)
-    {
-        $userFactory = new \App\Models\UserFactory();
-        $userFactory->ban($id_user); 
-        return json_encode(['status' => 'success']);
-    }
+    // public function BanUser($id_user)
+    // {
+    //     $userFactory = new \App\Models\UserFactory();
+    //     $userFactory->ban($id_user); 
+    //     return json_encode(['status' => 'success']);
+    // }
 
-    public function UnbanUser($id_user)
-    {
-        $userFactory = new UserFactory();
-        $userFactory->unban($id_user); 
-        return json_encode(['status' => 'success']);
-    }
+    // public function UnbanUser($id_user)
+    // {
+    //     $userFactory = new UserFactory();
+    //     $userFactory->unban($id_user); 
+    //     return json_encode(['status' => 'success']);
+    // }
 
-    public function ListAnnouncements()
-    {
-        $annonceModel = new AnnonceModel(); 
-        $annonces = $annonceModel->getAll(); 
-        return json_encode($annonces);
-    }
+    // public function ListAnnouncements()
+    // {
+    //     $annonceModel = new AnnonceModel(); 
+    //     $annonces = $annonceModel->getAll(); 
+    //     return json_encode($annonces);
+    // }
 
     public function CreateAnnouncement($data)
     {
@@ -165,15 +189,16 @@ class AdminController
         return json_encode(['status' => 'success']);
     }
     
-
-
-
     public function getRecentColis()
 {
     $colisFactory = new \App\Models\ColisFactory();
     $recent_colis = $colisFactory->RecentColis(); 
     return $recent_colis;
 }
+    public function getId()
+{
+    return $this->getId();
+}   
 
     
 }

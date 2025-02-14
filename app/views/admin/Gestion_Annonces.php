@@ -60,8 +60,8 @@ if (!isset($_SESSION['user']) || !isset($_SESSION['user']->prenom)) {
         <header class="flex items-center h-20 px-6 sm:px-10 bg-white">
             <div class="flex flex-shrink-0 items-center ml-auto">
                 <div class="hidden md:flex md:flex-col md:items-end md:leading-tight">
-                    <span class="font-semibold"><?php echo $nom . ' ' . $prenom; ?></span>
-                    <span class="text-sm text-gray-600"><?php echo $role; ?></span>
+                    <span class="font-semibold"><?php echo $_SESSION['user']->nom . ' ' . $_SESSION['user']->prenom; ?></span>
+                    <span class="text-sm text-gray-600"><?php echo $_SESSION['user']->role; ?></span>
                 </div>
                 <span class="h-12 w-12 ml-2 sm:ml-3 mr-2 bg-gray-100 rounded-full overflow-hidden">
                     <img src="../assets/images/<?php echo $photo; ?>" alt="user profile photo" class="h-full w-full object-cover">
@@ -105,44 +105,63 @@ if (!isset($_SESSION['user']) || !isset($_SESSION['user']->prenom)) {
 
     <!-- Liste des annonces -->
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <?php foreach ($annonces as $annonce): ?>
-            <div class="bg-white rounded-lg shadow-md overflow-hidden">
-                <div class="p-6">
-                    <div class="flex justify-between items-start">
-                        <h2 class="text-xl font-semibold text-gray-800 mb-2"><?= htmlspecialchars($annonce['title']) ?></h2>
-                        <span class="text-sm text-gray-500">
-                            <?= date('d/m/Y', strtotime($annonce['date_creation'])) ?>
-                        </span>
+            <?php foreach ($itineraires as $itineraire): ?>
+                <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+                    <!-- En-tête de la card -->
+                    <div class="bg-green-500 text-white px-4 py-2">
+                        <h2 class="text-xl font-semibold">
+                            <?= htmlspecialchars($itineraire['ville_depart']) ?> → <?= htmlspecialchars($itineraire['ville_destination']) ?>
+                        </h2>
                     </div>
                     
-                    <p class="text-gray-600 mb-4">
-                        <?= nl2br(htmlspecialchars($annonce['content'])) ?>
-                    </p>
-                    
-                    <div class="flex justify-end space-x-3 mt-4 pt-4 border-t">
-                        <a href='/Admin/edit-announcement/<?= $annonce['id'] ?>' 
-                            class='inline-flex items-center px-3 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 bg-white hover:bg-gray-50'>
-                            <svg class="h-4 w-4 mr-2 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-                            </svg>
-                            Éditer
-                        </a>
-                        
-                        <form action='/Admin/delete-announcement/<?= $annonce['id'] ?>' method='POST' class='inline'>
-                            <button type='submit' 
-                                class='inline-flex items-center px-3 py-2 border border-red-300 rounded-md text-sm font-medium text-red-700 bg-white hover:bg-red-50'
-                                onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette annonce ?')">
-                                <svg class="h-4 w-4 mr-2 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                    <!-- Corps de la card -->
+                    <div class="p-4">
+                        <!-- Informations du trajet -->
+                        <div class="mb-4">
+                            <div class="flex items-center mb-2">
+                                <svg class="w-5 h-5 text-gray-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                                 </svg>
-                                Supprimer
-                            </button>
-                        </form>
+                                <span class="text-gray-700"><?= date('d/m/Y', strtotime($itineraire['date_depart'])) ?> à <?= $itineraire['heure_depart'] ?></span>
+                            </div>
+                            <div class="flex items-center mb-2">
+                                <svg class="w-5 h-5 text-gray-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2z" />
+                                </svg>
+                                <span class="text-gray-700"><?= $itineraire['prix'] ?> DH</span>
+                            </div>
+                            <div class="flex items-center">
+                                <svg class="w-5 h-5 text-gray-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                                </svg>
+                                <span class="text-gray-700"><?= $itineraire['nombre_place'] ?> places disponibles</span>
+                            </div>
+                        </div>
+
+                        <!-- Informations du conducteur -->
+                        <div class="border-t pt-4">
+                            <h3 class="font-semibold text-gray-700 mb-2">Conducteur</h3>
+                            <div class="flex items-center mb-2">
+                                <img src="/assets/images/default-avatar.png" alt="Avatar" class="w-10 h-10 rounded-full mr-3">
+                                <div>
+                                    <p class="font-medium"><?= htmlspecialchars($itineraire['conducteur_nom']) ?> <?= htmlspecialchars($itineraire['conducteur_prenom']) ?></p>
+                                    <p class="text-sm text-gray-500"><?= htmlspecialchars($itineraire['conducteur_email']) ?></p>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <!-- Boutons d'action -->
+                        <div class="mt-4 flex justify-end space-x-2">
+                            <a href="/admin/itineraire/<?= $itineraire['id'] ?>" 
+                               class="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 transition duration-200">
+                                Voir détails
+                            </a>
+                        </div>
                     </div>
                 </div>
-            </div>
-        <?php endforeach; ?>
-    </div>
+            <?php endforeach; ?>
+        </div>
 </main>
 
     </div>

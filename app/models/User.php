@@ -207,4 +207,15 @@ class User {
       $results= $stmt->fetchAll(\PDO::FETCH_ASSOC);
       return $results;
    }
+   public static function getProfile($id) {
+      $connexion = Database::getInstance()->getConnection();
+      $query = "SELECT id, nom, prenom, email, telephone, role ,etat
+                 FROM utilisateurs 
+                 WHERE id = :id";
+      $stmt = $connexion->prepare($query);
+      $stmt->bindValue(':id', $id);
+      $stmt->execute();
+      $result = $stmt->fetch(\PDO::FETCH_ASSOC);
+      return $result;
+   }
 }

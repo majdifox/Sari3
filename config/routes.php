@@ -8,7 +8,7 @@ $router->add('GET', 'logout', 'authController', 'logout');
 //Les Actions d'Administrateurs
 $router->add('GET', 'admin', 'AdminController', 'dashboard');
 $router->add('GET', 'admin/users', 'AdminController', 'gestion_utilisateur');
-$router->add('GET', 'admin/annonce', 'AdminController', 'gestion_annonce');
+$router->add('GET', 'admin/annonces', 'AdminController', 'gestion_annonce');
 $router->add('GET', 'admin/profile', 'AdminController', 'gestion_profile');
 
 

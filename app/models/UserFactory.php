@@ -75,5 +75,9 @@ class UserFactory {
             $user =   User::CountByRole($role);
                return  $user;
     }
+    public function getProfile($id) {
+        $user =   User::getProfile($id);
+           return  $user;
+    }
 }
 
