@@ -2,7 +2,6 @@
  namespace App\Controllers;
 
  use App\Models\Conducteur;
-session_start();
 class ConducteurController{
     public $conducteur;
     public function __construct(){
@@ -10,7 +9,7 @@ class ConducteurController{
     }
 
       public function showItinirairesbyConducteur(){
-            $id_condecteur = $_SESSION["user"]['id'];
+            $id_condecteur = $_SESSION["user"]->id;
             $data = $this->conducteur->getItinerairebyCondicteur($id_condecteur);
          require_once('C:\laragon\www\Sari3\app\views\conducteur\Mes_Annonces.php');
       }
@@ -42,7 +41,7 @@ class ConducteurController{
             // echo 'getItinerairebyCondicteur';
             session_start();
           
-            $id_condecteur = $_SESSION['user']['id'];
+            $id_condecteur = $_SESSION['user']->id;
             $user =   $this->conducteur->getProfileInfos($id_condecteur);
            
             require_once 'C:\laragon\www\Sari3\app\views\conducteur\Profile_Conducteur.php';
@@ -53,7 +52,7 @@ class ConducteurController{
       }
       
       public function mesannonces() {
-            $id_condecteur = $_SESSION['user']['id'];
+            $id_condecteur = $_SESSION['user']->id;
             $data = $this->conducteur->getItinerairebyCondicteur($id_condecteur);
             require_once 'C:\laragon\www\Sari3\app\views\conducteur\Mes_Annonces.php';
     
