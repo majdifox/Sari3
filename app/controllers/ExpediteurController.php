@@ -51,7 +51,7 @@ class ExpediteurController{
     public function makeRequest() {
    
     $this->Expediteur->MakeRequest($_POST);
-    var_dump($_POST);
+    // var_dump($_POST);
 
   }
 
