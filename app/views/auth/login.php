@@ -7,8 +7,8 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         :root {
-            --dark-blue: #1a237e;
-            --yellow: #ffd700;
+            --dark-blue: #2563EB;
+            --yellow: #2563EB;
         }
 
         body {
@@ -117,7 +117,7 @@
                         </div>
 
                         <div class="text-center">
-                            <p>Pas encore de compte? <a href="index.php?action=register_form" class="register-link">S'inscrire</a></p>
+                            <p>Pas encore de compte? <a href="/index.php/register" class="register-link">S'inscrire</a></p>
                         </div>
                     </form>
                 </div>
