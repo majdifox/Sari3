@@ -99,21 +99,18 @@ class User {
    }
 
    // Register a new user
-   public static function register($cnie, $nom, $prenom, $email, $motdepasse, $status, $role, $datecreation) {
+   public static function register( $nom, $prenom, $email, $motdepasse, $role) {
       $db = Database::getInstance()->getConnection();
   
-      $query = "INSERT INTO utilisateurs (cnie, nom, prenom, email, motdepasse, status, role, datecreation) 
-                VALUES (:cnie, :nom, :prenom, :email, :motdepasse, :status, :role, :datecreation)";
+      $query = "INSERT INTO utilisateurs ( nom, prenom, email, mot_de_passe,  role) 
+                VALUES ( :nom, :prenom, :email, :motdepasse, :role)";
       $stmt = $db->prepare($query);
   
-      $stmt->bindParam(':cnie', $cnie, PDO::PARAM_STR);
       $stmt->bindParam(':nom', $nom, PDO::PARAM_STR);
       $stmt->bindParam(':prenom', $prenom, PDO::PARAM_STR);
       $stmt->bindParam(':email', $email, PDO::PARAM_STR);
       $stmt->bindParam(':motdepasse', $motdepasse, PDO::PARAM_STR);
-      $stmt->bindParam(':status', $status, PDO::PARAM_STR);
       $stmt->bindParam(':role', $role, PDO::PARAM_STR);
-      $stmt->bindParam(':datecreation', $datecreation, PDO::PARAM_STR);
   
       return $stmt->execute();
    }

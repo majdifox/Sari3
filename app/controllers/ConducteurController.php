@@ -58,8 +58,8 @@ class ConducteurController{
       }
       
       public function mesannonces() {
-            $id_condecteur = $_SESSION['user']->id;
-            $data = $this->getItinerairebyCondicteur($id_condecteur);
+            $id_condecteur = $_SESSION['user']['id'];
+            $data = $this->conducteur->getItinerairebyCondicteur($id_condecteur);
             require_once 'C:\laragon\www\Sari3\app\views\conducteur\Mes_Annonces.php';
     
       }
