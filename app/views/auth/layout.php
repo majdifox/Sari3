@@ -25,31 +25,12 @@
     </script>
 </head>
 <body class="bg-blue-50">
-  <!-- Header -->
-  <header class="bg-primary text-white py-4 shadow-md">
-    <div class="container mx-auto px-4 flex justify-between items-center">
-      <h1 class="text-2xl font-bold">sari3</h1>
-      <nav>
-        <ul class="flex space-x-4">
-          <!-- Adjust these links to suit the user's role or dashboard -->
-          <li><a href="login.php" class="hover:underline">LogIn</a></li>
-          <li><a href="inscription.php" class="hover:underline">Register</a></li>
-          <li><a href="logout.php" class="hover:underline">Logout</a></li>
-        </ul>
-      </nav>
-    </div>
-  </header>
+
 
   <!-- Main Content Area -->
   <main class="container mx-auto px-4 py-6">
     <?= $content ?? '<p class="text-xl text-gray-700">Welcome to sari3!</p>' ?>
   </main>
 
-  <!-- Footer -->
-  <footer class="bg-primary text-white py-4 mt-8">
-    <div class="container mx-auto px-4 text-center">
-      <p>&copy; <?= date("Y") ?> sari3. All rights reserved.</p>
-    </div>
-  </footer>
 </body>
 </html>
