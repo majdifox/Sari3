@@ -19,28 +19,35 @@ if (!isset($_SESSION['user']) || !isset($_SESSION['user']->prenom)) {
 </head>
 <body class="flex bg-gray-100 min-h-screen">
     <aside class="hidden sm:flex sm:flex-col">
-        <a href="/index.php/Admin/dashboard" class="inline-flex items-center justify-center h-20 w-20 bg-green-600 hover:bg-green-500">
-            <span class="text-white font-bold text-2xl">S3</span>
-        </a>
+
+                <a href="/Admin/" class="flex items-center">
+                    <img src="https://export-download.canva.com/ZADgo/DAGey3ZADgo/3/0/0001-1456244851306253508.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAJHKNGJLC2J7OGJ6Q%2F20250212%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20250212T180648Z&X-Amz-Expires=64508&X-Amz-Signature=08e79dfdbd4060b752d74edc03c491b40e21570f0fd7ee31777b4cd6e1db3cbe&X-Amz-SignedHeaders=host&response-content-disposition=attachment%3B%20filename%2A%3DUTF-8%27%27Red%2520Blue%2520Modern%2520Logistics%2520Express%2520Logo.png&response-expires=Thu%2C%2013%20Feb%202025%2012%3A01%3A56%20GMT" class="mr-3 mt-[-1rem] w-[7rem]" alt="Site Web Logo" />
+                </a>
         <div class="flex-grow flex flex-col justify-between text-gray-500 bg-gray-800">
             <nav class="flex flex-col mx-4 my-6 space-y-4">
-                <a href="/index.php/Admin/dashboard" class="inline-flex items-center justify-center py-3 text-green-600 bg-white rounded-lg">
+                <a href="#" class="inline-flex items-center justify-center py-3 text-green-600 bg-white rounded-lg">
+
                     <span class="sr-only">Dashboard</span>
                     <i class="fas fa-chart-line text-xl"></i>
                 </a>
 
-                <a href="/index.php/Admin/users" class="inline-flex items-center justify-center py-3 hover:text-gray-400 hover:bg-gray-700 focus:text-gray-400 focus:bg-gray-700 rounded-lg">
+                <a href="admin/users" class="inline-flex items-center justify-center py-3 hover:text-gray-400 hover:bg-gray-700 focus:text-gray-400 focus:bg-gray-700 rounded-lg">
+
                     <span class="sr-only">Utilisateurs</span>
                     <i class="fas fa-users text-xl"></i>
                 </a>
 
-                <a href="/index.php/Admin/colis" class="inline-flex items-center justify-center py-3 hover:text-gray-400 hover:bg-gray-700 focus:text-gray-400 focus:bg-gray-700 rounded-lg">
+
+                <a href="admin/colis" class="inline-flex items-center justify-center py-3 hover:text-gray-400 hover:bg-gray-700 focus:text-gray-400 focus:bg-gray-700 rounded-lg">
+
                     <span class="sr-only">Colis</span>
                     <i class="fas fa-box text-xl"></i>
                 </a>
 
-                <a href="/index.php/Admin/statistiques" class="inline-flex items-center justify-center py-3 hover:text-gray-400 hover:bg-gray-700 focus:text-gray-400 focus:bg-gray-700 rounded-lg">
-                    <span class="sr-only">Statistiques</span>
+
+                <a href="admin/" class="inline-flex items-center justify-center py-3 hover:text-gray-400 hover:bg-gray-700 focus:text-gray-400 focus:bg-gray-700 rounded-lg">
+                    <span class="sr-only">Annonces</span>
+
                     <i class="fas fa-chart-bar text-xl"></i>
                 </a>
             </nav>
@@ -52,7 +59,7 @@ if (!isset($_SESSION['user']) || !isset($_SESSION['user']->prenom)) {
             <div class="flex flex-shrink-0 items-center ml-auto">
                 <div class="flex items-center">
                     <span class="text-gray-800 text-sm mr-4">Bienvenue, <?= $_SESSION['user']->prenom ?></span>
-                    <a href="/logout" class="text-gray-800 hover:text-red-500">
+                    <a href="logout" class="text-gray-800 hover:text-red-500">
                         <i class="fas fa-sign-out-alt"></i>
                     </a>
                 </div>
@@ -262,52 +269,33 @@ if (!isset($_SESSION['user']) || !isset($_SESSION['user']->prenom)) {
     </div>
 
     <script>
-        // Graphique des colis
-        const colisCtx = document.getElementById('colisChart').getContext('2d');
-        new Chart(colisCtx, {
-            type: 'bar',
+      const colisStats = <?= json_encode($stats['colis']); ?>;
+
+        const colisChart = new Chart(document.getElementById('colisChart'), {
+            type: 'pie', // Type de graphique (ex: bar, pie, line, etc.)
             data: {
-                labels: <?= json_encode(array_column($colis_stats, 'statut')) ?>,
+                labels: ['En attente', 'En cours', 'Livrés'], // Légendes des données
                 datasets: [{
-                    label: 'Nombre de colis',
-                    data: <?= json_encode(array_column($colis_stats, 'total')) ?>,
-                    backgroundColor: ['#FCD34D', '#60A5FA', '#34D399'],
-                    borderWidth: 1
+                    label: 'Statistiques des colis',
+                    data: [colisStats.en_attente, colisStats.en_cours, colisStats.livres], // Données statistiques
+                    backgroundColor: ['#FF6384', '#36A2EB', '#4BC0C0'], // Couleurs pour les segments
                 }]
-            },
-            options: {
-                responsive: true,
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        ticks: {
-                            stepSize: 1
-                        }
-                    }
-                }
             }
         });
 
-        // Graphique des utilisateurs
-        const usersCtx = document.getElementById('usersChart').getContext('2d');
-        new Chart(usersCtx, {
-            type: 'pie',
-            data: {
-                labels: <?= json_encode(array_column($user_stats, 'role')) ?>,
-                datasets: [{
-                    data: <?= json_encode(array_column($user_stats, 'total')) ?>,
-                    backgroundColor: ['#60A5FA', '#34D399', '#F87171'],
-                }]
-            },
-            options: {
-                responsive: true,
-                plugins: {
-                    legend: {
-                        position: 'bottom'
-                    }
+        const usersStats = <?= json_encode($stats['users']); ?>;
+
+            const usersChart = new Chart(document.getElementById('usersChart'), {
+                type: 'bar',
+                data: {
+                    labels: ['Conducteurs', 'Expéditeurs', 'Admins'], // Légendes
+                    datasets: [{
+                        label: 'Nombre d\'utilisateurs par rôle',
+                        data: [usersStats.conducteurs, usersStats.expediteurs, usersStats.admins], // Données
+                        backgroundColor: ['#FF9F40', '#FFCD56', '#4BC0C0'], // Couleurs
+                    }]
                 }
-            }
-        });
+            });
 
         // Fetch Conducteurs
         fetch('/Admin/conducteurs')

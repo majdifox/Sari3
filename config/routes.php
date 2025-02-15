@@ -8,10 +8,12 @@ $router->add('GET', 'logout', 'authController', 'logout');
 $router->add('GET', 'register', 'authController', 'register');
 $router->add('POST', 'register', 'authController', 'register');
 //Les Actions d'Administrateurs
-$router->add('GET', 'Admin', 'AdminController', 'dashboard');
-$router->add('GET', 'Admin/users', 'AdminController', 'gestion_utilisateur');
-$router->add('GET', 'Admin/annonce', 'AdminController', 'gestion_annonce');
-$router->add('GET', 'Admin/profile', 'AdminController', 'gestion_profile');
+
+$router->add('GET', 'admin', 'AdminController', 'dashboard');
+$router->add('GET', 'admin/users', 'AdminController', 'gestion_utilisateur');
+$router->add('GET', 'admin/annonces', 'AdminController', 'gestion_annonce');
+$router->add('GET', 'admin/profile', 'AdminController', 'gestion_profile');
+
 //Les Actions du Conducteur
 $router->add('GET', 'Conducteur', 'ConducteurController', 'dashboard');
 $router->add('GET', 'MesAnnonces', 'ConducteurController', 'mesannonces');
@@ -26,7 +28,7 @@ $router->add('POST', 'makeRequest', 'ExpediteurController', 'makeRequest');
 $router->add('GET', 'MesColis', 'ExpediteurController', 'mescolis');
 $router->add('GET', 'PrflExpediteur', 'ExpediteurController', 'prflexpediteur');
 
-
+?>
 
 
 

@@ -46,6 +46,11 @@ class UserFactory {
         User::create($data);
         
     }
+
+    public function getAllUsers() {
+        $users = User::getAll();
+        return $users;
+    }
     public function getAllConducteurs() {
         $role = 'Conducteur';
         $user=User::getAllbyRole($role);
@@ -70,5 +75,19 @@ class UserFactory {
             $user =   User::CountByRole($role);
                return  $user;
     }
+    public function getProfile($id) {
+        $user =   User::getProfile($id);
+           return  $user;
+    }
+    public function validate($id_user) {
+          User::validateUser($id_user);
+    }
+    public function delete($id_user) {
+        User::deleteAccount($id_user);
+    }
+    public function ban($id_user) {
+        User::suspend($id_user);
+    }   
+
 }
 

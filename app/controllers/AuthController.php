@@ -25,6 +25,7 @@ class AuthController  {
             $_SESSION['user'] = $user;
             
             $role = $user->role;
+            if ($role='Admin')
             header("Location: http://sari3.test/index.php/".$role);
         }else {
             echo 'password incorrect';
