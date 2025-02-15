@@ -13,10 +13,9 @@ class Database {
         global $config; 
         $host = "localhost";
         $port = "5432";
-        $dbname = "Sarri";
-        
+        $dbname = "Sarii";
         $user = "postgres";
-        $pass = "Youness";
+        $pass = "Admin";
 
         try {
             $this->connection = new \PDO("pgsql:host=$host;port=$port;dbname=$dbname", $user, $pass);
