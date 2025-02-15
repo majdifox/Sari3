@@ -1,12 +1,12 @@
 <?php
 session_start();
-echo '<pre>';
-foreach ($Details as $city ) {
-    echo '<pre>';
-    var_dump($city->getStatus());
-    echo '</pre>';
-}
-echo '</pre>';
+// echo '<pre>';
+// foreach ($Details as $city ) {
+//     echo '<pre>';
+//     var_dump($city->getStatus());
+//     echo '</pre>';
+// }
+// echo '</pre>';
 ?>
 
 <!DOCTYPE html>
