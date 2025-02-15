@@ -1,10 +1,10 @@
 
 
 <!-- <?php
-echo 'hello';
-echo '<pre>';
-// var_dump($user);
-echo '</pre>';
+// echo 'hello';
+// echo '<pre>';
+// // var_dump($user);
+// echo '</pre>';
 ?> -->
 
 <!DOCTYPE html>
