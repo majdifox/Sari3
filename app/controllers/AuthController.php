@@ -17,7 +17,7 @@ class AuthController  {
     {
         // echo 'hello';
     if($_SERVER['REQUEST_METHOD']==='POST'){
-        echo '$POST';
+        // echo '$POST';
         $email = $_POST['email'] ;
         $password = $_POST['password'] ;
         $user =  User::getByEmail($email);
@@ -43,7 +43,6 @@ class AuthController  {
     }
 
     public function register() {
-        echo 'hhhhhh';
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $userData = [
                 'prenom' => $_POST['prenom'] ?? '',
@@ -68,9 +67,8 @@ class AuthController  {
             )) {
                 
                 // Get the registered user's data
-                var_dump($userData["email"]);
+                // var_dump($userData["email"]);
                 $user = User::getByEmail($userData['email']);
-                echo 'dd';
                 if ($user) {
                     // Send registration email
                     $this->emailNotification->sendRegistrationNotification([
