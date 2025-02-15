@@ -144,10 +144,9 @@ class ItineraireDetails {
         }
     
         $currentOrder = $result['orders'];
-        echo "HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH<br>";
         echo $currentOrder;
         // Verification d'Ordre de la ville
-        if ($currentOrder == 0) {
+        if ($currentOrder == 1) {
             echo 'noiice';
            $this->setStatusItinerarire();
             return;
