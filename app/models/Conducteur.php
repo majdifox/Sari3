@@ -6,7 +6,7 @@ use App\Models\UserFactory;
 use App\Models\ColisFactory;
 use App\Models\VehiculeFactory;
 use App\Models\ItineraireFactory;
-
+session_start();
 class Conducteur  extends  User {
     private $ItineraireFactory;
     private $ColisFactory;
@@ -28,7 +28,7 @@ class Conducteur  extends  User {
        
     }
     public function getColis($id){
-     $colis =  $this->ColisFactory->getColis($id);
+     return $colis =  $this->ColisFactory->getColis($id);
     }
     public function addAnnonce($dataCity,$dataVehicle,$TimingData) {
       $this->ItineraireFactory->addItineraire($dataCity,$dataVehicle,$TimingData);
@@ -36,7 +36,21 @@ class Conducteur  extends  User {
     public function getColisParVilleEtItineraire($Itineraire,$ville) {
      return $this->ColisFactory->getColisParVilleEtItineraire($Itineraire,$ville);
     }
-  
+
+    public function livrerColis($id){
+     $colis = $this->getColis($id);
+     if($colis){
+      $this->ColisFactory->statutlivre($colis);
+     }
+    }
+
+    public function nonLivrerColis($id){
+      $colis = $this->getColis($id);
+      if($colis){
+       $this->ColisFactory->statutnonlivre($colis);
+      }
+     }
+
   public function deleteAnnonce($id) {
     $this->ItineraireFactory->deleteItineraire($id);
   }
@@ -94,7 +108,6 @@ class Conducteur  extends  User {
     
    }
    public function createItiniraireDetails(Itineraire $Itineraire){
-    echo 'is work';
    return $details =  $this->ItineraireFactory->createItiniraireDetails($Itineraire);
    
   }
