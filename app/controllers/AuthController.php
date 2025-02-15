@@ -56,9 +56,6 @@ class AuthController  {
                 'role' => $_POST['role']
             ];
             
-            echo '<pre>';
-            var_dump($userData['email'],);
-            echo '</pre>';
             // Register the user
             if (User::register(
                  // CNIE (if needed)

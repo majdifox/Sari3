@@ -97,17 +97,7 @@ class Colis {
         $statut = $this->getStatus();
         $origin = $this->getOrigin();
         $nom = $this->getNom();
-        echo '<pre>';
-        var_dump([
-            'expediteur_id' => $expediteur_id,
-            'itineraire_id' => $itineraire_id,
-            'destination' => $destination,
-            'volume' => $volume,
-            'poids' => $poids,
-            'origin' => $origin,
-            'nom' => $nom,
-        ]);
-        echo '</pre>';
+       
         $query = "INSERT INTO colis (expediteur_id, itineraire_id, destination, volume, poids, origin,nom) 
                   VALUES (:expediteur_id, :itineraire_id, :destination, :volume, :poids, :origin,:nom)";
         $stmt = $this->db->prepare($query);
@@ -167,7 +157,65 @@ class Colis {
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+////////////////////////////
 
+
+
+public static function getColisParVilleEtItineraire($itineraire_id,$ville) {
+    echo $itineraire_id;
+    echo '<br>';
+    echo $ville;
+    $db = Database::getInstance()->getConnection();
+
+    $sql = "SELECT DISTINCT(c.*)
+            FROM colis c
+            JOIN itineraire i ON c.Itineraire_id = i.ID
+            JOIN details_itineraire d ON i.ID = d.Itineraire_id
+            WHERE  d.Itineraire_id= :id AND c.Destination = :ville AND c.Statut = 'En préparation' OR c.Statut = 'En transit'
+    ";
+
+    try {
+        $stmt = $db->prepare($sql);
+        $stmt->bindParam(':ville', $ville, PDO::PARAM_STR);
+        $stmt->bindParam(':id', $itineraire_id, PDO::PARAM_INT);
+        $stmt->execute();
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    } catch (PDOException $e) {
+        echo "Erreur : " . $e->getMessage();
+        return [];
+    }
+}
+
+
+public function colisLivrer(){
+    $id = $this->getId();
+    
+    $stmt = $this->db->prepare("UPDATE colis SET Statut = 'Livré' WHERE ID = :id");
+    $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+
+    $stmt->execute([$ColisID]);
+    
+}
+
+
+public function colisNonLivrer(){
+    
+    $stmt = $this->db->prepare("UPDATE colis SET Statut = 'Non livré' WHERE ID = ? ");
+    $stmt->execute([$ColisID]);
+    
+}
+
+
+
+
+
+
+
+
+
+
+//////////////////////////////
     public function setEtat($etat){
         $this->etat = $etat;
     }

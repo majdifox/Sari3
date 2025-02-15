@@ -15,7 +15,7 @@ use App\Models\ItineraireDetails;
 
        
         public function addItineraire($dataCity,$dataVehicle,$TimingData){
-            var_dump($dataCity);
+            // var_dump($dataCity);
           $data =   Itineraire::create($dataVehicle["id"],$TimingData);
           $i = 0;
             foreach ($dataCity as $city ) {
@@ -26,9 +26,14 @@ use App\Models\ItineraireDetails;
             
         }
         public function createItiniraireDetails(Itineraire $Itineraire) {
-            // ona  le id de Itineraire dans ghadi n9lb 3la details lkhrin dylo
+         
+            
             $list = ItineraireDetails::getDetailsOfItiniraire($Itineraire->getId());
-           
+            echo '<pre>';
+            var_dump($list);
+            // ona  le id de Itineraire dans ghadi n9lb 3la details lkhrin dylo
+            echo '</pre>';
+            
             if ($list) {
                 $i= 0;
                 $objects=[];
@@ -72,6 +77,14 @@ use App\Models\ItineraireDetails;
         return $objects;
             // b3d $result = fetchObject('itineraire');
         }
+        public function updateStatut($ville){
+            echo 'HHHHHHHHHHHHHHHHHHHHHH<br>';
+            var_dump($ville->getId());
+            echo 'hello';
+            $ville->updateStatut();
+        }
+            // b3d $result = fetchObject('itineraire');
+        
         
         
     }

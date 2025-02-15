@@ -1,7 +1,11 @@
 <?php
 session_start();
 echo '<pre>';
-var_dump($Details);
+foreach ($Details as $city ) {
+    echo '<pre>';
+    var_dump($city->getStatus());
+    echo '</pre>';
+}
 echo '</pre>';
 ?>
 
@@ -14,6 +18,7 @@ echo '</pre>';
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://api.mapbox.com/mapbox-gl-js/v2.6.1/mapbox-gl.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script> 
     <style>
         :root {
             --dark-blue: #1a237e;
@@ -133,7 +138,7 @@ echo '</pre>';
         }
     </style>
 </head>
-<body>
+<body class="overflow-x-hidden">
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg">
         <div class="container">
@@ -157,6 +162,7 @@ echo '</pre>';
         </div>
     </nav>
 
+    
     <!-- Driver Profile Content -->
     <div class="driver-container">
         <div class="row">
@@ -308,6 +314,9 @@ echo '</pre>';
             center: [-74.5, 40],
             zoom: 9
         });
+
+        
+
     </script>
 </body>
 </html>

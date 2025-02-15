@@ -33,6 +33,9 @@ class Conducteur  extends  User {
     public function addAnnonce($dataCity,$dataVehicle,$TimingData) {
       $this->ItineraireFactory->addItineraire($dataCity,$dataVehicle,$TimingData);
     }
+    public function getColisParVilleEtItineraire($Itineraire,$ville) {
+     return $this->ColisFactory->getColisParVilleEtItineraire($Itineraire,$ville);
+    }
   
   public function deleteAnnonce($id) {
     $this->ItineraireFactory->deleteItineraire($id);
@@ -59,21 +62,23 @@ class Conducteur  extends  User {
     // hna ghanbdlo status dyl Itineraire
     
   }
-  public function reachThePoint($id_Itineraire,$ville){
+  public function reachThePoint($ville){
 
-   $Itineraire =  $this->ItineraireFactory->getItineraire($id_Itineraire);
+  //  $Itineraire =  $this->ItineraireFactory->getItineraire($id_Itineraire);
    
-   $details =  $this->ItineraireFactory->createItineraireDetails($Itineraire);
-   foreach ($details as $detail) {
-    $ItineraireVille =$detail->getVille();
-    $order = $detail->getOrder();
-    $this->ItineraireFactory->checkThePreviousPoint($order,$detail);
-    if($ItineraireVille = $ville ){
-        $details->setStatut('true');
-    }
-    
-   }
-  }
+  //  $details =  $this->ItineraireFactory->createItineraireDetails($Itineraire);
+  //  foreach ($details as $detail) {
+  //   $ItineraireVille =$detail->getVille();
+  //   $order = $detail->getOrder();
+  //   $this->ItineraireFactory->checkThePreviousPoint($order,$detail);
+  //   if($ItineraireVille = $ville ){
+  //       $details->setStatut('true');
+  //     }
+      $this->ItineraireFactory->updateStatut($ville);
+  echo "here is the conducteur";
+   
+  
+}
    public function showVehiculeInfos($id){
     // search the vehicule 
     $data = $this->vehicule->getByItineraire($id);
@@ -89,6 +94,7 @@ class Conducteur  extends  User {
     
    }
    public function createItiniraireDetails(Itineraire $Itineraire){
+    echo 'is work';
    return $details =  $this->ItineraireFactory->createItiniraireDetails($Itineraire);
    
   }

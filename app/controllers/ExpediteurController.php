@@ -15,10 +15,7 @@ class ExpediteurController{
     }
 
     public function dashboard(){
-      session_start();
-      echo '<pre>';
-      // var_dump($_SESSION['user']->id);
-      echo '</pre>';
+    
       $id_expediteur = $_SESSION['user']['id'];
       $user =   $this->Expediteur->getProfileInfos($id_expediteur);
       

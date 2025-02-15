@@ -6,9 +6,7 @@ use PDO;
 class ColisFactory {
 
     public function createColis($colisData) {
-        echo '<pre>';
-        var_dump($colisData);
-        echo '</pre>';
+        
         return new Colis(
             $colisData['id'] ?? null,
             $colisData['expediteur_id'],
@@ -57,4 +55,18 @@ class ColisFactory {
         $colis = $this->createColis($colisData);
         $colis->create();
     }
+    public function getColisParVilleEtItineraire($Itineraire,$ville)
+     {
+        $colis  = Colis::getColisParVilleEtItineraire($Itineraire,$ville);
+        var_dump($colis);
+        $list= [];
+        $i =0 ;
+        foreach ($colis as $c) {
+            var_dump($c);
+           $list[$i]  =  $this->createColis($c);
+           $i++;
+        }
+        return $list;
+    }
+
 }
