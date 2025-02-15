@@ -31,7 +31,6 @@ class Router {
             if ($method === $route['method'] && preg_match($pattern, $uri, $matches)) {
                 
                 $controller = "App\\Controllers\\" . $route['controller'];
-                echo $controller;
                 if (class_exists($controller)) {
                     $action = $route['action'];
                     $controllerInstance = new $controller();
