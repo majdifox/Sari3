@@ -1,15 +1,10 @@
 <?php
 
-<<<<<<< HEAD
- use App\Models\Expediteur;
-=======
 namespace App\Controllers;
 
 use App\Models\Expediteur;
 
-session_start();
 
->>>>>>> 89983d3c85239092875e0abed125a1332fd68dfd
 class ExpediteurController{
     public $Expediteur;
     public function __construct(){
