@@ -16,6 +16,7 @@ $router->add('GET', 'admin/profile', 'AdminController', 'gestion_profile');
 
 //Les Actions du Conducteur
 $router->add('GET', 'Conducteur', 'ConducteurController', 'dashboard');
+$router->add('POST', 'Conducteur', 'ConducteurController', 'dashboard');
 $router->add('GET', 'MesAnnonces', 'ConducteurController', 'mesannonces');
 $router->add('GET', 'DetailsAnnonce', 'ConducteurController', 'details');
 $router->add('POST', 'addIteneraire', 'ConducteurController', 'addIteneraire');

@@ -41,6 +41,18 @@ class UserFactory {
         }
         return null;
     }
+    public function UpdateUser($data) {
+        $sql = "SELECT * FROM utilisateurs WHERE id = :id";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindParam(':id', );
+        $stmt->execute();
+        $userData = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($userData && password_verify($password, $userData['password'])) {
+            return $this->createUser($userData["role"], $userData);
+        }
+        return null;
+    }
     public function register($data) {
        
         User::create($data);

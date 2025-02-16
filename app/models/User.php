@@ -50,7 +50,7 @@ class User {
                   SET nom = :nom, 
                       prenom = :prenom, 
                       email = :email, 
-                      motdepasse = :motdepasse, 
+                      mot_de_passe = :motdepasse, 
                       telephone = :telephone, 
                       photo = :photo 
                   WHERE id = :id";
@@ -99,18 +99,21 @@ class User {
    }
 
    // Register a new user
-   public static function register( $nom, $prenom, $email, $motdepasse, $role) {
+   public static function register( $data) {
       $db = Database::getInstance()->getConnection();
-  
-      $query = "INSERT INTO utilisateurs ( nom, prenom, email, mot_de_passe,  role) 
-                VALUES ( :nom, :prenom, :email, :motdepasse, :role)";
+      echo "<pre>";
+      print_r($data);
+      echo "</pre>";
+      $query = "INSERT INTO utilisateurs ( nom, prenom,telephone ,email, mot_de_passe,  role) 
+                VALUES ( :nom, :prenom, :telephone,:email ,:motdepasse, :role)";
       $stmt = $db->prepare($query);
   
-      $stmt->bindParam(':nom', $nom, PDO::PARAM_STR);
-      $stmt->bindParam(':prenom', $prenom, PDO::PARAM_STR);
-      $stmt->bindParam(':email', $email, PDO::PARAM_STR);
-      $stmt->bindParam(':motdepasse', $motdepasse, PDO::PARAM_STR);
-      $stmt->bindParam(':role', $role, PDO::PARAM_STR);
+      $stmt->bindParam(':nom', $data['nom'], PDO::PARAM_STR);
+      $stmt->bindParam(':prenom', $data['prenom'], PDO::PARAM_STR);
+      $stmt->bindParam(':telephone', $data['telephone'], PDO::PARAM_STR);
+      $stmt->bindParam(':email', $data['email'], PDO::PARAM_STR);
+      $stmt->bindParam(':motdepasse', $data['motdepasse'], PDO::PARAM_STR);
+      $stmt->bindParam(':role', $data['role'], PDO::PARAM_STR);
   
       return $stmt->execute();
    }

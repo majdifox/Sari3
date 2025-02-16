@@ -43,7 +43,10 @@ class ConducteurController{
           
             $id_condecteur = $_SESSION['user']->id;
             $user =   $this->conducteur->getProfileInfos($id_condecteur);
-           
+            if ($_SERVER["REQUEST_METHOD"] === 'POST') {
+                 var_dump($_POST);
+                        $this->conducteur->UpdataProfile($_POST);
+            }
             require_once 'C:\laragon\www\Sari3\app\views\conducteur\Profile_Conducteur.php';
       }
       public function details(){

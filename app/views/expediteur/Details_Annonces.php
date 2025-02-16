@@ -234,7 +234,7 @@ echo '</pre>';
                 <div class="modal-body">
                     <form action="/index.php/makeRequest" method="POST">
                         
-                        <input type="hidden" name="expediteur_id" value="<?php echo $_SESSION["user"]["id"]; ?>">
+                        <input type="hidden" name="expediteur_id" value="<?php echo $_SESSION["user"]->id; ?>">
                         <input type="hidden" name="itineraire_id" value="<?php echo $Itineraire->getId(); ?>">
                         
             

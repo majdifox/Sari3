@@ -20,6 +20,7 @@ class AuthController  {
         echo '$POST';
         $email = $_POST['email'] ;
         $password = $_POST['password'] ;
+        echo $password;
         $user =  User::getByEmail($email);
         if ($user) {
             $_SESSION['user'] = $user;
@@ -43,27 +44,22 @@ class AuthController  {
     }
 
     public function register() {
-        echo 'hhhhhh';
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $userData = [
                 'prenom' => $_POST['prenom'] ?? '',
                 'nom' => $_POST['nom'] ?? '',
-                'email' => 'bou@gmail.com' ?? '',
+                'email' => $_POST["email"] ?? '',
                 'telephone' => $_POST['telephone'] ?? '',
                 'motdepasse' => password_hash($_POST['mot_de_passe'] ?? '', PASSWORD_DEFAULT),
                 // or whatever default status you want
                 'role' => $_POST['role']
             ];
-            
+            echo '<pre>';
+            var_dump($userData);
+            echo '<pre>';
             // Register the user
             if (User::register(
-                 // CNIE (if needed)
-                $userData['nom'],
-                $userData['prenom'],
-                $userData['email'],
-                $userData['telephone'],
-                $userData['motdepasse'],
-                $userData['role'],
+                $userData
                 
             )) {
                 
@@ -73,16 +69,16 @@ class AuthController  {
                 echo 'dd';
                 if ($user) {
                     // Send registration email
-                    $this->emailNotification->sendRegistrationNotification([
-                        'id' => $user->id,
-                        'prenom' => $user->prenom,
-                        'nom' => $user->nom,
-                        'email' => $user->email,
-                        'role' => $user->role
-                    ]);
+                    // $this->emailNotification->sendRegistrationNotification([
+                    //     'id' => $user->id,
+                    //     'prenom' => $user->prenom,
+                    //     'nom' => $user->nom,
+                    //     'email' => $user->email,
+                    //     'role' => $user->role
+                    // ]);
                 }
                 
-                header("Location: /index.php/login");
+                // header("Location: /index.php/login");
                 exit();
             } else {
                 // Handle registration failure

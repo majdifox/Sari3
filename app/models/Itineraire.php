@@ -4,6 +4,7 @@ namespace App\Models;
 use PDO;
 use Core\Model;
 use Core\Database;
+session_start();
 class Itineraire  {
     private $id;
     private $conducteur_id;
@@ -106,11 +107,12 @@ class Itineraire  {
     }
     public static function create($id,$TimingData) {
         $db = Database::getInstance()->getConnection();
+        $id_conducteur = $_SESSION["user"]->id;
         $query = "INSERT INTO public.itineraire(
 	 conducteur_id, vehicule_id, date_depart, date_arriver)
 	VALUES (:conducteur_id, :vehicule_id, :date_depart, :date_arriver) RETURNING  id;";
         $stmt = $db->prepare($query);
-        $stmt->bindParam(':conducteur_id', $_SESSION["user"]['id']);
+        $stmt->bindParam(':conducteur_id',$id_conducteur );
         $stmt->bindParam(':vehicule_id', $id);
         $stmt->bindParam(':date_depart', $TimingData['date_depart']);
         $stmt->bindParam(':date_arriver', $TimingData['date_arriver']);
