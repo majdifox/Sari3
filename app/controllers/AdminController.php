@@ -4,8 +4,8 @@
 
 use Core\View;
 use App\Models\Admin;
-use App\Models\UserFactory; 
-use App\Models\Itineraire; // added this line
+use App\Models\Itineraire; 
+use App\Models\UserFactory; // added this line
 use App\Models\AnnonceModel; // added this line
 use App\Models\VehiculeModel; // added this line
 
@@ -78,7 +78,6 @@ class AdminController
             'en_cours' => $colisFactory->CountByStatus('En transit') ?? 0,
             'livres' => $colisFactory->CountByStatus('Livré') ?? 0
         ];
-        // var_dump($stats);
         return $stats;
     }
 

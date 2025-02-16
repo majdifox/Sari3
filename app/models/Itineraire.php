@@ -88,6 +88,13 @@ class Itineraire  {
         $result = $stmt->fetch(\PDO::FETCH_ASSOC);
         return $result['NumberTotal'] ?? 0;
     }
+    public static function getAll() {
+        $connexion = Database::getInstance()->getConnection();
+        $sql = "SELECT *  FROM  itineraire";
+        $stmt = $connexion->query($sql);
+        $result = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+        return $result ?? 0;
+    }
     public static function CountByStatus($status) {
         $connexion = Database::getInstance()->getConnection();
         $sql = "SELECT COUNT(*) as NumberTotalit FROM itineraire where statut=:status ";

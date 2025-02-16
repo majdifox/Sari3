@@ -3,6 +3,7 @@ if (!isset($_SESSION['user']) || !isset($_SESSION['user']->prenom)) {
     header('Location: /login');
     exit();
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -104,12 +105,28 @@ if (!isset($_SESSION['user']) || !isset($_SESSION['user']->prenom)) {
 
     <!-- Liste des annonces -->
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <?php foreach ($itineraires as $itineraire): ?>
+            <?php foreach ($itineraires as $itineraire):
+            if ($itineraire['details'] != null) {
+              $destination = count($itineraire['details']);
+           
+            }
+                ?>
                 <div class="bg-white rounded-lg shadow-lg overflow-hidden">
                     <!-- En-tête de la card -->
                     <div class="bg-green-500 text-white px-4 py-2">
                         <h2 class="text-xl font-semibold">
-                            <?= htmlspecialchars($itineraire['ville_depart']) ?> → <?= htmlspecialchars($itineraire['ville_destination']) ?>
+                             <?php  
+                                        
+
+                         echo  $itineraire['details'][0]->getVille();
+                            
+                                        ?> 
+                                        → <?php
+                                       
+                                         echo $itineraire['details'][$destination-1]->getVille();
+                                         
+                                       
+                                        ?> 
                         </h2>
                     </div>
                     
@@ -121,20 +138,9 @@ if (!isset($_SESSION['user']) || !isset($_SESSION['user']->prenom)) {
                                 <svg class="w-5 h-5 text-gray-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                                 </svg>
-                                <span class="text-gray-700"><?= date('d/m/Y', strtotime($itineraire['date_depart'])) ?> à <?= $itineraire['heure_depart'] ?></span>
+                                <span class="text-gray-700"><?= $itineraire['Itineraire']->getDateDepart(); ?></span>
                             </div>
-                            <div class="flex items-center mb-2">
-                                <svg class="w-5 h-5 text-gray-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2z" />
-                                </svg>
-                                <span class="text-gray-700"><?= $itineraire['prix'] ?> DH</span>
-                            </div>
-                            <div class="flex items-center">
-                                <svg class="w-5 h-5 text-gray-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-                                </svg>
-                                <span class="text-gray-700"><?= $itineraire['nombre_place'] ?> places disponibles</span>
-                            </div>
+                            
                         </div>
 
                         <!-- Informations du conducteur -->
@@ -143,8 +149,7 @@ if (!isset($_SESSION['user']) || !isset($_SESSION['user']->prenom)) {
                             <div class="flex items-center mb-2">
                                 <img src="/assets/images/default-avatar.png" alt="Avatar" class="w-10 h-10 rounded-full mr-3">
                                 <div>
-                                    <p class="font-medium"><?= htmlspecialchars($itineraire['conducteur_nom']) ?> <?= htmlspecialchars($itineraire['conducteur_prenom']) ?></p>
-                                    <p class="text-sm text-gray-500"><?= htmlspecialchars($itineraire['conducteur_email']) ?></p>
+                                    <p class="font-medium"><?= htmlspecialchars($itineraire['Itineraire']->getConducteurID()) ?> </p>
                                 </div>
                             </div>
                         </div>
@@ -152,7 +157,7 @@ if (!isset($_SESSION['user']) || !isset($_SESSION['user']->prenom)) {
 
                         <!-- Boutons d'action -->
                         <div class="mt-4 flex justify-end space-x-2">
-                            <a href="/admin/itineraire/<?= $itineraire['id'] ?>" 
+                            <a href="/index.php/admin/itineraire/<?= $itineraire['Itineraire']->getId() ?>" 
                                class="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 transition duration-200">
                                 Voir détails
                             </a>

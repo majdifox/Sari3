@@ -96,8 +96,17 @@ use App\Models\ItineraireDetails;
         }
         public function getAnnonce(){
             // n9lbo 3la iniraire f database 
-            $Itineraire = Itineraire::getAllItinerairesavecDetails();
-            return $Itineraire;
+            $ItinerairesData = Itineraire::getAll();
+            $list = [];
+            $i = 0;
+            foreach ($ItinerairesData as $ItineraireData) {
+                $Itineraire = $this->getItineraire($ItineraireData['id']);
+                $ItineraireDetails = $this->createItiniraireDetails($Itineraire);
+                $data = ['Itineraire'=>$Itineraire,'details'=>$ItineraireDetails];
+                $list[$i]  = $data;
+                $i++;
+            }
+            return $list;
             
         }
         //////////////////////////////////////////////////////
