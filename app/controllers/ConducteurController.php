@@ -1,7 +1,9 @@
 <?php
- namespace App\Controllers;
 
- use App\Models\Conducteur;
+namespace App\Controllers;
+
+use App\Models\Conducteur;
+
 class ConducteurController{
     public $conducteur;
     public function __construct(){
@@ -38,7 +40,7 @@ class ConducteurController{
       }
       public function dashboard(){
             // echo 'getItinerairebyCondicteur';
-            session_start();
+            
           
             $id_condecteur = $_SESSION['user']->id;
             $user =   $this->conducteur->getProfileInfos($id_condecteur);

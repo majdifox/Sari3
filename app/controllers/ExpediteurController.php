@@ -3,6 +3,7 @@
 
  use App\Models\Expediteur;
 
+ session_start();
 class ExpediteurController{
     public $Expediteur;
     public function __construct(){
@@ -15,8 +16,8 @@ class ExpediteurController{
     }
 
     public function dashboard(){
-    
-      $id_expediteur = $_SESSION['user']['id'];
+     
+      $id_expediteur = $_SESSION['user']->id;
       $user =   $this->Expediteur->getProfileInfos($id_expediteur);
       
       require_once 'C:\laragon\www\Sari3\app\views\expediteur\Home_Annonces.php';
