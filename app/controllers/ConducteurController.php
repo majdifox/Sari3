@@ -1,7 +1,9 @@
 <?php
- namespace App\Controllers;
 
- use App\Models\Conducteur;
+namespace App\Controllers;
+
+use App\Models\Conducteur;
+
 class ConducteurController{
     public $conducteur;
     public function __construct(){

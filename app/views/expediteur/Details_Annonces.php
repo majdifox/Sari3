@@ -1,13 +1,3 @@
-<?php
-// echo '<pre>';
-// foreach ($Details as $city ) {
-//     echo '<pre>';
-//     var_dump($city->getStatus());
-//     echo '</pre>';
-// }
-// echo '</pre>';
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -180,28 +170,6 @@
                         <span class="ms-2">4.5</span>
                     </div>
                     <p class="text-muted mb-4">Professional Truck Driver</p>
-                    
-                    <!-- Driver Stats -->
-                    <div class="row">
-                        <div class="col-4">
-                            <div class="stats-card">
-                                <div class="stats-number"><?php echo 'total_trips' ?></div>
-                                <div class="stats-label">Trips</div>
-                            </div>
-                        </div>
-                        <div class="col-4">
-                            <div class="stats-card">
-                                <div class="stats-number"><?php echo 'total_deliveries' ?></div>
-                                <div class="stats-label">Deliveries</div>
-                            </div>
-                        </div>
-                        <div class="col-4">
-                            <div class="stats-card">
-                                <div class="stats-number"><?php echo 'avg_delivery_time' ?>h</div>
-                                <div class="stats-label">Avg Time</div>
-                            </div>
-                        </div>
-                    </div>
 
                     <button class="select-driver-btn mt-4 w-100" data-bs-toggle="modal" data-bs-target="#selectDriverModal">
                         Select Driver
