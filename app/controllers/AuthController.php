@@ -2,25 +2,29 @@
 namespace App\Controllers;
 
 use App\Models\User;
-session_start();
+use App\Models\EmailNotification;
+
 class AuthController  {
     
 
-    
+    public function __construct() {
+        $this->emailNotification = new EmailNotification();
+    }
     
 
     public function login ()
     {
         // echo 'hello';
     if($_SERVER['REQUEST_METHOD']==='POST'){
+        // echo '$POST';
         $email = $_POST['email'] ;
         $password = $_POST['password'] ;
+        echo $password;
         $user =  User::getByEmail($email);
         if ($user) {
             $_SESSION['user'] = $user;
             
             $role = $user->role;
-            if ($role='Admin')
             header("Location: http://sari3.test/index.php/".$role);
         }else {
             echo 'password incorrect';
@@ -32,7 +36,6 @@ class AuthController  {
     }
 
     public function logout (){
-        session_start();
         session_destroy();
         header('Location: login');
 
@@ -40,23 +43,41 @@ class AuthController  {
 
     public function register() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            // Common fields
-            $Prenom = $_POST['Prenom'] ?? '';
-            $Nom  = $_POST['Nom'] ?? '';
-            $Email      = $_POST['Email'] ?? '';
-            $Mot_de_passe   = $_POST['Mot_de_passe'] ?? '';
-            $Telephone      = $_POST['Telephone'] ?? '';
-            $Photo      = $_POST['Photo'] ?? '';
-            $Role       = $_POST['Role'] ?? '';
-            
-            if ($this->userModel->register($Prenom, $Nom, $Email, $Mot_de_passe, $Telephone, $Photo, $Role)) {
-                header("Location: index.php?action=login_form");
+            $userData = [
+                'prenom' => $_POST['prenom'] ?? '',
+                'nom' => $_POST['nom'] ?? '',
+                'email' => $_POST["email"] ?? '',
+                'telephone' => $_POST['telephone'] ?? '',
+                'motdepasse' => password_hash($_POST['mot_de_passe'] ?? '', PASSWORD_DEFAULT),
+                'role' => $_POST['role']
+            ];
+            echo '<pre>';
+            var_dump($userData);
+            echo '<pre>';
+            if (User::register(
+                $userData
+                
+            )) {
+                
+               
+                $user = User::getByEmail($userData['email']);
+                if ($user) {
+                    $this->emailNotification->sendRegistrationNotification([
+                        'id' => $user->id,
+                        'prenom' => $user->prenom,
+                        'nom' => $user->nom,
+                        'email' => $user->email,
+                        'role' => $user->role
+                    ]);
+                }
+                
+                // header("Location: /index.php/login");
                 exit();
             } else {
                 echo "Registration failed!";
             }
         } else {
-            include __DIR__ . '/../views/register.php';
+            require_once(__DIR__.'/../views/auth/inscription.php');
         }
     }
    

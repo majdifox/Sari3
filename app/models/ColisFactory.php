@@ -6,6 +6,7 @@ use PDO;
 class ColisFactory {
 
     public function createColis($colisData) {
+        
         return new Colis(
             $colisData['id'] ?? null,
             $colisData['expediteur_id'],
@@ -13,14 +14,17 @@ class ColisFactory {
             $colisData['destination'],
             $colisData['volume'],
             $colisData['poids'],
-            $colisData['date_depart'],
-            $colisData['date_arriver'],
-            $colisData['statut'],
-            $colisData['etat']
+            $colisData['date_depart']??null,
+            $colisData['date_arriver']?? null,
+            $colisData['statut']??null,
+            $colisData['etat']??null,
+            $colisData['nom'],
+            $colisData['origin']
         );
     }
 
-    // Retrieve a Colis by ID
+
+
     public function getColis($id) {
         $colisData = Colis::get($id);
         if ($colisData) {
@@ -28,6 +32,18 @@ class ColisFactory {
         } else {
             throw new \Exception("Colis not found with ID: $id");
         }
+    }
+
+    public function statutlivre(Colis $colis) {
+     
+        $colis->colisLivrer();
+        header('Location: AnnonceDetails/'.$colis->getItineraireId());
+    }
+
+    public function statutnonlivre(Colis $colis) {
+     
+        $colis->colisNonLivrer();
+        header('Location: AnnonceDetails/'.$colis->getItineraireId());
     }
 
     // Accept a Colis (update status to 'En transit')
@@ -52,6 +68,17 @@ class ColisFactory {
     public function addColis($colisData) {
         $colis = $this->createColis($colisData);
         $colis->create();
+    }
+    public function getColisParVilleEtItineraire($Itineraire,$ville)
+     {
+        $colis  = Colis::getColisParVilleEtItineraire($Itineraire,$ville);
+        $list= [];
+        $i =0 ;
+        foreach ($colis as $c) {
+           $list[$i]  =  $this->createColis($c);
+           $i++;
+        }
+        return $list;
     }
     public function CountAll(){
         $colis= Colis::CountAll();

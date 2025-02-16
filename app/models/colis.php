@@ -18,79 +18,259 @@ class Colis {
     private $date_arriver;
     private $statut;
     private $etat;
-    private $table = 'colis';
-    public function __construct($id,$expediteur_id,$itineraire,$destination,$volume,$poids,$date_depart,$date_arriver,$statut,$etat){
-        
+    private $origin;
+    private $nom;
+    private $db;
+
+    public function __construct($id = null, $expediteur_id = null, $itineraire_id = null, $destination = null, $volume = null, $poids = null, $date_depart = null, $date_arriver = null, $statut = null, $etat = null, $nom = null ,$origin = null) {
+        $this->db = Database::getInstance()->getConnection();
+        $this->id = $id;
+        $this->expediteur_id = $expediteur_id;
+        $this->itineraire_id = $itineraire_id;
+        $this->destination = $destination;
+        $this->volume = $volume;
+        $this->poids = $poids;
+        $this->date_depart = $date_depart;
+        $this->date_arriver = $date_arriver;
+        $this->statut = $statut;
+        $this->etat = $etat;
+        $this->origin = $origin;
+        $this->nom = $nom;
     }
-    
+
     public function getAll() {
-        // $sql = "SELECT c.*, u.nom as expediteur_nom, u.prenom as expediteur_prenom 
-        //         FROM {$this->table} c
-        //         JOIN utilisateurs u ON c.expediteur_id = u.id
-        //         ORDER BY c.date_depart DESC";
-        // return $this->query($sql);
+        $query = "SELECT * FROM colis";
+        $stmt = $this->db->prepare($query);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
-    public static function get($id){
-        // return specifique colis
+
+    public static function get($id) {
+        $db = Database::getInstance()->getConnection();
+        $query = "SELECT * FROM colis WHERE ID = :id";
+        $stmt = $db->prepare($query);
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC);
     }
-    public function getByItineraire($id) {
-        // $sql = "SELECT c.*, u.nom as expediteur_nom, u.prenom as expediteur_prenom 
-        //         FROM {$this->table} c
-        //         JOIN utilisateurs u ON c.expediteur_id = u.id
-        //         WHERE c.id IN (
-        //             SELECT colis_id FROM details_itineraire WHERE itineraire_id = ?
-        //         )
-        //         ORDER BY c.date_depart DESC";
-        // return $this->query($sql, [$id]);
+
+    public function getByItineraire($itineraire_id) {
+        $query = "SELECT * FROM colis WHERE itineraire_id = :itineraire_id";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindParam(':itineraire_id', $itineraire_id, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
-    public function getByExpediteur($id) {
-        // $sql = "SELECT c.*, u.nom as expediteur_nom, u.prenom as expediteur_prenom 
-        //         FROM {$this->table} c
-        //         JOIN utilisateurs u ON c.expediteur_id = u.id
-        //         WHERE c.id IN (
-        //             SELECT colis_id FROM details_itineraire WHERE itineraire_id = ?
-        //         )
-        //         ORDER BY c.date_depart DESC";
-        // return $this->query($sql, [$id]);
+
+    public function getByExpediteur($expediteur_id) {
+        $query = "SELECT * FROM colis WHERE expediteur_id = :expediteur_id";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindParam(':expediteur_id', $expediteur_id, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
     public function accept() {
-        // $sql = "UPDATE {$this->table} SET statut = 'Livré' WHERE id = ?";
-        // return $this->execute($sql, [$id]);
-        $etat = 'Accepté';
-        $this->setEtat($etat) ;
-        $this->update();
-
+        $query = "UPDATE colis SET statut = 'En transit' WHERE ID = :id";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindParam(':id', $this->id, PDO::PARAM_INT);
+        return $stmt->execute();
     }
+
     public function refuse() {
-        // $sql = "UPDATE {$this->table} SET statut = 'Livré' WHERE id = ?";
-        // return $this->execute($sql, [$id]);
-        $etat = 'Refus"';
-        $this->setEtat($etat) ;
-        $this->update();
+        $query = "UPDATE colis SET statut = 'Refusé' WHERE ID = :id";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindParam(':id', $this->id, PDO::PARAM_INT);
+        return $stmt->execute();
     }
 
     public function create() {
-        // $columns = implode(', ', array_keys($data));
-        // $values = implode(', ', array_fill(0, count($data), '?'));
         
-        // $sql = "INSERT INTO {$this->table} ({$columns}) VALUES ({$values})";
-        // return $this->execute($sql, array_values($data));
+        $id = $this->getId();
+        $expediteur_id = $this->getExpediteurId(); 
+        $itineraire_id = $this->getItineraireId();
+        $destination = $this->getDestination();
+        $volume = $this->getVolume();
+        $poids = $this->getPoids();
+        $date_depart = $this->getDateDepart();
+        $date_arriver = $this->getDateArriver();
+        $statut = $this->getStatus();
+        $origin = $this->getOrigin();
+        $nom = $this->getNom();
+       
+        $query = "INSERT INTO colis (expediteur_id, itineraire_id, destination, volume, poids, origin,nom) 
+                  VALUES (:expediteur_id, :itineraire_id, :destination, :volume, :poids, :origin,:nom)";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindParam(':expediteur_id', $expediteur_id, PDO::PARAM_INT);
+        $stmt->bindParam(':itineraire_id', $itineraire_id, PDO::PARAM_INT);
+        $stmt->bindParam(':destination', $destination, PDO::PARAM_STR);
+        $stmt->bindParam(':volume', $volume, PDO::PARAM_INT);
+        $stmt->bindParam(':poids', $poids, PDO::PARAM_INT);
+        $stmt->bindParam(':origin', $origin, PDO::PARAM_STR);
+        $stmt->bindParam(':nom', $nom, PDO::PARAM_STR);
+        return $stmt->execute();
     }
+
     public function update() {
-        // $columns = implode(', ', array_keys($data));
-        // $values = implode(', ', array_fill(0, count($data), '?'));
-        
-        // $sql = "INSERT INTO {$this->table} ({$columns}) VALUES ({$values})";
-        // return $this->execute($sql, array_values($data));
+        $id = $this->getId();
+        $expediteur_id = $this->getExpediteurId(); 
+        $itineraire_id = $this->getItineraireId();
+        $destination = $this->getDestination();
+        $volume = $this->getVolume();
+        $poids = $this->getPoids();
+        $date_depart = $this->getDateDepart();
+        $date_arriver = $this->getDateArriver();
+        $statut = $this->getStatus();
+        $query = "UPDATE colis 
+                  SET expediteur_id = :expediteur_id, 
+                      itineraire_id = :itineraire_id, 
+                      destination = :destination, 
+                      volume = :volume, 
+                      poids = :poids, 
+                      date_depart = :date_depart, 
+                      date_arriver = :date_arriver, 
+                      statut = :statut, 
+                      etat = :etat 
+                  WHERE ID = :id";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        $stmt->bindParam(':expediteur_id', $expediteur_id, PDO::PARAM_INT);
+        $stmt->bindParam(':itineraire_id', $itineraire_id, PDO::PARAM_INT);
+        $stmt->bindParam(':destination', $destination, PDO::PARAM_STR);
+        $stmt->bindParam(':volume', $volume, PDO::PARAM_STR);
+        $stmt->bindParam(':poids', $poids, PDO::PARAM_STR);
+        $stmt->bindParam(':date_depart', $date_depart, PDO::PARAM_STR);
+        $stmt->bindParam(':date_arriver', $date_arriver, PDO::PARAM_STR);
+        $stmt->bindParam(':statut', $statut, PDO::PARAM_STR);
+        $stmt->bindParam(':etat', $etat, PDO::PARAM_STR);
+        return $stmt->execute();
     }
 
-    public function delete(){
-
+    // Get Colis by Ville (City) and Expediteur (Sender) ID
+    public function getColisByVillesANDExpediteur($ville, $id) {
+        $query = "SELECT * FROM colis 
+                    WHERE destination = :ville AND expediteur_id = :expediteur_id";
+        $stmt = (new Colis())->db->prepare($query);
+        $stmt->bindParam(':ville', $ville, PDO::PARAM_STR);
+        $stmt->bindParam(':expediteur_id', $id, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
-    public function read(){
 
+////////////////////////////
+
+
+
+public static function getColisParVilleEtItineraire($itineraire_id,$ville) {
+    
+    $db = Database::getInstance()->getConnection();
+
+    $sql = "SELECT DISTINCT(c.*)
+            FROM colis c
+            JOIN itineraire i ON c.Itineraire_id = i.ID
+            JOIN details_itineraire d ON i.ID = d.Itineraire_id
+            WHERE  d.Itineraire_id= :id AND c.Destination = :ville AND c.Statut = 'En préparation' OR c.Statut = 'En transit'
+    ";
+
+    try {
+        $stmt = $db->prepare($sql);
+        $stmt->bindParam(':ville', $ville, PDO::PARAM_STR);
+        $stmt->bindParam(':id', $itineraire_id, PDO::PARAM_INT);
+        $stmt->execute();
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    } catch (\PDOException $e) {
+        echo "Erreur : " . $e->getMessage();
+        return [];
     }
+}
+
+
+public function colisLivrer(){
+    $ColisID = $this->getId();
+    
+    $stmt = $this->db->prepare("UPDATE colis SET Statut = 'Livré' WHERE ID = :id");
+    $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+
+    $stmt->execute([$ColisID]);
+    
+}
+
+
+public function colisNonLivrer(){
+    $ColisID = $this->getId();
+
+    $stmt = $this->db->prepare("UPDATE colis SET Statut = 'Non livré' WHERE ID = ? ");
+    $stmt->execute([$ColisID]);
+    
+}
+
+
+
+
+
+
+
+
+
+
+//////////////////////////////
+    public function setEtat($etat){
+        $this->etat = $etat;
+    }
+    public function setStatus($statut){
+        $this->statut = $statut;
+    }
+    public function setDateArriver($date_arriver){
+        $this->date_arriver = $date_arriver;
+    }
+    public function setPoids($poids){
+        $this->poids = $poids;
+    }
+    public function setVolume($volume){
+        $this->volume = $volume;
+    }
+    public function setDestination($destination){
+        $this->destination = $destination;
+    }
+    public function getEtat(){
+        return $this->etat;
+    }
+    public function getStatus(){
+        return  $this->statut;
+    }
+    public function getDateArriver(){
+        return  $this->date_arriver;
+    }
+    public function getDateDepart(){
+        return  $this->date_depart;
+    }
+    public function getPoids(){
+        return  $this->poids;
+    }
+    public function getVolume(){
+        return  $this->volume;
+    }
+    public function getDestination(){
+        return  $this->destination;
+    }
+    public function getId(){
+        return  $this->id;
+    }
+    public function getExpediteurId(){
+        return  $this->expediteur_id;
+    }
+    public function getItineraireId(){
+        return  $this->itineraire_id;
+    }
+    public function getOrigin(){
+        return  $this->origin;
+    }
+    public function getNom(){
+        return  $this->nom;
+    }
+
+
     public static function CountAll() {
         $connexion = Database::getInstance()->getConnection();
         $sql = "SELECT COUNT(*) as numbertotal FROM colis ";
@@ -107,82 +287,23 @@ class Colis {
         $result = $stmt->fetch(\PDO::FETCH_ASSOC);
         return $result['numbertotalcolis'];
     }
+            public static function getRecentColis()
+        {
+            $connexion = Database::getInstance()->getConnection();
+            
+            // Join with utilisateurs table to get expediteur information
+            $query = "SELECT c.*, 
+                            u.prenom as expediteur_prenom, 
+                            u.nom as expediteur_nom
+                    FROM colis c
+                    JOIN utilisateurs u ON c.expediteur_id = u.id
+                    ORDER BY c.date_depart DESC 
+                    LIMIT 5";
+                    
+            $stmt = $connexion->prepare($query);
+            $stmt->execute();
+            $recent_colis = $stmt->fetchAll(\PDO::FETCH_ASSOC);
 
-
-
-    /// getters  ans  setters
-
-    public function setEtat($etat){
-        $this->etat = $etat;
-    }
-    public function setStatus($statut){
-        $this->status = $statut;
-    }
-    public function setDateArriver($date_arriver){
-        $this->date_arriver = $date_arriver;
-    }
-    public function setPoids($poids){
-        $this->poids = $poids;
-    }
-    public function setVolume($volume){
-        $this->volume = $volume;
-    }
-    public function setDestination($destination){
-        $this->destination = $destination;
-    }
-    public function getEtat(){
-        return $this->etat = $etat;
-    }
-    public function getStatus(){
-       return  $this->status = $statut;
-    }
-    public function getDateArriver(){
-       return  $this->date_arriver = $date_arriver;
-    }
-    public function getDateDepart(){
-       return  $this->date_depart = $date_depart;
-    }
-    public function getPoids(){
-       return  $this->poids = $poids;
-    }
-    public function getVolume(){
-       return  $this->volume = $volume;
-    }
-    public function getDestination(){
-       return  $this->destination = $destination;
-    }
-    public function getId(){
-       return  $this->destination = $destination;
-    }
-    public function getExpediteurId(){
-       return  $this->destination = $destination;
-    }
-    public function getItineraireId(){
-       return  $this->destination = $destination;
-    }
-    
-    // les 5 dernier colis
-    public static function getRecentColis()
-{
-    $connexion = Database::getInstance()->getConnection();
-    
-    // Join with utilisateurs table to get expediteur information
-    $query = "SELECT c.*, 
-                     u.prenom as expediteur_prenom, 
-                     u.nom as expediteur_nom
-              FROM colis c
-              JOIN utilisateurs u ON c.expediteur_id = u.id
-              ORDER BY c.date_depart DESC 
-              LIMIT 5";
-              
-    $stmt = $connexion->prepare($query);
-    $stmt->execute();
-    $recent_colis = $stmt->fetchAll(\PDO::FETCH_ASSOC);
-
-    return $recent_colis;
-}
-
-
-    
-   
+            return $recent_colis;
+        }
 }

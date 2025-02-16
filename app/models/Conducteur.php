@@ -6,7 +6,6 @@ use App\Models\UserFactory;
 use App\Models\ColisFactory;
 use App\Models\VehiculeFactory;
 use App\Models\ItineraireFactory;
-
 class Conducteur  extends  User {
     private $ItineraireFactory;
     private $ColisFactory;
@@ -28,12 +27,41 @@ class Conducteur  extends  User {
        
     }
     public function getColis($id){
-     $colis =  $this->ColisFactory->getColis($id);
+     return $colis =  $this->ColisFactory->getColis($id);
     }
-    public function addAnnonce($data) {
-      $this->ItineraireFactory->addItineraire($data);
+    public function UpdataProfile($data){
+     $user =  $this->UserFactory->getUser($data['id']);
+     if ($user) {
+      
+      $user->setNom($data["nom"]);
+      $user->setPrenom($data["prenom"]);
+      $user->setTelephone($data["telephone"]);
+      $user->setEmail($data["email"]);
+      $user->setMotDePasse($data["password"]);
+      $user->UpdateUser();
+     }
     }
-  
+    public function addAnnonce($dataCity,$dataVehicle,$TimingData) {
+      $this->ItineraireFactory->addItineraire($dataCity,$dataVehicle,$TimingData);
+    }
+    public function getColisParVilleEtItineraire($Itineraire,$ville) {
+     return $this->ColisFactory->getColisParVilleEtItineraire($Itineraire,$ville);
+    }
+
+    public function livrerColis($id){
+     $colis = $this->getColis($id);
+     if($colis){
+      $this->ColisFactory->statutlivre($colis);
+     }
+    }
+
+    public function nonLivrerColis($id){
+      $colis = $this->getColis($id);
+      if($colis){
+       $this->ColisFactory->statutnonlivre($colis);
+      }
+     }
+
   public function deleteAnnonce($id) {
     $this->ItineraireFactory->deleteItineraire($id);
   }
@@ -59,33 +87,41 @@ class Conducteur  extends  User {
     // hna ghanbdlo status dyl Itineraire
     
   }
-  public function reachThePoint($id_Itineraire,$ville){
+  public function reachThePoint($ville){
 
-   $Itineraire =  $this->ItineraireFactory->getItineraire($id_Itineraire);
+  //  $Itineraire =  $this->ItineraireFactory->getItineraire($id_Itineraire);
    
-   $details =  $this->ItineraireFactory->createItineraireDetails($Itineraire);
-   foreach ($details as $detail) {
-    $ItineraireVille =$detail->getVille();
-    $order = $detail->getOrder();
-    $this->ItineraireFactory->checkThePreviousPoint($order,$detail);
-    if($ItineraireVille = $ville ){
-        $details->setStatut('true');
-    }
-    
-   }
-  }
+  //  $details =  $this->ItineraireFactory->createItineraireDetails($Itineraire);
+  //  foreach ($details as $detail) {
+  //   $ItineraireVille =$detail->getVille();
+  //   $order = $detail->getOrder();
+  //   $this->ItineraireFactory->checkThePreviousPoint($order,$detail);
+  //   if($ItineraireVille = $ville ){
+  //       $details->setStatut('true');
+  //     }
+      $this->ItineraireFactory->updateStatut($ville);
+  echo "here is the conducteur";
+   
+  
+}
    public function showVehiculeInfos($id){
     // search the vehicule 
     $data = $this->vehicule->getByItineraire($id);
     $vehicule = new Vehicule();
    }
-   public function getItinerairebyCondicteur($id){
+   public function getItinerairebyCondicteur($id_condecteur){
+    return  $data =  $this->ItineraireFactory->getItinerairebyCondicteur($id_condecteur);
+
+    
+   }
+   public function getItinerairebyID($id){
+     return $Itineraire =  $this->ItineraireFactory->getItineraire($id);
+    
+   }
+   public function createItiniraireDetails(Itineraire $Itineraire){
+   return $details =  $this->ItineraireFactory->createItiniraireDetails($Itineraire);
    
-    echo $id;
-   }
-   public function createItiniraireDetails( $Itineraire_id){
-    // $this->ItineraireFactory-> createItiniraireDetails(Itineraire $Itineraire);
-   }
+  }
    public function getProfileInfos($id_condecteur){
     return  $user =  $this->UserFactory->getUser($id_condecteur);
   }

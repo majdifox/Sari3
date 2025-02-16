@@ -19,7 +19,7 @@
                     <img src="https://export-download.canva.com/ZADgo/DAGey3ZADgo/3/0/0001-1456244851306253508.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAJHKNGJLC2J7OGJ6Q%2F20250212%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20250212T180648Z&X-Amz-Expires=64508&X-Amz-Signature=08e79dfdbd4060b752d74edc03c491b40e21570f0fd7ee31777b4cd6e1db3cbe&X-Amz-SignedHeaders=host&response-content-disposition=attachment%3B%20filename%2A%3DUTF-8%27%27Red%2520Blue%2520Modern%2520Logistics%2520Express%2520Logo.png&response-expires=Thu%2C%2013%20Feb%202025%2012%3A01%3A56%20GMT" class="mr-3 mt-[-1rem] w-[7rem]" alt="Site Web Logo" />
                 </a>
                 <div class="flex items-center lg:order-2 mt-[-1rem]">
-                    <a href="logout" class="text-white bg-blue-500 hover:opacity-80 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800">Logout</a>
+                    <a href="/index.php/logout" class="text-white bg-blue-500 hover:opacity-80 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800">Logout</a>
                     <button data-collapse-toggle="mobile-menu-2" type="button" class="inline-flex items-center p-2 ml-1 text-sm text-gray-500 rounded-lg lg:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" aria-controls="mobile-menu-2" aria-expanded="false">
                         <span class="sr-only">Open main menu</span>
                         <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd"></path></svg>
@@ -33,9 +33,6 @@
                         </li>
                         <li>
                             <a href="Conducteur" class="block py-2 pr-4 pl-3 text-stone-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-primary-700 lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700">Profile</a>
-                        </li>
-                        <li>
-                            <a href="" class="block py-2 pr-4 pl-3 text-stone-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-primary-700 lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700"></a>
                         </li>
                     </ul>
                 </div>
@@ -82,16 +79,19 @@
                 Publier un Cours <span class="ml-[0.7rem]"><i class="fa-solid fa-paper-plane" style="color: #ffffff;"></i></span>
             </button>
         </div>    
+    <?php
 
+        foreach ($data as $itineraire ) {
+            // var_dump($itineraire)
+            ?>
+        
         <!-- Les annonces du conducteur-->
         <div class="mt-[4rem] ml-[20rem] bg-white dark:bg-gray-800 rounded-xl shadow-2xl max-w-4xl w-full p-8 transition-all duration-300 animate-fade-in pt-[3.5rem]">
             <div class="flex flex-col md:flex-row">
                 <div class="md:w-1/3 text-center mb-8 md:mb-0">
 
-                    <h2 class="text-xl font-semibold text-blue-500 mb-4  mt-[3rem]">Vehicule</h2>
-                    <p class="text-stone-700 font-semibold">Ford Transit - Camion</p>
 
-                    <a  href='DetailsAnnonce'>
+                    <a  href='AnnonceDetails/<?=$itineraire->getId()?>'>
                     <button class="ml-[5.7rem] mt-[5rem] flex items-center rounded-md border border-blue-300 py-2 px-4 text-center text-sm transition-all shadow-sm hover:shadow-lg text-blue-600 hover:text-white hover:bg-blue-800 hover:border-blue-800 focus:text-white focus:bg-blue-800 focus:border-blue-800 active:border-blue-800 active:text-white active:bg-blue-800 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none" type="button">
                         Details
                         
@@ -105,7 +105,7 @@
                 <div class="mb-8">
                     
                     <h2 class="text-xl font-semibold text-blue-500">Date de Depart</h2>
-                    <p class="text-lg font-semibold text-stone-700">15-02-2025</p>
+                    <p class="text-lg font-semibold text-stone-700"><?=$itineraire->getDateDepart()?></p>
                     
                     <h3 class="text-xl font-semibold text-blue-500">Date d'Arrivé</h2>
                     <p class="text-lg font-semibold text-stone-700">17-02-2025</p>
@@ -125,89 +125,12 @@
 
         </div>
 
-        <div class="mt-[4rem] ml-[20rem] bg-white dark:bg-gray-800 rounded-xl shadow-2xl max-w-4xl w-full p-8 transition-all duration-300 animate-fade-in pt-[3.5rem]">
-            <div class="flex flex-col md:flex-row">
-                <div class="md:w-1/3 text-center mb-8 md:mb-0">
+       <?php
 
-                    <h2 class="text-xl font-semibold text-blue-500 mb-4  mt-[3rem]">Vehicule</h2>
-                    <p class="text-stone-700 font-semibold">Ford Transit - Camion</p>
-
-                    <a href=''>
-                    <button class="ml-[5.7rem] mt-[5rem] flex items-center rounded-md border border-blue-300 py-2 px-4 text-center text-sm transition-all shadow-sm hover:shadow-lg text-blue-600 hover:text-white hover:bg-blue-800 hover:border-blue-800 focus:text-white focus:bg-blue-800 focus:border-blue-800 active:border-blue-800 active:text-white active:bg-blue-800 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none" type="button">
-                        Details
-                        
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4 ml-1.5">
-                            <path fill-rule="evenodd" d="M16.28 11.47a.75.75 0 0 1 0 1.06l-7.5 7.5a.75.75 0 0 1-1.06-1.06L14.69 12 7.72 5.03a.75.75 0 0 1 1.06-1.06l7.5 7.5Z" clip-rule="evenodd" />
-                        </svg>
-                    </button>
-                    </a>
-                </div>
-
-                <div class="mb-8">
-                    
-                    <h2 class="text-xl font-semibold text-blue-500">Date de Depart</h2>
-                    <p class="text-lg font-semibold text-stone-700">15-02-2025</p>
-                    
-                    <h3 class="text-xl font-semibold text-blue-500">Date d'Arrivé</h2>
-                    <p class="text-lg font-semibold text-stone-700">17-02-2025</p>
-                </div>
-            </div>
-
-            <div class="mb-[0.5rem]">
-                <hr class="h-px w-[50rem] my-4 bg-gray-200 border-0 dark:bg-gray-700">
-
-                <svg id="morecmnt" class="w-4 h-4 text-blue-700 cursor-pointer" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 10">
-                    <path d="M15.434 1.235A2 2 0 0 0 13.586 0H2.414A2 2 0 0 0 1 3.414L6.586 9a2 2 0 0 0 2.828 0L15 3.414a2 2 0 0 0 .434-2.179Z"/>
-                </svg>
-                <svg id="lesscmnt" class="w-4 h-4 text-blue-700 cursor-pointer hidden" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 10 16">
-                    <path d="M3.414 1A2 2 0 0 0 0 2.414v11.172A2 2 0 0 0 3.414 15L9 9.414a2 2 0 0 0 0-2.828L3.414 1Z"/>
-                </svg>
-            </div>
-
-        </div>
-        
-        <div class="mt-[4rem] ml-[20rem] bg-white dark:bg-gray-800 rounded-xl shadow-2xl max-w-4xl w-full p-8 transition-all duration-300 animate-fade-in pt-[3.5rem]">
-            <div class="flex flex-col md:flex-row">
-                <div class="md:w-1/3 text-center mb-8 md:mb-0">
-
-                    <h2 class="text-xl font-semibold text-blue-500 mb-4  mt-[3rem]">Vehicule</h2>
-                    <p class="text-stone-700 font-semibold">Ford Transit - Camion</p>
-
-                    <a  href=''>
-                    <button class="ml-[5.7rem] mt-[5rem] flex items-center rounded-md border border-blue-300 py-2 px-4 text-center text-sm transition-all shadow-sm hover:shadow-lg text-blue-600 hover:text-white hover:bg-blue-800 hover:border-blue-800 focus:text-white focus:bg-blue-800 focus:border-blue-800 active:border-blue-800 active:text-white active:bg-blue-800 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none" type="button">
-                        Details
-                        
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4 ml-1.5">
-                            <path fill-rule="evenodd" d="M16.28 11.47a.75.75 0 0 1 0 1.06l-7.5 7.5a.75.75 0 0 1-1.06-1.06L14.69 12 7.72 5.03a.75.75 0 0 1 1.06-1.06l7.5 7.5Z" clip-rule="evenodd" />
-                        </svg>
-                    </button>
-                    </a>
-                </div>
-
-                <div class="mb-8">
-                    
-                    <h2 class="text-xl font-semibold text-blue-500">Date de Depart</h2>
-                    <p class="text-lg font-semibold text-stone-700">15-02-2025</p>
-                    
-                    <h3 class="text-xl font-semibold text-blue-500">Date d'Arrivé</h2>
-                    <p class="text-lg font-semibold text-stone-700">17-02-2025</p>
-                </div>
-            </div>
-
-            <div class="mb-[0.5rem]">
-                <hr class="h-px w-[50rem] my-4 bg-gray-200 border-0 dark:bg-gray-700">
-
-                <svg id="morecmnt" class="w-4 h-4 text-blue-700 cursor-pointer" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 10">
-                    <path d="M15.434 1.235A2 2 0 0 0 13.586 0H2.414A2 2 0 0 0 1 3.414L6.586 9a2 2 0 0 0 2.828 0L15 3.414a2 2 0 0 0 .434-2.179Z"/>
-                </svg>
-                <svg id="lesscmnt" class="w-4 h-4 text-blue-700 cursor-pointer hidden" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 10 16">
-                    <path d="M3.414 1A2 2 0 0 0 0 2.414v11.172A2 2 0 0 0 3.414 15L9 9.414a2 2 0 0 0 0-2.828L3.414 1Z"/>
-                </svg>
-            </div>
-
-        </div>
             
-     
+     }
+
+     ?>
 
     </main>
 

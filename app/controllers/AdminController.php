@@ -4,14 +4,12 @@
 
 use Core\View;
 use App\Models\Admin;
-use App\Models\Vehicule; 
+use App\Models\UserFactory; 
 use App\Models\Itineraire; // added this line
-use App\Models\UserFactory; // added this line
 use App\Models\AnnonceModel; // added this line
+use App\Models\VehiculeModel; // added this line
 
-use App\Models\ColisFactory;
-use App\Models\VehiculeFactory;
-use App\Models\ItineraireFactory;
+
 class AdminController 
 {
     private $admin;
@@ -29,7 +27,7 @@ class AdminController
         $conducteurs = $this->ListConducteurs();
         $itineraires = $this->ListItineraires();
 
-        $total_users = $this->admin->CountUtilisateurs();
+        // $total_users = $this->admin->CountUtilisateurs();
         
         require_once 'C:\laragon\www\Sari3\app\views\Admin\Dashboard_Administrateur.php';
         // return json_encode($itineraires);
@@ -56,7 +54,7 @@ class AdminController
         $stats = [];
         
         // Statistiques des utilisateurs
-        $userFactory = new UserFactory();
+        $userFactory = new \App\Models\UserFactory();
         $stats['users'] = [
             'total' => $userFactory->CountAll(),    
             'conducteurs' => $userFactory->CountByRole('Conducteur'),
@@ -65,7 +63,7 @@ class AdminController
         ];
         
         // Statistiques des itinéraires
-        $itineraireFactory = new ItineraireFactory();
+        $itineraireFactory = new \App\Models\ItineraireFactory();
         $stats['itineraires'] = [
             'total' => $itineraireFactory->CountAll() ?? 0,
             'actifs' => $itineraireFactory->CountByStatus('En préparation') ?? 0,
@@ -73,7 +71,7 @@ class AdminController
         ];
         
         // Statistiques des colis
-        $colisFactory = new ColisFactory();
+        $colisFactory = new \App\Models\ColisFactory();
         $stats['colis'] = [
             'total' => $colisFactory->CountAll() ?? 0,
             'en_attente' => $colisFactory->CountByStatus('En préparation') ?? 0,
@@ -86,19 +84,19 @@ class AdminController
 
     public function ListConducteurs()
     {
-        $userFactory = new UserFactory();
+        $userFactory = new \App\Models\UserFactory();
         $conducteurs = $userFactory->getAllConducteurs();
         return $conducteurs;
     }
     public function ListItineraires()
     {
-        $itineraireFactory = new ItineraireFactory();
-        $itineraires = $itineraireFactory->getItineraire();
+        $itineraireFactory = new \App\Models\ItineraireFactory();
+        $itineraires = $itineraireFactory->getItineraires();
         return $itineraires;
     }
     public function ListExpediteurs()
     {
-        $userFactory = new UserFactory();
+        $userFactory = new \App\Models\UserFactory();
         $expediteurs = $userFactory->getAllExpediteurs();
         return $expediteurs;
     }
@@ -138,7 +136,7 @@ class AdminController
 
     public function BanUser($id_user)
     {
-        $userFactory = new UserFactory();
+        $userFactory = new \App\Models\UserFactory();
         $userFactory->ban($id_user); 
     }
 
@@ -172,7 +170,7 @@ class AdminController
     
     public function getRecentColis()
 {
-    $colisFactory = new ColisFactory();
+    $colisFactory = new \App\Models\ColisFactory();
     $recent_colis = $colisFactory->RecentColis(); 
     return $recent_colis;
 }

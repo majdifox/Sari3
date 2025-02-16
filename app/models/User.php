@@ -2,6 +2,7 @@
 namespace App\Models;
 
 use PDO;
+
 use Core\Database;
 
 class User {
@@ -49,7 +50,7 @@ class User {
                   SET nom = :nom, 
                       prenom = :prenom, 
                       email = :email, 
-                      motdepasse = :motdepasse, 
+                      mot_de_passe = :motdepasse, 
                       telephone = :telephone, 
                       photo = :photo 
                   WHERE id = :id";
@@ -68,6 +69,7 @@ class User {
     public function getId() { return $this->id; }
     public function getNom() { return $this->nom; }
     public function getCnie() { return $this->cnie; }
+    public function getTelephone() { return $this->telephone; }
     public function getPrenom() { return $this->prenom; }
     public function getEmail() { return $this->email; }
     public function getMotDePasse() { return $this->motdepasse; }
@@ -98,24 +100,24 @@ class User {
    }
 
    // Register a new user
-   public static function register($cnie, $nom, $prenom, $email, $motdepasse, $status, $role, $datecreation) {
+   public static function register( $data) {
       $db = Database::getInstance()->getConnection();
-  
-      $query = "INSERT INTO utilisateurs (cnie, nom, prenom, email, motdepasse, status, role, datecreation) 
-                VALUES (:cnie, :nom, :prenom, :email, :motdepasse, :status, :role, :datecreation)";
+      echo "<pre>";
+      print_r($data);
+      echo "</pre>";
+      $query = "INSERT INTO utilisateurs ( nom, prenom,telephone ,email, mot_de_passe,  role) 
+                VALUES ( :nom, :prenom, :telephone,:email ,:motdepasse, :role)";
       $stmt = $db->prepare($query);
   
-      $stmt->bindParam(':cnie', $cnie, PDO::PARAM_STR);
-      $stmt->bindParam(':nom', $nom, PDO::PARAM_STR);
-      $stmt->bindParam(':prenom', $prenom, PDO::PARAM_STR);
-      $stmt->bindParam(':email', $email, PDO::PARAM_STR);
-      $stmt->bindParam(':motdepasse', $motdepasse, PDO::PARAM_STR);
-      $stmt->bindParam(':status', $status, PDO::PARAM_STR);
-      $stmt->bindParam(':role', $role, PDO::PARAM_STR);
-      $stmt->bindParam(':datecreation', $datecreation, PDO::PARAM_STR);
+      $stmt->bindParam(':nom', $data['nom'], PDO::PARAM_STR);
+      $stmt->bindParam(':prenom', $data['prenom'], PDO::PARAM_STR);
+      $stmt->bindParam(':telephone', $data['telephone'], PDO::PARAM_STR);
+      $stmt->bindParam(':email', $data['email'], PDO::PARAM_STR);
+      $stmt->bindParam(':motdepasse', $data['motdepasse'], PDO::PARAM_STR);
+      $stmt->bindParam(':role', $data['role'], PDO::PARAM_STR);
   
       return $stmt->execute();
-  }
+   }
 
    // Get all users by role
    public static function getAllByRole($role) {
@@ -137,6 +139,9 @@ class User {
    }
 
    // Activate a user account
+  
+
+   // Activate a user account
    public function activateAccount($cnie, $id) {
       $query = "UPDATE utilisateurs SET status = 'active' WHERE cnie = :cnie AND id = :id";
       $stmt = $this->db->prepare($query);
@@ -144,8 +149,9 @@ class User {
       $stmt->bindParam(':id', $id, PDO::PARAM_INT);
       return $stmt->execute();
    }
+   
 
-   public static function countAll() {
+   public static function countAll () {
       $connexion = Database::getInstance()->getConnection();
       $sql = "SELECT COUNT(*) as numbertotal FROM utilisateurs";
       $stmt = $connexion->query($sql);
