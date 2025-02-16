@@ -23,6 +23,8 @@ class ColisFactory {
         );
     }
 
+
+
     public function getColis($id) {
         $colisData = Colis::get($id);
         if ($colisData) {
@@ -30,6 +32,18 @@ class ColisFactory {
         } else {
             throw new \Exception("Colis not found with ID: $id");
         }
+    }
+
+    public function statutlivre(Colis $colis) {
+     
+        $colis->colisLivrer();
+        header('Location: AnnonceDetails/'.$colis->getItineraireId());
+    }
+
+    public function statutnonlivre(Colis $colis) {
+     
+        $colis->colisNonLivrer();
+        header('Location: AnnonceDetails/'.$colis->getItineraireId());
     }
 
     // Accept a Colis (update status to 'En transit')
@@ -58,11 +72,9 @@ class ColisFactory {
     public function getColisParVilleEtItineraire($Itineraire,$ville)
      {
         $colis  = Colis::getColisParVilleEtItineraire($Itineraire,$ville);
-        var_dump($colis);
         $list= [];
         $i =0 ;
         foreach ($colis as $c) {
-            var_dump($c);
            $list[$i]  =  $this->createColis($c);
            $i++;
         }

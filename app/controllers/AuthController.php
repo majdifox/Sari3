@@ -4,7 +4,6 @@ namespace App\Controllers;
 use App\Models\User;
 use App\Models\EmailNotification;
 
-session_start();
 class AuthController  {
     
 
@@ -17,7 +16,7 @@ class AuthController  {
     {
         // echo 'hello';
     if($_SERVER['REQUEST_METHOD']==='POST'){
-        echo '$POST';
+        // echo '$POST';
         $email = $_POST['email'] ;
         $password = $_POST['password'] ;
         echo $password;
@@ -37,7 +36,6 @@ class AuthController  {
     }
 
     public function logout (){
-        session_start();
         session_destroy();
         header('Location: login');
 
@@ -51,37 +49,31 @@ class AuthController  {
                 'email' => $_POST["email"] ?? '',
                 'telephone' => $_POST['telephone'] ?? '',
                 'motdepasse' => password_hash($_POST['mot_de_passe'] ?? '', PASSWORD_DEFAULT),
-                // or whatever default status you want
                 'role' => $_POST['role']
             ];
             echo '<pre>';
             var_dump($userData);
             echo '<pre>';
-            // Register the user
             if (User::register(
                 $userData
                 
             )) {
                 
-                // Get the registered user's data
-                var_dump($userData["email"]);
+               
                 $user = User::getByEmail($userData['email']);
-                echo 'dd';
                 if ($user) {
-                    // Send registration email
-                    // $this->emailNotification->sendRegistrationNotification([
-                    //     'id' => $user->id,
-                    //     'prenom' => $user->prenom,
-                    //     'nom' => $user->nom,
-                    //     'email' => $user->email,
-                    //     'role' => $user->role
-                    // ]);
+                    $this->emailNotification->sendRegistrationNotification([
+                        'id' => $user->id,
+                        'prenom' => $user->prenom,
+                        'nom' => $user->nom,
+                        'email' => $user->email,
+                        'role' => $user->role
+                    ]);
                 }
                 
                 // header("Location: /index.php/login");
                 exit();
             } else {
-                // Handle registration failure
                 echo "Registration failed!";
             }
         } else {

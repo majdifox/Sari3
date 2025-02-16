@@ -14,32 +14,30 @@ class ConducteurController{
          require_once('C:\laragon\www\Sari3\app\views\conducteur\Mes_Annonces.php');
       }
       public function annoncedetails($id){
+            // echo "L3aaaadaaaaab<br>";
              $Itineraire = $this->conducteur->getItinerairebyID($id);
              $Details= $this->conducteur->createItiniraireDetails( $Itineraire);
-             echo $_SERVER["REQUEST_METHOD"];
+             
+             
              if ($_SERVER["REQUEST_METHOD"] === 'POST') {
-                  echo '<pre>';
-                  var_dump($_POST);
-                  echo '</pre>';
-                 $colis =  $this->conducteur->getColisParVilleEtItineraire($Itineraire->getId(),$_POST["ville"]) ;
+                   $colis =  $this->conducteur->getColisParVilleEtItineraire($Itineraire->getId(),$_POST["ville"]) ;
+                
                 
              }
             require_once('C:\laragon\www\Sari3\app\views\conducteur\Annonce_details.php');
       }
       public function addIteneraire(){
             if ($_SERVER["REQUEST_METHOD"] === "POST") {
-                  // Decode JSON to get vehicle as an object
-                  $vehicleData = json_decode($_POST['vehicleData'], true);  // Decode JSON string to an array
+                  $vehicleData = json_decode($_POST['vehicleData'], true);  
                   $selectedCities = $_POST['cities'] ?? [];
               
                  
                   $this->conducteur->addAnnonce($selectedCities,$vehicleData,$_POST);
               }
-            var_dump($_POST);
+            
       }
       public function dashboard(){
             // echo 'getItinerairebyCondicteur';
-            session_start();
           
             $id_condecteur = $_SESSION['user']->id;
             $user =   $this->conducteur->getProfileInfos($id_condecteur);
@@ -62,9 +60,7 @@ class ConducteurController{
       }
       public function updateDetailsItenraireStatus($id,$idDetails) {
             $Itineraire = $this->conducteur->getItinerairebyID($id);
-            echo $idDetails.'<br>';
-            
-            echo $idDetails;
+           
             echo '<br>';
             $Details = $this->conducteur->createItiniraireDetails($Itineraire);
         
@@ -74,8 +70,8 @@ class ConducteurController{
                   if($ville->getId() == $idDetails){
                         echo $ville->getVille();
                         echo $id;
-                        $colis = 
-                   $this->conducteur->reachThePoint($ville);
+                        $colis =  $this->conducteur->reachThePoint($ville);
+                        
                   }
       }
       require_once('C:\laragon\www\Sari3\app\views\conducteur\Annonce_details.php');
@@ -89,6 +85,18 @@ class ConducteurController{
             $this->conducteur->getColisParVilleEtItineraire($Itineraire,$ville);
       }
 
+
+      public function livrerUneColis(){
+            $id = $_POST['Livration_confirmer'];
+            $this->conducteur->livrerColis($id);
+            
+      }
+
+      public function nonLivrerUneColis(){
+            $id = $_POST['Livration_annuler'];
+            $this->conducteur->nonLivrerColis($id);
+            
+      }
       
       
       public function addAnnonce() {

@@ -2,7 +2,6 @@
  namespace App\Controllers;
 
  use App\Models\Expediteur;
-
 class ExpediteurController{
     public $Expediteur;
     public function __construct(){
@@ -16,7 +15,7 @@ class ExpediteurController{
 
     public function dashboard(){
     
-      $id_expediteur = $_SESSION['user']['id'];
+      $id_expediteur = $_SESSION['user']->id;
       $user =   $this->Expediteur->getProfileInfos($id_expediteur);
       
       require_once 'C:\laragon\www\Sari3\app\views\expediteur\Home_Annonces.php';
@@ -51,7 +50,7 @@ class ExpediteurController{
     public function makeRequest() {
    
     $this->Expediteur->MakeRequest($_POST);
-    var_dump($_POST);
+    // var_dump($_POST);
 
   }
 

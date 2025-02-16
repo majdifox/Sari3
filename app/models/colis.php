@@ -162,9 +162,7 @@ class Colis {
 
 
 public static function getColisParVilleEtItineraire($itineraire_id,$ville) {
-    echo $itineraire_id;
-    echo '<br>';
-    echo $ville;
+    
     $db = Database::getInstance()->getConnection();
 
     $sql = "SELECT DISTINCT(c.*)
@@ -181,7 +179,7 @@ public static function getColisParVilleEtItineraire($itineraire_id,$ville) {
         $stmt->execute();
 
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    } catch (PDOException $e) {
+    } catch (\PDOException $e) {
         echo "Erreur : " . $e->getMessage();
         return [];
     }
@@ -189,7 +187,7 @@ public static function getColisParVilleEtItineraire($itineraire_id,$ville) {
 
 
 public function colisLivrer(){
-    $id = $this->getId();
+    $ColisID = $this->getId();
     
     $stmt = $this->db->prepare("UPDATE colis SET Statut = 'Livré' WHERE ID = :id");
     $stmt->bindParam(':id', $id, PDO::PARAM_INT);
@@ -200,7 +198,8 @@ public function colisLivrer(){
 
 
 public function colisNonLivrer(){
-    
+    $ColisID = $this->getId();
+
     $stmt = $this->db->prepare("UPDATE colis SET Statut = 'Non livré' WHERE ID = ? ");
     $stmt->execute([$ColisID]);
     

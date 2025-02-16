@@ -23,6 +23,8 @@ $router->add('POST', 'addIteneraire', 'ConducteurController', 'addIteneraire');
 $router->add('GET', 'AnnonceDetails/{id}', 'ConducteurController', 'annoncedetails');
 $router->add('POST', 'AnnonceDetails/{id}', 'ConducteurController', 'annoncedetails');
 $router->add('POST', 'updateStatus/{id}/{id}', 'ConducteurController', 'updateDetailsItenraireStatus');
+$router->add('POST', 'updateColisLivre', 'ConducteurController', 'livrerUneColis');
+$router->add('POST', 'updateColisNonLivre', 'ConducteurController', 'nonLivrerUneColis');
 
 //Les Actions d'Expediteur
 $router->add('GET', 'Expediteur', 'ExpediteurController', 'dashboard');

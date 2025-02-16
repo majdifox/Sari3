@@ -4,7 +4,6 @@ namespace App\Models;
 use PDO;
 use Core\Model;
 use Core\Database;
-session_start();
 class Itineraire  {
     private $id;
     private $conducteur_id;
