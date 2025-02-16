@@ -12,7 +12,7 @@ class UserFactory {
        
         switch ($role) {
             case 'Expediteur':
-                return new Expediteur(null, $userData);
+                return new Expediteur($userData->id,null,$userData->nom,$userData->prenom,$userData->email,$role,null);
             case 'Conducteur':
                 return new Conducteur($userData->id,null,$userData->nom,$userData->prenom,$userData->email,$role,null);
             case 'Admin':
@@ -33,6 +33,18 @@ class UserFactory {
         $sql = "SELECT * FROM users WHERE username = :username";
         $stmt = $this->db->prepare($sql);
         $stmt->bindParam(':username', $username);
+        $stmt->execute();
+        $userData = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($userData && password_verify($password, $userData['password'])) {
+            return $this->createUser($userData["role"], $userData);
+        }
+        return null;
+    }
+    public function UpdateUser($data) {
+        $sql = "SELECT * FROM utilisateurs WHERE id = :id";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindParam(':id', );
         $stmt->execute();
         $userData = $stmt->fetch(PDO::FETCH_ASSOC);
 

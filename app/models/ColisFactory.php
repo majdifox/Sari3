@@ -80,5 +80,17 @@ class ColisFactory {
         }
         return $list;
     }
+    public function CountAll(){
+        $colis= Colis::CountAll();
+        return $colis;
+    }
+    public function CountByStatus($status){
+        $colis= Colis::CountByStatus($status);
+        return $colis;
+    }
+    public function RecentColis(){
+        $colis= Colis::getRecentColis();
+        return $colis;
+    }
 
 }

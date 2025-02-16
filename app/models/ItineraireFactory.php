@@ -79,7 +79,28 @@ use App\Models\ItineraireDetails;
         }
             // b3d $result = fetchObject('itineraire');
         
-        
+        //////////////////////////////////////////////////
+        public function CountAll(){
+            $itit= Itineraire::CountAll();
+            return $itit;
+        }
+        public function CountByStatus($status){
+            $itit= Itineraire::CountByStatus($status);
+            return $itit;
+        }
+        public function getItineraires(){
+            // n9lbo 3la iniraire f database 
+            $Itineraire = Itineraire::getAllItineraires();
+            return $Itineraire;
+            
+        }
+        public function getAnnonce(){
+            // n9lbo 3la iniraire f database 
+            $Itineraire = Itineraire::getAllItinerairesavecDetails();
+            return $Itineraire;
+            
+        }
+        //////////////////////////////////////////////////////
         
     }
 

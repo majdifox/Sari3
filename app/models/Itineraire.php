@@ -106,11 +106,12 @@ class Itineraire  {
     }
     public static function create($id,$TimingData) {
         $db = Database::getInstance()->getConnection();
+        $id_conducteur = $_SESSION["user"]->id;
         $query = "INSERT INTO public.itineraire(
 	 conducteur_id, vehicule_id, date_depart, date_arriver)
 	VALUES (:conducteur_id, :vehicule_id, :date_depart, :date_arriver) RETURNING  id;";
         $stmt = $db->prepare($query);
-        $stmt->bindParam(':conducteur_id', $_SESSION["user"]['id']);
+        $stmt->bindParam(':conducteur_id',$id_conducteur );
         $stmt->bindParam(':vehicule_id', $id);
         $stmt->bindParam(':date_depart', $TimingData['date_depart']);
         $stmt->bindParam(':date_arriver', $TimingData['date_arriver']);
@@ -159,5 +160,20 @@ class Itineraire  {
 
     public function setStatut($statut){
         $this->statut = $statut;
+    }
+
+    public static function getAllItineraires() {
+        $connexion = Database::getInstance()->getConnection();
+        $query = "SELECT i.*, 
+                        u.nom as conducteur_nom, 
+                        u.prenom as conducteur_prenom
+                FROM itineraire i
+                JOIN utilisateurs u ON i.conducteur_id = u.id
+                ORDER BY i.date_depart DESC 
+                LIMIT 5";
+                
+        $stmt = $connexion->prepare($query);
+        $stmt->execute();
+        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
     }
 }

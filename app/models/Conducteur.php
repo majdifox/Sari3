@@ -6,7 +6,6 @@ use App\Models\UserFactory;
 use App\Models\ColisFactory;
 use App\Models\VehiculeFactory;
 use App\Models\ItineraireFactory;
-session_start();
 class Conducteur  extends  User {
     private $ItineraireFactory;
     private $ColisFactory;
@@ -29,6 +28,18 @@ class Conducteur  extends  User {
     }
     public function getColis($id){
      return $colis =  $this->ColisFactory->getColis($id);
+    }
+    public function UpdataProfile($data){
+     $user =  $this->UserFactory->getUser($data['id']);
+     if ($user) {
+      
+      $user->setNom($data["nom"]);
+      $user->setPrenom($data["prenom"]);
+      $user->setTelephone($data["telephone"]);
+      $user->setEmail($data["email"]);
+      $user->setMotDePasse($data["password"]);
+      $user->UpdateUser();
+     }
     }
     public function addAnnonce($dataCity,$dataVehicle,$TimingData) {
       $this->ItineraireFactory->addItineraire($dataCity,$dataVehicle,$TimingData);
