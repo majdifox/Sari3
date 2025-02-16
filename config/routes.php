@@ -7,10 +7,10 @@ $router->add('GET', 'logout', 'authController', 'logout');
 
 //Les Actions d'Administrateurs
 
-$router->add('GET', 'admin', 'AdminController', 'dashboard');
-$router->add('GET', 'admin/users', 'AdminController', 'gestion_utilisateur');
-$router->add('GET', 'admin/annonces', 'AdminController', 'gestion_annonce');
-$router->add('GET', 'admin/profile', 'AdminController', 'gestion_profile');
+$router->add('GET', 'Admin', 'AdminController', 'dashboard');
+$router->add('GET', 'Admin/users', 'AdminController', 'gestion_utilisateur');
+$router->add('GET', 'Admin/annonces', 'AdminController', 'gestion_annonce');
+$router->add('GET', 'Admin/profile', 'AdminController', 'gestion_profile');
 
 //Les Actions du Conducteur
 $router->add('GET', 'Conducteur', 'ConducteurController', 'dashboard');

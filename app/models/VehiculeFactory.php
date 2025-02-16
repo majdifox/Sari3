@@ -13,7 +13,6 @@ class VehiculeFactory {
         $VehiculeData =   Vehicule::get($id);
         if ($Vehicule) {
          return  $this->createVehicule($VehiculeData['id'],$expediteur_id,$VehiculeData['itineare_id'],$VehiculeData['destination'],$VehiculeData['volume'],$VehiculeData['poids'],$VehiculeData['date_depart'],$VehiculeData['date_arriver'],$VehiculeData['status'],$VehiculeData['etat']);
-         # code...
         }else{
          echo 'not found';
         }
