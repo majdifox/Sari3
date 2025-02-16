@@ -69,6 +69,7 @@ class User {
     public function getId() { return $this->id; }
     public function getNom() { return $this->nom; }
     public function getCnie() { return $this->cnie; }
+    public function getTelephone() { return $this->telephone; }
     public function getPrenom() { return $this->prenom; }
     public function getEmail() { return $this->email; }
     public function getMotDePasse() { return $this->motdepasse; }

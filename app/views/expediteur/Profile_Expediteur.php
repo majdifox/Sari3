@@ -8,7 +8,7 @@
     <!-- Lien des Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css" integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ==" crossorigin="anonymous" referrerpolicy="no-referrer" /> 
     
-    <title>Expediteur - Profile</title>
+    <title><?= $user->getRole()?> - Profile</title>
 </head>
 <body class="bg-stone-300">
 
@@ -45,46 +45,50 @@
 
     <main>
 
-    <!-- Profile Form -->
-    <div id="ctnrcsltion" class="hidden fixed left-[32rem] top-[0rem] flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
-        <div class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
-            <i id="xmarkcsltion" class="fa-solid fa-xmark ml-[26rem] text-2xl cursor-pointer mt-[1.2rem]" style="color: #2e2e2e;"></i>
-            <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
-                <h1 class="text-xl mt-[-2rem] font-bold leading-tight tracking-tight text-stone-700 md:text-2xl dark:text-white">
-                    Modifier Votre Profile
-                </h1>
-                <form class="space-y-4 md:space-y-6" method="POST" action="/expediteur/updateProfile">
-                    <div class="grid lg:grid-cols-2 gap-6">
-                        <div>
-                            <label for="nom" class="block mb-2 text-sm font-medium text-stone-700 dark:text-white">Nom</label>
-                            <input type="text" name="nom" id="nom" value="<?= htmlspecialchars($user['nom'] ?? '') ?>" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
+        <!-- Profile Form-->
+        <div id="ctnrcsltion" class="hidden fixed left-[32rem] top-[0rem] flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
+            <div class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
+                <i id="xmarkcsltion" class="fa-solid fa-xmark ml-[26rem] text-2xl cursor-pointer mt-[1.2rem]" style="color: #2e2e2e;"></i>
+                <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
+                    <h1 class="text-xl mt-[-2rem] font-bold leading-tight tracking-tight text-stone-700 md:text-2xl dark:text-white">
+                        Modifier Votre Profile
+                    </h1>
+                    <form class="space-y-4 md:space-y-6" method="POST" enctype="multipart/form-data">
+                        <div class="grid lg:grid-cols-2 gap-6">
+                            <div>
+                                <label for="nom" class="block mb-2 text-sm font-medium text-stone-700 dark:text-white">Nom</label>
+                                <input type="text" name="nom" id="nom" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required="" >
+                            </div>
+                            <div>
+                                <label for="prenom" class="block mb-2 text-sm font-medium text-stone-700 dark:text-white">Prenom</label>
+                                <input type="text" name="prenom" id="prenom" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required="" >
+                            </div>
                         </div>
-                        <div>
-                            <label for="prenom" class="block mb-2 text-sm font-medium text-stone-700 dark:text-white">Prenom</label>
-                            <input type="text" name="prenom" id="prenom" value="<?= htmlspecialchars($user['prenom'] ?? '') ?>" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
+                        <div class="grid lg:grid-cols-2 gap-6">
+                            <div>
+                                <label for="telephone" class="block mb-2 text-sm font-medium text-stone-700 dark:text-white">Téléphone</label>
+                                <input type="text" name="telephone" id="telephone" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required="" >
+                            </div>
+                            <div>
+                                <label for="email" class="block mb-2 text-sm font-medium text-stone-700 dark:text-white">Email</label>
+                                <input type="email" name="email" id="email" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required="" >
+                            </div>
                         </div>
-                    </div>
-                    <div class="grid lg:grid-cols-2 gap-6">
-                        <div>
-                            <label for="telephone" class="block mb-2 text-sm font-medium text-stone-700 dark:text-white">Téléphone</label>
-                            <input type="text" name="telephone" id="telephone" value="<?= htmlspecialchars($user['telephone'] ?? '') ?>" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
+                        <div class="grid lg:grid-cols-2 gap-6">
+                            <div>
+                                <label for="password" class="block mb-2 text-sm font-medium text-stone-700 dark:text-white">Password</label>
+                                <input type="password" name="password" id="password" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required="" >
+                            </div>
+                            <div>
+                                <label class="block mb-2 text-sm font-medium text-stone-700 dark:text-white" for="photo">Photo de Profile</label>
+                                <input name="photo" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-[7px] dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" type="file">
+                            </div>
                         </div>
-                        <div>
-                            <label for="email" class="block mb-2 text-sm font-medium text-stone-700 dark:text-white">Email</label>
-                            <input type="email" name="email" id="email" value="<?= htmlspecialchars($user['email'] ?? '') ?>" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
-                        </div>
-                    </div>
-                    <div class="grid lg:grid-cols-2 gap-6">
-                        <div>
-                            <label for="photo_url" class="block mb-2 text-sm font-medium text-stone-700 dark:text-white">Photo URL</label>
-                            <input type="text" name="photo_url" id="photo_url" value="<?= htmlspecialchars($user['photo'] ?? '') ?>" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                        </div>
-                    </div>
-                    <button type="submit" class="ml-[7rem] w-[8rem] text-white bg-gradient-to-r from-blue-400 via-blue-500 to-blue-600 hover:bg-gradient-to-br font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Confirmer</button>
-                </form>
+                        <button type="submit" class="ml-[7rem] w-[8rem] text-white bg-gradient-to-r from-blue-400 via-blue-500 to-blue-600 hover:bg-gradient-to-br font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Confirmer</button>
+                    </form>
+                </div>
             </div>
         </div>
-    </div>
 
         <section>
             <div class="mb-[4rem]">
@@ -97,8 +101,8 @@
                                     <img src='https://marketplace.canva.com/EAFHfL_zPBk/1/0/1600w/canva-yellow-inspiration-modern-instagram-profile-picture-kpZhUIzCx_w.jpg' class="w-32 h-32 bg-gray-300 rounded-full mb-4 shrink-0">
 
                                     </img>
-                                    <h1 class="text-xl font-bold">Ahmed Reda</h1>
-                                    <p class="text-lg text-stone-600 font-semibold">Expediteur</p>
+                                    <h1 class="capitalize text-xl font-bold"><?php echo $user->getNom() .' ' . $user->getPrenom() ?></h1>
+                                    <p class="text-lg text-stone-600 font-semibold"><?= $user->getRole();?></p>
                                 </div>
                                 <button id="mdfiebttn" type="button" class="ml-[6.7rem] mt-[2.5rem] text-white bg-gradient-to-r from-blue-400 via-blue-500 to-blue-600 hover:bg-gradient-to-br font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Modifier</button>
                             </div>
@@ -112,11 +116,11 @@
                                             <dl class="text-gray-900 divide-y divide-gray-200 dark:text-white dark:divide-gray-700">
                                                 <div class="flex flex-col pb-3">
                                                     <dt class="mb-1 text-stone-900 font-bold text-base dark:text-gray-400">Nom</dt>
-                                                    <dd class="text-lg text-stone-600 font-semibold">Reda</dd>
+                                                    <dd class="capitalize text-lg text-stone-600 font-semibold"><?= $user->getNom();?></dd>
                                                 </div>
                                                 <div class="flex flex-col py-3">
                                                     <dt class="mb-1 text-stone-900 font-bold text-base dark:text-gray-400">Prenom</dt>
-                                                    <dd class="text-lg text-stone-600 font-semibold">Ahmed</dd>
+                                                    <dd class="capitalize text-lg text-stone-600 font-semibold"><?= $user->getPrenom();?></dd>
                                                 </div>
                                             </dl>
                                         </div>
@@ -125,11 +129,11 @@
                                             <dl class="text-gray-900 divide-y divide-gray-200 dark:text-white dark:divide-gray-700">
                                                     <div class="flex flex-col pb-3">
                                                         <dt class="mb-1 text-stone-900 font-bold text-base dark:text-gray-400">Téléphone</dt>
-                                                        <dd class="text-lg text-stone-600 font-semibold">0635487595</dd>
+                                                        <dd class="text-lg text-stone-600 font-semibold">0658497512</dd>
                                                     </div>
                                                     <div class="flex flex-col py-3">
                                                         <dt class="mb-1 text-stone-900 font-bold text-base dark:text-gray-400">Email</dt>
-                                                        <dd class="text-lg text-stone-600 font-semibold">reda@gmail.com</dd>
+                                                        <dd class="text-lg text-stone-600 font-semibold"><?= $user->getEmail();?></dd>
                                                     </div>
                                             </dl>
                                         </div>
@@ -149,7 +153,7 @@
         <div class="w-full max-w-screen-xl mx-auto p-4 md:py-8">
             <div class="sm:flex sm:items-center sm:justify-between">
                 <a class="flex items-center mb-4 sm:mb-0 space-x-3 rtl:space-x-reverse">
-                    <img src="../Red-Blue-Modern-Logistics-Express-Logo.png" class="mb-[-2rem] w-[7rem]" alt="Flowbite Logo" />
+                    <img src="https://export-download.canva.com/ZADgo/DAGey3ZADgo/3/0/0001-1456244851306253508.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAJHKNGJLC2J7OGJ6Q%2F20250212%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20250212T180648Z&X-Amz-Expires=64508&X-Amz-Signature=08e79dfdbd4060b752d74edc03c491b40e21570f0fd7ee31777b4cd6e1db3cbe&X-Amz-SignedHeaders=host&response-content-disposition=attachment%3B%20filename%2A%3DUTF-8%27%27Red%2520Blue%2520Modern%2520Logistics%2520Express%2520Logo.png&response-expires=Thu%2C%2013%20Feb%202025%2012%3A01%3A56%20GMT" class="mb-[-2rem] w-[7rem]" alt="Flowbite Logo" />
                 </a>
                 <ul class="flex flex-wrap items-center mb-6 text-sm font-medium text-gray-500 sm:mb-0 dark:text-gray-400">
                     <li>

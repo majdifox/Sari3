@@ -9,13 +9,15 @@ use App\Models\ItineraireFactory;
 
 class Expediteur extends  User {
     private $ItineraireFactory;
+    private $ColisFactory;
+    private $UserFactory;
     
 
     public function __construct($id = null ,$cnie = null,$nom = null  ,$prenom = null,$email = null,$role = null,$datecreation = null){
       parent::__construct();
       
       $this->id =  $id;
-      $this->cni =  $cnie;
+      $this->cnie =  $cnie;
       $this->nom =  $nom;
       $this->prenom =  $prenom;
       $this->email =  $email;

@@ -1,9 +1,11 @@
 <?php
- namespace App\Controllers;
 
- use App\Models\Expediteur;
+namespace App\Controllers;
 
- session_start();
+use App\Models\Expediteur;
+
+session_start();
+
 class ExpediteurController{
     public $Expediteur;
     public function __construct(){
@@ -22,6 +24,16 @@ class ExpediteurController{
       
       require_once 'C:\laragon\www\Sari3\app\views\expediteur\Home_Annonces.php';
     }
+
+    public function prflExpediteur(){
+     
+      $id_expediteur = $_SESSION['user']->id;
+      $user =   $this->Expediteur->getProfileInfos($id_expediteur);
+      
+      require_once 'C:\laragon\www\Sari3\app\views\expediteur\Profile_Expediteur.php';
+
+    }
+
     public function detailsannonceexp($id){
       $Itineraire = $this->Expediteur->getItinerairebyID($id);
       
@@ -33,11 +45,6 @@ class ExpediteurController{
     public function mescolis(){
 
       require_once 'C:\laragon\www\Sari3\app\views\expediteur\Mes_Colis.php';
-    }
-
-    public function prflexpediteur(){
-
-      require_once 'C:\laragon\www\Sari3\app\views\expediteur\Profile_Expediteur.php';
     }
 
 

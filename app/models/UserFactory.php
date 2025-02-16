@@ -12,7 +12,7 @@ class UserFactory {
        
         switch ($role) {
             case 'Expediteur':
-                return new Expediteur(null, $userData);
+                return new Expediteur($userData->id,null,$userData->nom,$userData->prenom,$userData->email,$role,null);
             case 'Conducteur':
                 return new Conducteur($userData->id,null,$userData->nom,$userData->prenom,$userData->email,$role,null);
             case 'Admin':

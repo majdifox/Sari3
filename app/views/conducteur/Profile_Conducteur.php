@@ -138,7 +138,7 @@
                                             <dl class="text-gray-900 divide-y divide-gray-200 dark:text-white dark:divide-gray-700">
                                                     <div class="flex flex-col pb-3">
                                                         <dt class="mb-1 text-stone-900 font-bold text-base dark:text-gray-400">Téléphone</dt>
-                                                        <dd class="text-lg text-stone-600 font-semibold">0635487595</dd>
+                                                        <dd class="text-lg text-stone-600 font-semibold">0658497512</dd>
                                                     </div>
                                                     <div class="flex flex-col py-3">
                                                         <dt class="mb-1 text-stone-900 font-bold text-base dark:text-gray-400">Email</dt>
